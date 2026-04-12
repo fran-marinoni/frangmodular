@@ -69,7 +69,7 @@ const Proyectos = () => {
           <div className="hidden md:grid grid-cols-3">
             {services.map((service, i) => (
               <div key={i} className="aspect-[4/3] overflow-hidden">
-                <img src={service.image} alt={service.title} className="w-full h-full object-cover" />
+                <img src={service.image} alt={service.title} loading="lazy" className="w-full h-full object-cover" />
               </div>
             ))}
           </div>
@@ -94,7 +94,7 @@ const Proyectos = () => {
             {services.map((service, i) => (
               <div key={i} className={`${i < services.length - 1 ? "border-b border-border" : ""}`}>
                 <div className="aspect-[4/3] overflow-hidden">
-                  <img src={service.image} alt={service.title} className="w-full h-full object-cover" />
+                  <img src={service.image} alt={service.title} loading="lazy" className="w-full h-full object-cover" />
                 </div>
                 <div className="p-5 flex flex-col">
                   <h3 className="font-display text-lg font-black text-foreground whitespace-pre-line leading-tight mb-3">
