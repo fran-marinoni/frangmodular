@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import Header from "@/components/Header";
 import FooterSection from "@/components/home/FooterSection";
 import { getCategoryBySlug } from "@/lib/projectsData";
@@ -39,7 +39,7 @@ const ProyectoCategoria = () => {
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-3">
               {items.map((item, i) => (
-                <div key={i} className="relative group overflow-hidden">
+                <Link key={i} to={`/proyecto/${item.slug}`} className="relative group overflow-hidden block">
                   <div className="aspect-square overflow-hidden">
                     <img
                       src={resolvedImages[item.image] || "/placeholder.svg"}
@@ -52,11 +52,11 @@ const ProyectoCategoria = () => {
                     <h3 className="font-display text-sm md:text-lg lg:text-xl font-black text-white leading-tight whitespace-pre-line mb-2 md:mb-3">
                       {item.name}
                     </h3>
-                    <button className="self-start bg-primary text-primary-foreground text-[9px] md:text-[10px] font-bold px-4 py-1.5 border-2 border-primary rounded-[8px] tracking-wider hover:bg-primary/80 hover:-translate-y-1 transition-all duration-200">
+                    <span className="self-start bg-primary text-primary-foreground text-[9px] md:text-[10px] font-bold px-4 py-1.5 border-2 border-primary rounded-[8px] tracking-wider hover:bg-primary/80 hover:-translate-y-1 transition-all duration-200">
                       Ver proyecto
-                    </button>
+                    </span>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           )}
