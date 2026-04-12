@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import FooterSection from "@/components/home/FooterSection";
 
@@ -31,6 +32,11 @@ const blogPosts = [
 const Blog = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <SEOHead
+        title="Blog – Noticias y proyectos"
+        description="Artículos sobre diseño de espacios, mobiliario modular, proyectos destacados y tendencias en oficinas. Blog de Generación Modular."
+        canonical="/blog"
+      />
       <Header />
 
       {/* Hero */}

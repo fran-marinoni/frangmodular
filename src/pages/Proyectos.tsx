@@ -1,5 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import FooterSection from "@/components/home/FooterSection";
 import { getAllCategories } from "@/lib/projectsData";
@@ -51,6 +52,11 @@ const Proyectos = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Proyectos – Corporativo, Educación, Salud, Hospitalidad, Retail"
+        description="Conoce nuestros proyectos de mobiliario modular en Ecuador: oficinas corporativas, centros educativos, hospitales, hoteles y espacios comerciales."
+        canonical="/proyectos"
+      />
       <Header />
       <main>
         {/* Servicios Section */}

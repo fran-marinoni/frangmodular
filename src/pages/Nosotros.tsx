@@ -1,3 +1,4 @@
+import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import FooterSection from "@/components/home/FooterSection";
 
@@ -14,6 +15,11 @@ import truckImg from "@/assets/nosotros/truck.png";
 const Nosotros = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <SEOHead
+        title="Nosotros – Más de 35 años fabricando mobiliario"
+        description="Generación Modular es una empresa ecuatoriana de manufactura enfocada en diseño y fabricación de mobiliario modular desde 1990. 3,000 m² de fábrica, +2,153 proyectos."
+        canonical="/nosotros"
+      />
       <Header />
 
       {/* Hero: Desde 1990 */}
