@@ -1,35 +1,3 @@
-import img_corporativo_2020_coface from "@/assets/projects/corporativo-2020-coface.jpg";
-import img_corporativo_2020_ptie from "@/assets/projects/corporativo-2020-ptie.jpg";
-import img_corporativo_2020_grupo_superior from "@/assets/projects/corporativo-2020-grupo-superior.jpg";
-import img_corporativo_2020_kushki from "@/assets/projects/corporativo-2020-kushki.jpg";
-import img_corporativo_2020_pfizer from "@/assets/projects/corporativo-2020-pfizer.jpg";
-import img_corporativo_2020_semaica_energia from "@/assets/projects/corporativo-2020-semaica-energia.jpg";
-import img_corporativo_2022_merino_lizarzaburu_abogados from "@/assets/projects/corporativo-2022-merino-lizarzaburu-abogados.jpg";
-import img_corporativo_2023_danec from "@/assets/projects/corporativo-2023-danec.jpg";
-import img_corporativo_2023_usfq from "@/assets/projects/corporativo-2023-usfq.jpg";
-import img_corporativo_2024_ibm from "@/assets/projects/corporativo-2024-ibm.jpg";
-import img_corporativo_2025_banco_de_guayaquil from "@/assets/projects/corporativo-2025-banco-de-guayaquil.jpg";
-import img_corporativo_2025_general_motors from "@/assets/projects/corporativo-2025-general-motors.jpg";
-import img_corporativo_2025_termikon from "@/assets/projects/corporativo-2025-termikon.jpg";
-import img_corporativo_2025_proyecto_ana from "@/assets/projects/corporativo-2025-proyecto-ana.jpg";
-import img_educacion_2025_colegio_menor from "@/assets/projects/educacion-2025-colegio-menor.jpg";
-import img_educacion_2025_crisfe_by_objekt from "@/assets/projects/educacion-2025-crisfe-by-objekt.jpg";
-import img_salud_2015_hospital_pasteur_etapa_1 from "@/assets/projects/salud-2015-hospital-pasteur-etapa-1.jpg";
-import img_salud_2019_axxis_radiologos_asociados from "@/assets/projects/salud-2019-axxis-radiologos-asociados.jpg";
-import img_salud_2024_clinica_pasteur from "@/assets/projects/salud-2024-clinica-pasteur.jpg";
-import img_salud_2025_clinica_santa_lucia from "@/assets/projects/salud-2025-clinica-santa-lucia.jpg";
-import img_salud_2025_dr_cornejo from "@/assets/projects/salud-2025-dr-cornejo.jpg";
-import img_hospitalidad_2021_novopan from "@/assets/projects/hospitalidad-2021-novopan.jpg";
-import img_hospitalidad_2023_hampton_inn from "@/assets/projects/hospitalidad-2023-hampton-inn.png";
-import img_hospitalidad_2025_aeropuerto_mariscal_sucre from "@/assets/projects/hospitalidad-2025-aeropuerto-mariscal-sucre.jpg";
-import img_hospitalidad_2025_oro_verde from "@/assets/projects/hospitalidad-2025-oro-verde.jpg";
-import img_retail_2017_almacenes_japon from "@/assets/projects/retail-2017-almacenes-japon.jpg";
-import img_retail_2017_bellini from "@/assets/projects/retail-2017-bellini.jpg";
-import img_retail_2017_chaide from "@/assets/projects/retail-2017-chaide.jpg";
-import img_retail_2023_1001_carros from "@/assets/projects/retail-2023-1001-carros.jpg";
-import img_retail_2023_casabaca from "@/assets/projects/retail-2023-casabaca.jpg";
-import img_retail_2024_agrinag from "@/assets/projects/retail-2024-agrinag.jpg";
-
 export interface ProjectItem {
   name: string;
   image: string;
@@ -42,6 +10,31 @@ export interface CategoryData {
   projects: Record<string, ProjectItem[]>;
 }
 
+// Use dynamic image paths via Vite's glob import pattern
+// Images will be resolved at runtime instead of bundled eagerly
+const imageModules = import.meta.glob<{ default: string }>(
+  '/src/assets/projects/*.{jpg,png}',
+  { eager: false }
+);
+
+const imageCache: Record<string, string> = {};
+
+export async function resolveImage(path: string): Promise<string> {
+  if (imageCache[path]) return imageCache[path];
+  const loader = imageModules[path];
+  if (loader) {
+    const mod = await loader();
+    imageCache[path] = mod.default;
+    return mod.default;
+  }
+  return '/placeholder.svg';
+}
+
+// Synchronous fallback for initial render — returns placeholder until resolved
+function imgPath(filename: string): string {
+  return `/src/assets/projects/${filename}`;
+}
+
 const categories: CategoryData[] = [
   {
     slug: "corporativo",
@@ -49,28 +42,28 @@ const categories: CategoryData[] = [
     years: ["2025", "2024", "2023", "2022", "2020"],
     projects: {
       "2025": [
-        { name: "BANCO DE GUAYAQUIL.", image: img_corporativo_2025_banco_de_guayaquil },
-        { name: "GENERAL MOTORS.", image: img_corporativo_2025_general_motors },
-        { name: "TERMIKON.", image: img_corporativo_2025_termikon },
-        { name: "PROYECTO ANA.", image: img_corporativo_2025_proyecto_ana },
+        { name: "BANCO DE GUAYAQUIL.", image: imgPath("corporativo-2025-banco-de-guayaquil.jpg") },
+        { name: "GENERAL MOTORS.", image: imgPath("corporativo-2025-general-motors.jpg") },
+        { name: "TERMIKON.", image: imgPath("corporativo-2025-termikon.jpg") },
+        { name: "PROYECTO ANA.", image: imgPath("corporativo-2025-proyecto-ana.jpg") },
       ],
       "2024": [
-        { name: "IBM.", image: img_corporativo_2024_ibm },
+        { name: "IBM.", image: imgPath("corporativo-2024-ibm.jpg") },
       ],
       "2023": [
-        { name: "DANEC.", image: img_corporativo_2023_danec },
-        { name: "USFQ.", image: img_corporativo_2023_usfq },
+        { name: "DANEC.", image: imgPath("corporativo-2023-danec.jpg") },
+        { name: "USFQ.", image: imgPath("corporativo-2023-usfq.jpg") },
       ],
       "2022": [
-        { name: "MERINO LIZARZABURU ABOGADOS.", image: img_corporativo_2022_merino_lizarzaburu_abogados },
+        { name: "MERINO LIZARZABURU ABOGADOS.", image: imgPath("corporativo-2022-merino-lizarzaburu-abogados.jpg") },
       ],
       "2020": [
-        { name: "COFACE.", image: img_corporativo_2020_coface },
-        { name: "PTIE.", image: img_corporativo_2020_ptie },
-        { name: "GRUPO SUPERIOR.", image: img_corporativo_2020_grupo_superior },
-        { name: "KUSHKI.", image: img_corporativo_2020_kushki },
-        { name: "PFIZER.", image: img_corporativo_2020_pfizer },
-        { name: "SEMAICA ENERGIA.", image: img_corporativo_2020_semaica_energia },
+        { name: "COFACE.", image: imgPath("corporativo-2020-coface.jpg") },
+        { name: "PTIE.", image: imgPath("corporativo-2020-ptie.jpg") },
+        { name: "GRUPO SUPERIOR.", image: imgPath("corporativo-2020-grupo-superior.jpg") },
+        { name: "KUSHKI.", image: imgPath("corporativo-2020-kushki.jpg") },
+        { name: "PFIZER.", image: imgPath("corporativo-2020-pfizer.jpg") },
+        { name: "SEMAICA ENERGIA.", image: imgPath("corporativo-2020-semaica-energia.jpg") },
       ],
     },
   },
@@ -80,8 +73,8 @@ const categories: CategoryData[] = [
     years: ["2025"],
     projects: {
       "2025": [
-        { name: "COLEGIO MENOR.", image: img_educacion_2025_colegio_menor },
-        { name: "CRISFE BY OBJEKT.", image: img_educacion_2025_crisfe_by_objekt },
+        { name: "COLEGIO MENOR.", image: imgPath("educacion-2025-colegio-menor.jpg") },
+        { name: "CRISFE BY OBJEKT.", image: imgPath("educacion-2025-crisfe-by-objekt.jpg") },
       ],
     },
   },
@@ -91,17 +84,17 @@ const categories: CategoryData[] = [
     years: ["2025", "2024", "2019", "2015"],
     projects: {
       "2025": [
-        { name: "CLINICA SANTA LUCIA.", image: img_salud_2025_clinica_santa_lucia },
-        { name: "DR CORNEJO.", image: img_salud_2025_dr_cornejo },
+        { name: "CLINICA SANTA LUCIA.", image: imgPath("salud-2025-clinica-santa-lucia.jpg") },
+        { name: "DR CORNEJO.", image: imgPath("salud-2025-dr-cornejo.jpg") },
       ],
       "2024": [
-        { name: "CLINICA PASTEUR.", image: img_salud_2024_clinica_pasteur },
+        { name: "CLINICA PASTEUR.", image: imgPath("salud-2024-clinica-pasteur.jpg") },
       ],
       "2019": [
-        { name: "AXXIS - RADIOLOGOS ASOCIADOS.", image: img_salud_2019_axxis_radiologos_asociados },
+        { name: "AXXIS - RADIOLOGOS ASOCIADOS.", image: imgPath("salud-2019-axxis-radiologos-asociados.jpg") },
       ],
       "2015": [
-        { name: "HOSPITAL PASTEUR  ETAPA 1.", image: img_salud_2015_hospital_pasteur_etapa_1 },
+        { name: "HOSPITAL PASTEUR  ETAPA 1.", image: imgPath("salud-2015-hospital-pasteur-etapa-1.jpg") },
       ],
     },
   },
@@ -111,14 +104,14 @@ const categories: CategoryData[] = [
     years: ["2025", "2023", "2021"],
     projects: {
       "2025": [
-        { name: "AEROPUERTO MARISCAL SUCRE.", image: img_hospitalidad_2025_aeropuerto_mariscal_sucre },
-        { name: "ORO VERDE.", image: img_hospitalidad_2025_oro_verde },
+        { name: "AEROPUERTO MARISCAL SUCRE.", image: imgPath("hospitalidad-2025-aeropuerto-mariscal-sucre.jpg") },
+        { name: "ORO VERDE.", image: imgPath("hospitalidad-2025-oro-verde.jpg") },
       ],
       "2023": [
-        { name: "HAMPTON INN.", image: img_hospitalidad_2023_hampton_inn },
+        { name: "HAMPTON INN.", image: imgPath("hospitalidad-2023-hampton-inn.png") },
       ],
       "2021": [
-        { name: "NOVOPAN.", image: img_hospitalidad_2021_novopan },
+        { name: "NOVOPAN.", image: imgPath("hospitalidad-2021-novopan.jpg") },
       ],
     },
   },
@@ -128,16 +121,16 @@ const categories: CategoryData[] = [
     years: ["2024", "2023", "2017"],
     projects: {
       "2024": [
-        { name: "AGRINAG.", image: img_retail_2024_agrinag },
+        { name: "AGRINAG.", image: imgPath("retail-2024-agrinag.jpg") },
       ],
       "2023": [
-        { name: "1001 CARROS.", image: img_retail_2023_1001_carros },
-        { name: "CASABACA.", image: img_retail_2023_casabaca },
+        { name: "1001 CARROS.", image: imgPath("retail-2023-1001-carros.jpg") },
+        { name: "CASABACA.", image: imgPath("retail-2023-casabaca.jpg") },
       ],
       "2017": [
-        { name: "ALMACENES JAPON.", image: img_retail_2017_almacenes_japon },
-        { name: "BELLINI.", image: img_retail_2017_bellini },
-        { name: "CHAIDE.", image: img_retail_2017_chaide },
+        { name: "ALMACENES JAPON.", image: imgPath("retail-2017-almacenes-japon.jpg") },
+        { name: "BELLINI.", image: imgPath("retail-2017-bellini.jpg") },
+        { name: "CHAIDE.", image: imgPath("retail-2017-chaide.jpg") },
       ],
     },
   },
