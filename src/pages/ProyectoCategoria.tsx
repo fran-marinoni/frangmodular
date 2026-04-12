@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import FooterSection from "@/components/home/FooterSection";
 import { getCategoryBySlug } from "@/lib/projectsData";
+import { useResolvedImages } from "@/hooks/useResolvedImage";
 import NotFound from "@/pages/NotFound";
 
 const ProyectoCategoria = () => {
@@ -9,15 +10,16 @@ const ProyectoCategoria = () => {
   const navigate = useNavigate();
   const data = category ? getCategoryBySlug(category) : undefined;
 
-  if (!data || !year || !data.years.includes(year)) return <NotFound />;
+  const items = (data && year) ? (data.projects[year] || []) : [];
+  const imagePaths = items.map((item) => item.image);
+  const resolvedImages = useResolvedImages(imagePaths);
 
-  const items = data.projects[year] || [];
+  if (!data || !year || !data.years.includes(year)) return <NotFound />;
 
   return (
     <div className="min-h-screen bg-background">
       <Header />
       <main>
-        {/* Title row */}
         <section className="px-6 md:px-8 pt-8 md:pt-12 pb-6">
           <div className="flex items-end justify-between">
             <h1 className="font-display text-[2.5rem] md:text-[3.5rem] lg:text-[4.5rem] font-black leading-none text-foreground">
@@ -29,7 +31,6 @@ const ProyectoCategoria = () => {
           </div>
         </section>
 
-        {/* Projects grid */}
         <section className="px-0">
           {items.length === 0 ? (
             <div className="px-6 md:px-8 py-20 text-center">
@@ -39,15 +40,14 @@ const ProyectoCategoria = () => {
             <div className="grid grid-cols-2 md:grid-cols-3">
               {items.map((item, i) => (
                 <div key={i} className="relative group overflow-hidden">
-                  {/* Image */}
                   <div className="aspect-square overflow-hidden">
                     <img
-                      src={item.image}
+                      src={resolvedImages[item.image] || "/placeholder.svg"}
                       alt={item.name}
+                      loading="lazy"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   </div>
-                  {/* Overlay with name + button */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex flex-col justify-end p-4 md:p-6">
                     <h3 className="font-display text-sm md:text-lg lg:text-xl font-black text-white leading-tight whitespace-pre-line mb-2 md:mb-3">
                       {item.name}
@@ -62,7 +62,6 @@ const ProyectoCategoria = () => {
           )}
         </section>
 
-        {/* Year navigation */}
         <section className="px-6 md:px-8 py-8 flex flex-wrap gap-2 justify-center">
           {data.years.map((y) => (
             <button
