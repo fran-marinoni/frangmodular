@@ -118,24 +118,6 @@ const ProyectoDetalle = () => {
           </div>
         </section>
 
-        {/* CTA Bar */}
-        <section className="bg-primary text-primary-foreground">
-          <div className="px-6 md:px-8 py-5 md:py-6 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8">
-            <h3 className="font-display text-xl md:text-2xl font-black">
-              Cotiza tu proyecto
-            </h3>
-            <span className="font-bold text-lg md:text-xl tracking-wide">098-747-8458</span>
-            <a
-              href="https://wa.me/5939877490249"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-primary-foreground text-foreground text-[11px] font-bold px-8 py-3 rounded-[10px] border-2 border-primary-foreground hover:opacity-90 hover:-translate-y-1 transition-all duration-200 tracking-wider"
-            >
-              Whatsapp
-            </a>
-          </div>
-        </section>
-
         {/* Carousel + Text */}
         {carouselPaths.length > 0 && (
           <section className="border-t border-border">
