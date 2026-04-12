@@ -106,7 +106,10 @@ const HeroSection = () => {
               <div className="absolute right-[5%] md:right-[10%] lg:right-[12%] xl:right-[14%] bottom-0 z-[5]">
                 <img
                   src={chairHero}
-                  alt="Silla Apollo"
+                  alt="Silla ejecutiva Apollo de Generación Modular"
+                  fetchPriority="high"
+                  width={560}
+                  height={700}
                   className="w-[280px] md:w-[380px] lg:w-[480px] xl:w-[560px] object-contain"
                 />
               </div>

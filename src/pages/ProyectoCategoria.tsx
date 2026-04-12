@@ -1,4 +1,5 @@
 import { useParams, useNavigate, Link } from "react-router-dom";
+import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import FooterSection from "@/components/home/FooterSection";
 import { getCategoryBySlug } from "@/lib/projectsData";
@@ -18,6 +19,11 @@ const ProyectoCategoria = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title={`Proyectos ${data.title.replace('.', '')} ${year}`}
+        description={`Proyectos de mobiliario ${data.title.replace('.', '').toLowerCase()} realizados por Generación Modular en ${year}. Diseño y fabricación de mobiliario modular en Ecuador.`}
+        canonical={`/proyectos/${category}/${year}`}
+      />
       <Header />
       <main>
         <section className="px-6 md:px-8 pt-8 md:pt-12 pb-6">

@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
+import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import FooterSection from "@/components/home/FooterSection";
 import { getProjectBySlug, getProjectImagePaths, resolveImage } from "@/lib/projectsData";
@@ -61,6 +62,11 @@ const ProyectoDetalle = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <SEOHead
+        title={`${displayName} – Proyecto ${project.year}`}
+        description={`Proyecto ${displayName} realizado por Generación Modular en ${project.year}. Cliente: ${project.client}. Diseño y fabricación de mobiliario modular.`}
+        canonical={`/proyecto/${project.slug}`}
+      />
       <Header />
 
       <main>

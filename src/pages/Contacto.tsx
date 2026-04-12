@@ -1,4 +1,5 @@
 import { useState } from "react";
+import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import FooterSection from "@/components/home/FooterSection";
 import heroImg from "@/assets/contact/hero.jpg";
@@ -23,6 +24,11 @@ const Contacto = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <SEOHead
+        title="Contacto – Cotiza tu proyecto"
+        description="Contáctanos para cotizar tu proyecto de mobiliario. Visita nuestro showroom en Quito. Teléfono: (02) 511-1157. WhatsApp: 098-747-8458."
+        canonical="/contacto"
+      />
       <Header />
 
       {/* Hero: Form + Image */}
