@@ -16,8 +16,7 @@ const Index = () => {
         description="Diseño y fabricación de mobiliario modular para oficinas, espacios educativos, de salud, hospitalidad y retail. Más de 35 años de experiencia en Ecuador."
         canonical="/"
       />
-      <Header>
-      </Header>
+      <Header />
       <main>
         <HeroSection />
         <ModularitySection />
