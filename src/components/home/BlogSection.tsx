@@ -26,7 +26,7 @@ const BlogSection = () => {
 
         {/* Image — 245x204 */}
         <div className="md:w-[245px] md:h-[204px] shrink-0 overflow-hidden">
-          <img src={blogImage} alt="Blog" className="w-full h-full object-cover" />
+          <img src={blogImage} alt="Blog" loading="lazy" className="w-full h-full object-cover" />
         </div>
       </div>
     </section>

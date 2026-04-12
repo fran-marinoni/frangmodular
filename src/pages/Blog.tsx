@@ -40,6 +40,7 @@ const Blog = () => {
             <img
               src={heroImg}
               alt="Back to the 90s"
+              loading="lazy"
               className="w-full h-[350px] md:h-[500px] object-cover"
             />
           </div>

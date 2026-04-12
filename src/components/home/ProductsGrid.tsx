@@ -24,7 +24,7 @@ const ProductsGrid = () => {
             ].map((item) => (
               <Link key={item.label} to={item.to} className="group bg-background relative overflow-hidden">
                 <div className="relative min-h-[220px] md:min-h-[300px] lg:min-h-[340px]">
-                  <img src={item.img} alt={item.label} className="absolute inset-0 w-full h-full object-cover" />
+                  <img src={item.img} alt={item.label} loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
                   <div className="absolute bottom-5 left-5 flex items-center gap-1.5 z-10">
                     <ArrowRight className="w-3.5 h-3.5 text-background" />
@@ -39,7 +39,7 @@ const ProductsGrid = () => {
           <div className="grid grid-cols-1 gap-px md:[grid-template-columns:619fr_330fr_330fr]">
           <Link to="/productos" className="group bg-background relative overflow-hidden">
             <div className="relative min-h-[200px] md:min-h-[270px] lg:min-h-[300px]">
-              <img src={prodOperativas} alt="Líneas de oficina operativas" className="absolute inset-0 w-full h-full object-cover" />
+              <img src={prodOperativas} alt="Líneas de oficina operativas" loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
               <div className="absolute bottom-5 left-5 flex items-center gap-1.5 z-10">
                 <ArrowRight className="w-3.5 h-3.5 text-background" />
@@ -50,7 +50,7 @@ const ProductsGrid = () => {
 
           <Link to="/productos" className="group bg-background relative overflow-hidden">
             <div className="relative min-h-[200px] md:min-h-[270px] lg:min-h-[300px]">
-              <img src={prodLounge} alt="Lounge" className="absolute inset-0 w-full h-full object-cover" />
+              <img src={prodLounge} alt="Lounge" loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
               <div className="absolute bottom-5 left-5 flex items-center gap-1.5 z-10">
                 <ArrowRight className="w-3.5 h-3.5 text-background" />
