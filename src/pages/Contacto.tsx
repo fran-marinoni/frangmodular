@@ -33,6 +33,7 @@ const Contacto = () => {
             <img
               src={heroImg}
               alt="Contáctanos"
+              loading="lazy"
               className="w-full h-full object-cover"
             />
           </div>

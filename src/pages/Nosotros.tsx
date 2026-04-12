@@ -42,6 +42,7 @@ const Nosotros = () => {
             <img
               src={foundersImg}
               alt="Fundadores"
+              loading="lazy"
               className="w-full h-[528px] object-cover"
             />
           </div>
@@ -56,6 +57,7 @@ const Nosotros = () => {
             <img
               src={workersImg}
               alt="Trabajadores"
+              loading="lazy"
               className="w-full h-full object-cover"
             />
           </div>
@@ -101,21 +103,21 @@ const Nosotros = () => {
           </div>
           {/* Funcionalidad */}
           <div className="flex flex-col bg-background">
-            <img src={equipmentImg} alt="Funcionalidad" className="w-full h-[298px] object-cover" />
+            <img src={equipmentImg} alt="Funcionalidad" loading="lazy" className="w-full h-[298px] object-cover" />
             <div className="p-4 md:p-6">
               <h3 className="text-lg font-black">Funcionalidad.</h3>
             </div>
           </div>
           {/* Diseño y Calidad */}
           <div className="flex flex-col bg-background">
-            <img src={cncImg} alt="Diseño y Calidad" className="w-full h-[298px] object-cover" />
+            <img src={cncImg} alt="Diseño y Calidad" loading="lazy" className="w-full h-[298px] object-cover" />
             <div className="p-4 md:p-6">
               <h3 className="text-lg font-black">Diseño<br />y Calidad.</h3>
             </div>
           </div>
           {/* Flexibilidad */}
           <div className="flex flex-col bg-background">
-            <img src={machineImg} alt="Flexibilidad" className="w-full h-[298px] object-cover" />
+            <img src={machineImg} alt="Flexibilidad" loading="lazy" className="w-full h-[298px] object-cover" />
             <div className="p-4 md:p-6">
               <h3 className="text-lg font-black">Flexibilidad.</h3>
             </div>
@@ -143,6 +145,7 @@ const Nosotros = () => {
             <img
               src={teamProjectImg}
               alt="Proyecto de equipo"
+              loading="lazy"
               className="w-full h-[528px] object-cover"
             />
           </div>
@@ -163,7 +166,7 @@ const Nosotros = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-border">
           <div className="bg-background">
             <div className="overflow-hidden">
-              <img src={factoryImg} alt="Fábrica" className="w-full aspect-[4/3] object-cover" />
+              <img src={factoryImg} alt="Fábrica" loading="lazy" className="w-full aspect-[4/3] object-cover" />
             </div>
             <div className="p-6 md:p-8 flex items-baseline gap-3">
               <span className="text-4xl md:text-5xl font-black">01</span>
@@ -173,7 +176,7 @@ const Nosotros = () => {
           </div>
           <div className="bg-background">
             <div className="overflow-hidden">
-              <img src={showroomImg} alt="Showroom" className="w-full aspect-[4/3] object-cover" />
+              <img src={showroomImg} alt="Showroom" loading="lazy" className="w-full aspect-[4/3] object-cover" />
             </div>
             <div className="p-6 md:p-8 flex items-baseline gap-3">
               <span className="text-4xl md:text-5xl font-black">02</span>
@@ -183,7 +186,7 @@ const Nosotros = () => {
           </div>
           <div className="bg-background">
             <div className="overflow-hidden">
-              <img src={truckImg} alt="Cobertura nacional" className="w-full aspect-[4/3] object-cover" />
+              <img src={truckImg} alt="Cobertura nacional" loading="lazy" className="w-full aspect-[4/3] object-cover" />
             </div>
             <div className="p-6 md:p-8 flex items-baseline gap-3">
               <span className="text-4xl md:text-5xl font-black">03</span>
