@@ -16,6 +16,7 @@ const DynamicBlogArticle = lazy(() => import("./pages/DynamicBlogArticle.tsx"));
 const Contacto = lazy(() => import("./pages/Contacto.tsx"));
 const Proyectos = lazy(() => import("./pages/Proyectos.tsx"));
 const ProyectoCategoria = lazy(() => import("./pages/ProyectoCategoria.tsx"));
+const ProyectoDetalle = lazy(() => import("./pages/ProyectoDetalle.tsx"));
 const AdminLogin = lazy(() => import("./pages/admin/AdminLogin.tsx"));
 const AdminDashboard = lazy(() => import("./pages/admin/AdminDashboard.tsx"));
 const AdminBlogs = lazy(() => import("./pages/admin/AdminBlogs.tsx"));
@@ -49,6 +50,7 @@ const App = () => (
           <Route path="/contacto" element={<LazyRoute><Contacto /></LazyRoute>} />
           <Route path="/proyectos" element={<LazyRoute><Proyectos /></LazyRoute>} />
           <Route path="/proyectos/:category/:year" element={<LazyRoute><ProyectoCategoria /></LazyRoute>} />
+          <Route path="/proyecto/:projectSlug" element={<LazyRoute><ProyectoDetalle /></LazyRoute>} />
           <Route path="/admin" element={<LazyRoute><AdminLogin /></LazyRoute>} />
           <Route path="/admin/dashboard" element={<LazyRoute><ProtectedRoute><AdminDashboard /></ProtectedRoute></LazyRoute>} />
           <Route path="/admin/blogs" element={<LazyRoute><ProtectedRoute><AdminBlogs /></ProtectedRoute></LazyRoute>} />
