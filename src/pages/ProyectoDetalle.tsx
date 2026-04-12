@@ -4,21 +4,43 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
 import Header from "@/components/Header";
 import FooterSection from "@/components/home/FooterSection";
-import { getProjectBySlug } from "@/lib/projectsData";
-import { useResolvedImage } from "@/hooks/useResolvedImage";
+import { getProjectBySlug, getProjectImagePaths, resolveImage } from "@/lib/projectsData";
 import NotFound from "@/pages/NotFound";
 
-const ProjectImage = ({ imagePath, alt, className }: { imagePath: string; alt: string; className?: string }) => {
-  const src = useResolvedImage(imagePath);
-  return <img src={src} alt={alt} loading="lazy" className={className} />;
+const useResolvedImages = (paths: string[]) => {
+  const [resolved, setResolved] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    let cancelled = false;
+    if (paths.length === 0) return;
+    Promise.all(
+      paths.map(async (p) => {
+        const src = await resolveImage(p);
+        return [p, src] as const;
+      })
+    ).then((entries) => {
+      if (!cancelled) setResolved(Object.fromEntries(entries));
+    });
+    return () => { cancelled = true; };
+  }, [paths.join("|")]);
+
+  return resolved;
 };
 
 const ProyectoDetalle = () => {
   const { projectSlug } = useParams();
   const project = projectSlug ? getProjectBySlug(projectSlug) : undefined;
 
-  // Carousel for bottom images — reuse the same project image with different crops/views
-  // Since we have 1 image per project, we simulate multiple views
+  // Get all images from the project's folder
+  const allImagePaths = project ? getProjectImagePaths(project.imageFolder) : [];
+
+  // First 2 images are fixed, rest go to carousel
+  const fixedPaths = allImagePaths.slice(0, 2);
+  const carouselPaths = allImagePaths.length > 2 ? allImagePaths.slice(2) : allImagePaths;
+
+  const resolvedImages = useResolvedImages(allImagePaths);
+
+  // Carousel
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -36,9 +58,6 @@ const ProyectoDetalle = () => {
   if (!project) return <NotFound />;
 
   const displayName = project.name.replace(/\.$/, '');
-
-  // We use the same image for the carousel slides with different object-position
-  const carouselPositions = ["object-center", "object-left", "object-right"];
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -75,20 +94,27 @@ const ProyectoDetalle = () => {
         {/* Two Fixed Images */}
         <section className="border-t border-border">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border">
-            <div className="overflow-hidden bg-background">
-              <ProjectImage
-                imagePath={project.image}
-                alt={`${displayName} - Vista 1`}
-                className="w-full h-[300px] md:h-[450px] lg:h-[520px] object-cover"
-              />
-            </div>
-            <div className="overflow-hidden bg-background">
-              <ProjectImage
-                imagePath={project.image}
-                alt={`${displayName} - Vista 2`}
-                className="w-full h-[300px] md:h-[450px] lg:h-[520px] object-cover object-[70%_center]"
-              />
-            </div>
+            {fixedPaths.map((path, i) => (
+              <div key={i} className="overflow-hidden bg-background">
+                <img
+                  src={resolvedImages[path] || "/placeholder.svg"}
+                  alt={`${displayName} - Vista ${i + 1}`}
+                  loading={i === 0 ? undefined : "lazy"}
+                  className="w-full h-[300px] md:h-[450px] lg:h-[520px] object-cover"
+                />
+              </div>
+            ))}
+            {/* If only 1 image, duplicate it */}
+            {fixedPaths.length === 1 && (
+              <div className="overflow-hidden bg-background">
+                <img
+                  src={resolvedImages[fixedPaths[0]] || "/placeholder.svg"}
+                  alt={`${displayName} - Vista 2`}
+                  loading="lazy"
+                  className="w-full h-[300px] md:h-[450px] lg:h-[520px] object-cover object-[70%_center]"
+                />
+              </div>
+            )}
           </div>
         </section>
 
@@ -111,54 +137,57 @@ const ProyectoDetalle = () => {
         </section>
 
         {/* Carousel + Text */}
-        <section className="border-t border-border">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border">
-            {/* Left: Carousel */}
-            <div className="bg-background relative">
-              <div ref={emblaRef} className="overflow-hidden">
-                <div className="flex">
-                  {carouselPositions.map((pos, i) => (
-                    <div key={i} className="flex-[0_0_100%] min-w-0">
-                      <ProjectImage
-                        imagePath={project.image}
-                        alt={`${displayName} - Slide ${i + 1}`}
-                        className={`w-full h-[350px] md:h-[450px] lg:h-[520px] object-cover ${pos}`}
-                      />
-                    </div>
-                  ))}
+        {carouselPaths.length > 0 && (
+          <section className="border-t border-border">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border">
+              {/* Left: Carousel */}
+              <div className="bg-background relative">
+                <div ref={emblaRef} className="overflow-hidden">
+                  <div className="flex">
+                    {carouselPaths.map((path, i) => (
+                      <div key={i} className="flex-[0_0_100%] min-w-0">
+                        <img
+                          src={resolvedImages[path] || "/placeholder.svg"}
+                          alt={`${displayName} - Slide ${i + 1}`}
+                          loading="lazy"
+                          className="w-full h-[350px] md:h-[450px] lg:h-[520px] object-cover"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Carousel Controls */}
+                <div className="absolute bottom-4 left-4 flex gap-2">
+                  <button
+                    onClick={scrollPrev}
+                    className="w-10 h-10 bg-primary text-primary-foreground flex items-center justify-center hover:bg-primary/80 transition-colors"
+                  >
+                    <ArrowLeft className="w-5 h-5" />
+                  </button>
+                  <button
+                    onClick={scrollNext}
+                    className="w-10 h-10 bg-primary text-primary-foreground flex items-center justify-center hover:bg-primary/80 transition-colors"
+                  >
+                    <ArrowRight className="w-5 h-5" />
+                  </button>
                 </div>
               </div>
 
-              {/* Carousel Controls */}
-              <div className="absolute bottom-4 left-4 flex gap-2">
-                <button
-                  onClick={scrollPrev}
-                  className="w-10 h-10 bg-primary text-primary-foreground flex items-center justify-center hover:bg-primary/80 transition-colors"
-                >
-                  <ArrowLeft className="w-5 h-5" />
-                </button>
-                <button
-                  onClick={scrollNext}
-                  className="w-10 h-10 bg-primary text-primary-foreground flex items-center justify-center hover:bg-primary/80 transition-colors"
-                >
-                  <ArrowRight className="w-5 h-5" />
-                </button>
+              {/* Right: Description */}
+              <div className="bg-background p-8 md:p-12 lg:p-16 flex flex-col justify-center">
+                {project.description?.map((paragraph, i) => (
+                  <p
+                    key={i}
+                    className="text-sm md:text-base leading-relaxed text-foreground/80 mb-6 last:mb-0 text-center"
+                  >
+                    {paragraph}
+                  </p>
+                ))}
               </div>
             </div>
-
-            {/* Right: Description */}
-            <div className="bg-background p-8 md:p-12 lg:p-16 flex flex-col justify-center">
-              {project.description?.map((paragraph, i) => (
-                <p
-                  key={i}
-                  className="text-sm md:text-base leading-relaxed text-foreground/80 mb-6 last:mb-0 text-center md:text-center"
-                >
-                  {paragraph}
-                </p>
-              ))}
-            </div>
-          </div>
-        </section>
+          </section>
+        )}
 
         <FooterSection />
       </main>
