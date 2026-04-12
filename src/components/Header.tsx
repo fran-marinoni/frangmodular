@@ -284,7 +284,7 @@ const Header = () => {
               </button>
             </div>
 
-            <nav className="flex flex-col py-2">
+            <nav className="flex flex-col py-2" aria-label="Navegación móvil">
               {navLinks.map((link) => {
                 if (link.label === "PRODUCTOS") {
                   return (
