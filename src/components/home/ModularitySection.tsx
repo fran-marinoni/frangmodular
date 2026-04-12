@@ -140,7 +140,7 @@ const ModularitySection = () => {
       <div className="grid grid-cols-1 md:grid-cols-12">
         {/* Left — tall vertical image, full height */}
         <div className="md:col-span-4 relative min-h-[300px] md:min-h-[480px] lg:min-h-[560px] overflow-hidden">
-          <img src={claimRight} alt="Espacio modular" className="w-full h-full object-cover object-center absolute inset-0" />
+          <img src={claimRight} alt="Espacio modular" loading="lazy" className="w-full h-full object-cover object-center absolute inset-0" />
         </div>
 
         {/* Right — split vertically: big title top, text+image bottom */}
@@ -182,7 +182,7 @@ const ModularitySection = () => {
               </p>
             </div>
             <div className="col-span-2 relative overflow-hidden border-l border-border">
-              <img src={claimLeft} alt="Sala de conferencias" className="w-full h-full object-cover object-[center_30%] absolute inset-0" />
+              <img src={claimLeft} alt="Sala de conferencias" loading="lazy" className="w-full h-full object-cover object-[center_30%] absolute inset-0" />
             </div>
           </div>
         </div>

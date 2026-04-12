@@ -26,10 +26,10 @@ const ContactSection = () => {
           {/* Instagram images */}
           <div className="flex gap-2 mb-5">
             <div className="flex-1 aspect-square overflow-hidden">
-              <img src={contact1} alt="Oficina" className="w-full h-full object-cover" />
+              <img src={contact1} alt="Oficina" loading="lazy" className="w-full h-full object-cover" />
             </div>
             <div className="flex-1 aspect-square overflow-hidden">
-              <img src={contact2} alt="Sala de reuniones" className="w-full h-full object-cover" />
+              <img src={contact2} alt="Sala de reuniones" loading="lazy" className="w-full h-full object-cover" />
             </div>
           </div>
 

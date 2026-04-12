@@ -25,7 +25,7 @@ const ProjectsSection = () => {
         {projectTypes.map((proj) => (
           <div key={proj.num} className="flex flex-col">
             <div className="relative aspect-[3/4] overflow-hidden">
-              <img src={proj.image} alt={proj.label} className="w-full h-full object-cover" />
+              <img src={proj.image} alt={proj.label} loading="lazy" className="w-full h-full object-cover" />
             </div>
             <div className="bg-background px-4 py-4 flex flex-col items-end text-right border-t border-border">
               <span className="font-display text-[32px] font-black text-foreground leading-none">
@@ -45,7 +45,7 @@ const ProjectsSection = () => {
         <div className="grid grid-cols-4 gap-px bg-border border-t border-border">
           {projectTypes.map((proj) => (
             <div key={proj.num} className="relative aspect-[3/4] overflow-hidden">
-              <img src={proj.image} alt={proj.label} className="w-full h-full object-cover" />
+              <img src={proj.image} alt={proj.label} loading="lazy" className="w-full h-full object-cover" />
             </div>
           ))}
         </div>

@@ -59,7 +59,7 @@ const HeroSection = () => {
             <ArrowLeft className="w-5 h-5" />
           </button>
           <div className="w-[100px] h-[100px] xl:w-[120px] xl:h-[120px] overflow-hidden relative border-l-2 border-foreground">
-            <img src={cards.left.image} alt={cards.left.label} className="w-full h-full object-cover" />
+            <img src={cards.left.image} alt={cards.left.label} loading="lazy" className="w-full h-full object-cover" />
             <div className="absolute bottom-2 left-2">
               <span className="bg-primary text-primary-foreground text-[8px] font-bold px-2 py-0.5 tracking-wider uppercase whitespace-pre-line">
                 {cards.left.label}
@@ -74,7 +74,7 @@ const HeroSection = () => {
           className="hidden lg:flex absolute right-0 top-[55%] z-20 items-stretch border-2 border-foreground cursor-pointer group transition-transform duration-200 hover:-translate-y-1"
         >
           <div className="w-[180px] h-[90px] xl:w-[210px] xl:h-[100px] overflow-hidden relative border-r-2 border-foreground">
-            <img src={cards.right.image} alt={cards.right.label} className="w-full h-full object-cover" />
+            <img src={cards.right.image} alt={cards.right.label} loading="lazy" className="w-full h-full object-cover" />
             <div className="absolute top-2 left-2 bg-foreground/80 text-background text-[7px] font-bold px-1.5 py-0.5 leading-tight whitespace-pre-line">
               {cards.right.label}
             </div>
@@ -118,6 +118,7 @@ const HeroSection = () => {
                 <img
                   src={heroSlide2}
                   alt="Film"
+                  loading="lazy"
                   className="w-full h-auto object-contain"
                 />
                 <div className="absolute inset-0 bg-foreground/30" />
@@ -138,6 +139,7 @@ const HeroSection = () => {
               <img
                 src={heroSlide3}
                 alt="Proyectos"
+                loading="lazy"
                 className="absolute inset-0 w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-foreground/30" />
