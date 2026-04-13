@@ -1,13 +1,13 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { ChevronDown } from "lucide-react";
-import chairFeatures from "@/assets/chair-features.png";
-import chairFeature1 from "@/assets/chair-feature-1.png";
-import chairFeature2 from "@/assets/chair-feature-2.png";
-import chairFeature3 from "@/assets/chair-feature-3.png";
-import chairFeature4 from "@/assets/chair-feature-4.png";
-import chairThumb1 from "@/assets/chair-apollo-thumb1.jpg";
-import chairThumb2 from "@/assets/chair-apollo-thumb2.jpg";
-import chairThumb3 from "@/assets/chair-apollo-thumb3.jpg";
+import chairFeatures from "@/assets/chair-features.webp";
+import chairFeature1 from "@/assets/chair-feature-1.webp";
+import chairFeature2 from "@/assets/chair-feature-2.webp";
+import chairFeature3 from "@/assets/chair-feature-3.webp";
+import chairFeature4 from "@/assets/chair-feature-4.webp";
+import chairThumb1 from "@/assets/chair-apollo-thumb1.webp";
+import chairThumb2 from "@/assets/chair-apollo-thumb2.webp";
+import chairThumb3 from "@/assets/chair-apollo-thumb3.webp";
 
 const thumbnails = [chairThumb1, chairThumb2, chairThumb3];
 const categories = ["VISITA", "EJECUTIVA", "OPERATIVA"];
@@ -238,7 +238,7 @@ const ProductSection = () => {
                   muted
                   playsInline
                   preload="metadata"
-                  poster="/videos/chair-apollo-poster.jpg"
+                  poster="/videos/chair-apollo-poster.webp"
                   className="w-full max-w-xs md:max-w-2xl mx-auto max-h-[45vh] md:max-h-[60vh] object-contain"
                   style={{ pointerEvents: "none", WebkitTransform: "translateZ(0)" }}
                 />

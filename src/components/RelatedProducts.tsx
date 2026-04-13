@@ -1,6 +1,6 @@
-import chairLumi from "@/assets/chair-lumi.png";
-import chairUnique from "@/assets/chair-unique.png";
-import chairClark from "@/assets/chair-clark.png";
+import chairLumi from "@/assets/chair-lumi.webp";
+import chairUnique from "@/assets/chair-unique.webp";
+import chairClark from "@/assets/chair-clark.webp";
 
 const products = [
   { name: "Lumi.", image: chairLumi },

@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import prodSillas from "@/assets/home/prod-sillas.jpg";
-import prodFlexible from "@/assets/home/prod-flexible.jpg";
-import prodGerenciales from "@/assets/home/prod-gerenciales.jpg";
-import prodOperativas from "@/assets/home/prod-operativas.jpg";
-import prodLounge from "@/assets/home/prod-lounge.jpg";
+import prodSillas from "@/assets/home/prod-sillas.webp";
+import prodFlexible from "@/assets/home/prod-flexible.webp";
+import prodGerenciales from "@/assets/home/prod-gerenciales.webp";
+import prodOperativas from "@/assets/home/prod-operativas.webp";
+import prodLounge from "@/assets/home/prod-lounge.webp";
 
 const ProductsGrid = () => {
   return (
