@@ -34,9 +34,7 @@ const imageCache: Record<string, string> = {};
 
 export async function resolveImage(path: string): Promise<string> {
   if (imageCache[path]) return imageCache[path];
-  // Prefer optimized version (-opt.webp) if available
-  const optPath = path.replace('.webp', '-opt.webp');
-  const loader = allProjectImages[optPath] || thumbnailImages[optPath] || allProjectImages[path] || thumbnailImages[path];
+  const loader = allProjectImages[path] || thumbnailImages[path];
   if (loader) {
     const mod = await loader();
     imageCache[path] = mod.default;
@@ -48,16 +46,13 @@ export async function resolveImage(path: string): Promise<string> {
 /** Get all image paths for a project folder */
 export function getProjectImagePaths(folder: string): string[] {
   const prefix = folder.endsWith('/') ? folder : folder + '/';
-  // Return only non-opt originals (resolveImage will swap to -opt automatically)
   return Object.keys(allProjectImages)
-    .filter((k) => k.startsWith(prefix) && !k.includes('-opt.webp'))
+    .filter((k) => k.startsWith(prefix))
     .sort();
 }
 
 function thumbPath(filename: string): string {
-  // Use optimized thumbnail if available (e.g. "foo.webp" -> "foo-opt.webp")
-  const optName = filename.replace('.webp', '-opt.webp');
-  return `/src/assets/projects/${optName}`;
+  return `/src/assets/projects/${filename}`;
 }
 
 function makeSlug(name: string): string {
