@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown, ChevronUp } from "lucide-react";
-import logo from "@/assets/logo.png";
-import productsChairImg from "@/assets/products-menu-chair.png";
-import productsOfficeImg from "@/assets/products-menu-office.png";
+import logo from "@/assets/logo.webp";
+import productsChairImg from "@/assets/products-menu-chair.webp";
+import productsOfficeImg from "@/assets/products-menu-office.webp";
 
 const navLinks = [
   { label: "HOME", to: "/" },

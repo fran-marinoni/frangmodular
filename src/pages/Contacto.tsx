@@ -2,8 +2,8 @@ import { useState } from "react";
 import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import FooterSection from "@/components/home/FooterSection";
-import heroImg from "@/assets/contact/hero.jpg";
-import showroomChairsImg from "@/assets/contact/showroom-chairs.png";
+import heroImg from "@/assets/contact/hero.webp";
+import showroomChairsImg from "@/assets/contact/showroom-chairs.webp";
 
 const Contacto = () => {
   const [formData, setFormData] = useState({

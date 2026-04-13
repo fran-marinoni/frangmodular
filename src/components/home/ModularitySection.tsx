@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import claimLeft from "@/assets/home/claim-left.jpg";
-import claimRight from "@/assets/home/claim-right.jpg";
+import claimLeft from "@/assets/home/claim-left.webp";
+import claimRight from "@/assets/home/claim-right.webp";
 
 const WORDS = ["MODULARIDAD", "FUNCIONALIDAD", "VIDA", "COMODIDAD"];
 const TRANSITION_COOLDOWN = 800; // ms between word changes

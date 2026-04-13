@@ -2,12 +2,12 @@ import { useState, useCallback, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
-import chairHero from "@/assets/home/hero-chair.png";
-import heroSlide2 from "@/assets/home/hero-slide2.png";
-import heroSlide3 from "@/assets/home/hero-slide3.png";
-import heroPreview90s from "@/assets/home/hero-preview-90s.png";
-import heroPreviewProyectos from "@/assets/home/hero-preview-proyectos.png";
-import heroPreviewProductos from "@/assets/home/hero-preview-productos.png";
+import chairHero from "@/assets/home/hero-chair.webp";
+import heroSlide2 from "@/assets/home/hero-slide2.webp";
+import heroSlide3 from "@/assets/home/hero-slide3.webp";
+import heroPreview90s from "@/assets/home/hero-preview-90s.webp";
+import heroPreviewProyectos from "@/assets/home/hero-preview-proyectos.webp";
+import heroPreviewProductos from "@/assets/home/hero-preview-productos.webp";
 
 type PreviewCard = {
   image: string;

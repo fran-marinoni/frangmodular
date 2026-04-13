@@ -1,8 +1,8 @@
-import footerLogo from "@/assets/footer-logo.png";
-import igIcon from "@/assets/social/instagram.png";
-import pinterestIcon from "@/assets/social/pinterest.png";
-import tiktokIcon from "@/assets/social/tiktok.png";
-import linkedinIcon from "@/assets/social/linkedin.png";
+import footerLogo from "@/assets/footer-logo.webp";
+import igIcon from "@/assets/social/instagram.webp";
+import pinterestIcon from "@/assets/social/pinterest.webp";
+import tiktokIcon from "@/assets/social/tiktok.webp";
+import linkedinIcon from "@/assets/social/linkedin.webp";
 
 const FooterSection = () => {
   return (
