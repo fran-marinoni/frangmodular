@@ -1,10 +1,25 @@
+import { useMemo } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import FooterSection from "@/components/home/FooterSection";
 import { getCategoryBySlug } from "@/lib/projectsData";
 import { useResolvedImages } from "@/hooks/useResolvedImage";
+import { useImagePreloader } from "@/hooks/useImagePreloader";
 import NotFound from "@/pages/NotFound";
+
+const SectionLoader = () => (
+  <div className="flex flex-col items-center justify-center py-32 gap-6">
+    <h2 className="font-display text-[2rem] md:text-[2.5rem] font-black tracking-tighter text-foreground leading-none">
+      Generación<br />
+      <span className="font-normal italic">Modular.</span>
+    </h2>
+    <div className="w-48 md:w-64 h-[3px] bg-muted rounded-full overflow-hidden">
+      <div className="h-full bg-primary rounded-full animate-loading-grow" />
+    </div>
+    <p className="text-muted-foreground text-xs tracking-widest uppercase">Cargando proyectos</p>
+  </div>
+);
 
 const ProyectoCategoria = () => {
   const { category, year } = useParams();
@@ -14,6 +29,14 @@ const ProyectoCategoria = () => {
   const items = (data && year) ? (data.projects[year] || []) : [];
   const imagePaths = items.map((item) => item.image);
   const resolvedImages = useResolvedImages(imagePaths);
+
+  // Collect resolved URLs for preloading
+  const resolvedUrls = useMemo(
+    () => imagePaths.map((p) => resolvedImages[p]).filter(Boolean),
+    [resolvedImages, imagePaths.length]
+  );
+
+  const imagesReady = useImagePreloader(resolvedUrls, 600);
 
   if (!data || !year || !data.years.includes(year)) return <NotFound />;
 
@@ -42,6 +65,8 @@ const ProyectoCategoria = () => {
             <div className="px-6 md:px-8 py-20 text-center">
               <p className="text-muted-foreground text-sm">No hay proyectos para este año.</p>
             </div>
+          ) : !imagesReady ? (
+            <SectionLoader />
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-3">
               {items.map((item, i) => (
@@ -51,7 +76,6 @@ const ProyectoCategoria = () => {
                       <img
                         src={resolvedImages[item.image]}
                         alt={item.name}
-                        loading="lazy"
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                     )}
