@@ -35,37 +35,43 @@ const LazyRoute = ({ children }: { children: React.ReactNode }) => (
   </Suspense>
 );
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/productos/apollo" element={<LazyRoute><ApolloProduct /></LazyRoute>} />
-          <Route path="/nosotros" element={<LazyRoute><Nosotros /></LazyRoute>} />
-          <Route path="/blog" element={<LazyRoute><Blog /></LazyRoute>} />
-          <Route path="/blog/back-to-the-90s" element={<LazyRoute><BlogArticle90s /></LazyRoute>} />
-          <Route path="/blog/:slug" element={<LazyRoute><DynamicBlogArticle /></LazyRoute>} />
-          <Route path="/contacto" element={<LazyRoute><Contacto /></LazyRoute>} />
-          <Route path="/proyectos" element={<LazyRoute><Proyectos /></LazyRoute>} />
-          <Route path="/proyectos/:category/:year" element={<LazyRoute><ProyectoCategoria /></LazyRoute>} />
-          <Route path="/proyecto/:projectSlug" element={<LazyRoute><ProyectoDetalle /></LazyRoute>} />
-          <Route path="/admin" element={<LazyRoute><AdminLogin /></LazyRoute>} />
-          <Route path="/admin/dashboard" element={<LazyRoute><ProtectedRoute><AdminDashboard /></ProtectedRoute></LazyRoute>} />
-          <Route path="/admin/blogs" element={<LazyRoute><ProtectedRoute><AdminBlogs /></ProtectedRoute></LazyRoute>} />
-          <Route path="/admin/blogs/new" element={<LazyRoute><ProtectedRoute><AdminBlogEditor /></ProtectedRoute></LazyRoute>} />
-          <Route path="/admin/blogs/edit/:id" element={<LazyRoute><ProtectedRoute><AdminBlogEditor /></ProtectedRoute></LazyRoute>} />
-          <Route path="/admin/products" element={<LazyRoute><ProtectedRoute><AdminProducts /></ProtectedRoute></LazyRoute>} />
-          <Route path="/admin/products/new" element={<LazyRoute><ProtectedRoute><AdminProductEditor /></ProtectedRoute></LazyRoute>} />
-          <Route path="/admin/products/edit/:id" element={<LazyRoute><ProtectedRoute><AdminProductEditor /></ProtectedRoute></LazyRoute>} />
-          <Route path="/productos/:slug" element={<LazyRoute><DynamicProduct /></LazyRoute>} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  const [preloaded, setPreloaded] = useState(false);
+  const handlePreloadFinished = useCallback(() => setPreloaded(true), []);
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        {!preloaded && <PreloadScreen onFinished={handlePreloadFinished} />}
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/productos/apollo" element={<LazyRoute><ApolloProduct /></LazyRoute>} />
+            <Route path="/nosotros" element={<LazyRoute><Nosotros /></LazyRoute>} />
+            <Route path="/blog" element={<LazyRoute><Blog /></LazyRoute>} />
+            <Route path="/blog/back-to-the-90s" element={<LazyRoute><BlogArticle90s /></LazyRoute>} />
+            <Route path="/blog/:slug" element={<LazyRoute><DynamicBlogArticle /></LazyRoute>} />
+            <Route path="/contacto" element={<LazyRoute><Contacto /></LazyRoute>} />
+            <Route path="/proyectos" element={<LazyRoute><Proyectos /></LazyRoute>} />
+            <Route path="/proyectos/:category/:year" element={<LazyRoute><ProyectoCategoria /></LazyRoute>} />
+            <Route path="/proyecto/:projectSlug" element={<LazyRoute><ProyectoDetalle /></LazyRoute>} />
+            <Route path="/admin" element={<LazyRoute><AdminLogin /></LazyRoute>} />
+            <Route path="/admin/dashboard" element={<LazyRoute><ProtectedRoute><AdminDashboard /></ProtectedRoute></LazyRoute>} />
+            <Route path="/admin/blogs" element={<LazyRoute><ProtectedRoute><AdminBlogs /></ProtectedRoute></LazyRoute>} />
+            <Route path="/admin/blogs/new" element={<LazyRoute><ProtectedRoute><AdminBlogEditor /></ProtectedRoute></LazyRoute>} />
+            <Route path="/admin/blogs/edit/:id" element={<LazyRoute><ProtectedRoute><AdminBlogEditor /></ProtectedRoute></LazyRoute>} />
+            <Route path="/admin/products" element={<LazyRoute><ProtectedRoute><AdminProducts /></ProtectedRoute></LazyRoute>} />
+            <Route path="/admin/products/new" element={<LazyRoute><ProtectedRoute><AdminProductEditor /></ProtectedRoute></LazyRoute>} />
+            <Route path="/admin/products/edit/:id" element={<LazyRoute><ProtectedRoute><AdminProductEditor /></ProtectedRoute></LazyRoute>} />
+            <Route path="/productos/:slug" element={<LazyRoute><DynamicProduct /></LazyRoute>} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;
