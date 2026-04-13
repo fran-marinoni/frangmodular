@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { resolveImage } from "@/lib/projectsData";
 
 export function useResolvedImage(imagePath: string): string {
-  const [src, setSrc] = useState<string>("/placeholder.svg");
+  const [src, setSrc] = useState<string>("");
 
   useEffect(() => {
     let cancelled = false;
