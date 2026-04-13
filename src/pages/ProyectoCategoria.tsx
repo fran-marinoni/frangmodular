@@ -46,13 +46,15 @@ const ProyectoCategoria = () => {
             <div className="grid grid-cols-2 md:grid-cols-3">
               {items.map((item, i) => (
                 <Link key={i} to={`/proyecto/${item.slug}`} className="relative group overflow-hidden block">
-                  <div className="aspect-square overflow-hidden">
-                    <img
-                      src={resolvedImages[item.image] || "/placeholder.svg"}
-                      alt={item.name}
-                      loading="lazy"
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
+                  <div className="aspect-square overflow-hidden bg-muted">
+                    {resolvedImages[item.image] && (
+                      <img
+                        src={resolvedImages[item.image]}
+                        alt={item.name}
+                        loading="lazy"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    )}
                   </div>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex flex-col justify-end p-4 md:p-6">
                     <h3 className="font-display text-sm md:text-lg lg:text-xl font-black text-white leading-tight whitespace-pre-line mb-2 md:mb-3">

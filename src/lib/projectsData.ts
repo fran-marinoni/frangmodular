@@ -26,7 +26,7 @@ const allProjectImages = import.meta.glob<{ default: string }>(
 
 // Also keep the old thumbnail glob for backward compat
 const thumbnailImages = import.meta.glob<{ default: string }>(
-  '/src/assets/projects/*.{jpg,png}',
+  '/src/assets/projects/*.{webp,jpg,jpeg,png}',
   { eager: false }
 );
 
