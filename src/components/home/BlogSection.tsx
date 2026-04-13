@@ -11,10 +11,10 @@ const BlogSection = () => {
           </h2>
         </div>
 
-        {/* Spacer to push text+image to the right */}
+        {/* Spacer */}
         <div className="hidden md:block flex-1" />
 
-        {/* Text — next to image */}
+        {/* Text */}
         <div className="flex flex-col justify-center px-6 md:px-8 py-6 md:py-0 md:shrink-0">
           <h3 className="font-display text-lg md:text-xl font-black text-foreground mb-2">
             Back to the 90s.
@@ -24,9 +24,9 @@ const BlogSection = () => {
           </p>
         </div>
 
-        {/* Image — 245x204 */}
+        {/* Image */}
         <div className="md:w-[245px] md:h-[204px] shrink-0 overflow-hidden">
-          <img src={blogImage} alt="Blog" loading="lazy" className="w-full h-full object-cover" />
+          <img src={blogImage} alt="Artículo Back to the 90s" loading="lazy" width={245} height={204} className="w-full h-full object-cover" />
         </div>
       </div>
     </section>

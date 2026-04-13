@@ -13,7 +13,7 @@ const ContactSection = () => {
           </h2>
 
           <div className="flex items-start gap-3 mb-5">
-            <img src={logo} alt="Generación Modular" className="w-10 h-10 rounded-full object-cover flex-shrink-0 mt-0.5" />
+            <img src={logo} alt="Generación Modular" width={40} height={40} className="w-10 h-10 rounded-full object-cover flex-shrink-0 mt-0.5" />
             <div>
               <p className="font-bold text-sm text-foreground">generación.modular</p>
               <p className="text-xs text-muted-foreground leading-relaxed max-w-[320px]">
@@ -26,10 +26,10 @@ const ContactSection = () => {
           {/* Instagram images */}
           <div className="flex gap-2 mb-5">
             <div className="flex-1 aspect-square overflow-hidden">
-              <img src={contact1} alt="Oficina" loading="lazy" className="w-full h-full object-cover" />
+              <img src={contact1} alt="Oficina moderna" loading="lazy" width={300} height={300} className="w-full h-full object-cover" />
             </div>
             <div className="flex-1 aspect-square overflow-hidden">
-              <img src={contact2} alt="Sala de reuniones" loading="lazy" className="w-full h-full object-cover" />
+              <img src={contact2} alt="Sala de reuniones moderna" loading="lazy" width={300} height={300} className="w-full h-full object-cover" />
             </div>
           </div>
 
@@ -43,7 +43,7 @@ const ContactSection = () => {
           </div>
         </div>
 
-        {/* Vertical divider — full height */}
+        {/* Vertical divider */}
         <div className="hidden md:block bg-border" />
 
         {/* Right — Showroom */}
@@ -67,7 +67,7 @@ const ContactSection = () => {
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="Ubicación Showroom"
+              title="Ubicación Showroom Generación Modular en Quito"
             />
           </div>
         </div>

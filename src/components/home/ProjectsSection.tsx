@@ -20,19 +20,19 @@ const ProjectsSection = () => {
         </h2>
       </div>
 
-      {/* Mobile: image + label stacked per project */}
+      {/* Mobile */}
       <div className="md:hidden grid grid-cols-2 gap-px bg-border border-t border-border">
         {projectTypes.map((proj) => (
           <div key={proj.num} className="flex flex-col">
             <div className="relative aspect-[3/4] overflow-hidden">
-              <img src={proj.image} alt={proj.label} loading="lazy" className="w-full h-full object-cover" />
+              <img src={proj.image} alt={`Proyecto ${proj.label}`} loading="lazy" width={400} height={533} className="w-full h-full object-cover" />
             </div>
             <div className="bg-background px-4 py-4 flex flex-col items-end text-right border-t border-border">
               <span className="font-display text-[32px] font-black text-foreground leading-none">
                 {proj.num}
               </span>
               <div className="flex items-center gap-1 mt-1">
-                <ArrowRight className="w-4 h-4 text-foreground" />
+                <ArrowRight className="w-4 h-4 text-foreground" aria-hidden="true" />
                 <span className="font-bold text-[16px] text-foreground leading-tight">{proj.label}</span>
               </div>
             </div>
@@ -40,12 +40,12 @@ const ProjectsSection = () => {
         ))}
       </div>
 
-      {/* Desktop: images row + labels row */}
+      {/* Desktop */}
       <div className="hidden md:block">
         <div className="grid grid-cols-4 gap-px bg-border border-t border-border">
           {projectTypes.map((proj) => (
             <div key={proj.num} className="relative aspect-[3/4] overflow-hidden">
-              <img src={proj.image} alt={proj.label} loading="lazy" className="w-full h-full object-cover" />
+              <img src={proj.image} alt={`Proyecto ${proj.label}`} loading="lazy" width={400} height={533} className="w-full h-full object-cover" />
             </div>
           ))}
         </div>
@@ -60,7 +60,7 @@ const ProjectsSection = () => {
                 {proj.num}
               </span>
               <div className="flex items-center gap-1.5 mt-1">
-                <ArrowRight className="w-5 h-5 text-foreground" />
+                <ArrowRight className="w-5 h-5 text-foreground" aria-hidden="true" />
                 <span className="font-bold text-[22px] md:text-[26px] text-foreground leading-tight">{proj.label}</span>
               </div>
             </div>

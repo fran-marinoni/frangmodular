@@ -126,7 +126,7 @@ const Header = () => {
     <>
       <header className="flex items-center justify-between px-6 md:px-8 py-4 relative z-50">
         <Link to="/" className="flex items-center gap-3">
-          <img src={logo} alt="Generación Modular" className="h-8 w-8 object-contain" />
+          <img src={logo} alt="Generación Modular" width={32} height={32} className="h-8 w-8 object-contain" />
           <div className="leading-tight">
             <div className="text-xs font-bold tracking-wide">generación</div>
             <div className="text-xs font-bold tracking-wide">modular</div>
@@ -167,6 +167,7 @@ const Header = () => {
         <button
           className="md:hidden p-2"
           onClick={() => setMobileOpen(true)}
+          aria-label="Abrir menú de navegación"
         >
           <Menu className="h-6 w-6" />
         </button>
@@ -196,7 +197,9 @@ const Header = () => {
                 <div className="relative h-48 overflow-hidden">
                   <img
                     src={productsChairImg}
-                    alt="Silla"
+                    alt="Silla ejecutiva"
+                    width={300}
+                    height={192}
                     className="absolute bottom-0 left-0 w-full h-auto object-contain"
                   />
                 </div>
@@ -207,7 +210,9 @@ const Header = () => {
                 <div className="flex-1 overflow-hidden">
                   <img
                     src={productsOfficeImg}
-                    alt="Oficina"
+                    alt="Estación de trabajo"
+                    width={400}
+                    height={300}
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -273,13 +278,13 @@ const Header = () => {
           >
             <div className="flex items-center justify-between p-5 border-b border-border">
               <Link to="/" className="flex items-center gap-3" onClick={() => setMobileOpen(false)}>
-                <img src={logo} alt="Generación Modular" className="h-7 w-7 object-contain" />
+                <img src={logo} alt="Generación Modular" width={28} height={28} className="h-7 w-7 object-contain" />
                 <div className="leading-tight">
                   <div className="text-xs font-bold tracking-wide">generación</div>
                   <div className="text-xs font-bold tracking-wide">modular</div>
                 </div>
               </Link>
-              <button onClick={() => setMobileOpen(false)} className="p-1">
+              <button onClick={() => setMobileOpen(false)} className="p-1" aria-label="Cerrar menú">
                 <X className="h-5 w-5" />
               </button>
             </div>
