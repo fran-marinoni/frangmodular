@@ -31,7 +31,7 @@ const DynamicBlogArticle = () => {
 
       {/* Full-width cover image */}
       <section>
-        <img src={post.coverImage} alt={post.title} className="w-full h-[400px] md:h-[550px] object-cover" />
+        <img src={post.coverImage} alt={post.title} loading="lazy" width={1200} height={550} className="w-full h-[400px] md:h-[550px] object-cover" />
       </section>
 
       {/* Section 0: Text + Image right */}
