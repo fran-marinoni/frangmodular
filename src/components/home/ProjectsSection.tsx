@@ -1,8 +1,8 @@
 import { ArrowRight } from "lucide-react";
-import proyCorporativo from "@/assets/home/proy-corporativo.webp";
-import proyEducacion from "@/assets/home/proy-educacion.webp";
-import proySalud from "@/assets/home/proy-salud.webp";
-import proyHospitalidad from "@/assets/home/proy-hospitalidad.webp";
+import proyCorporativo from "@/assets/home/proy-corporativo-opt.webp";
+import proyEducacion from "@/assets/home/proy-educacion-opt.webp";
+import proySalud from "@/assets/home/proy-salud-opt.webp";
+import proyHospitalidad from "@/assets/home/proy-hospitalidad-opt.webp";
 
 const projectTypes = [
   { num: "01", label: "Corporativo.", image: proyCorporativo },
