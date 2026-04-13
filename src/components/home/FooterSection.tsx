@@ -29,26 +29,28 @@ const FooterSection = () => {
             {/* Logo & social */}
             <div className="md:col-span-3">
               <div className="mb-5">
-                <img src={footerLogo} alt="Generación Modular" className="h-8 object-contain" />
+                <img src={footerLogo} alt="Generación Modular" width={120} height={32} className="h-8 object-contain" />
               </div>
               <div className="flex items-center gap-3 mb-6">
-                <a href="#" className="hover:opacity-80 transition-opacity">
-                  <img src={igIcon} alt="Instagram" className="w-[18px] h-[18px] object-contain" />
+                <a href="#" aria-label="Instagram" className="hover:opacity-80 transition-opacity">
+                  <img src={igIcon} alt="" width={18} height={18} className="w-[18px] h-[18px] object-contain" />
                 </a>
-                <a href="#" className="hover:opacity-80 transition-opacity">
-                  <img src={pinterestIcon} alt="Pinterest" className="w-[15px] h-[15px] object-contain" />
+                <a href="#" aria-label="Pinterest" className="hover:opacity-80 transition-opacity">
+                  <img src={pinterestIcon} alt="" width={15} height={15} className="w-[15px] h-[15px] object-contain" />
                 </a>
-                <a href="#" className="hover:opacity-80 transition-opacity">
-                  <img src={tiktokIcon} alt="TikTok" className="w-[15px] h-[18px] object-contain" />
+                <a href="#" aria-label="TikTok" className="hover:opacity-80 transition-opacity">
+                  <img src={tiktokIcon} alt="" width={15} height={18} className="w-[15px] h-[18px] object-contain" />
                 </a>
-                <a href="#" className="hover:opacity-80 transition-opacity">
-                  <img src={linkedinIcon} alt="LinkedIn" className="w-[18px] h-[18px] object-contain" />
+                <a href="#" aria-label="LinkedIn" className="hover:opacity-80 transition-opacity">
+                  <img src={linkedinIcon} alt="" width={18} height={18} className="w-[18px] h-[18px] object-contain" />
                 </a>
               </div>
               <div>
                 <p className="text-[10px] opacity-70 mb-2">Suscríbete a nuestro newsletter</p>
                 <div className="flex gap-0">
+                  <label className="sr-only" htmlFor="footer-email">Email para newsletter</label>
                   <input
+                    id="footer-email"
                     type="email"
                     placeholder="Email"
                     className="bg-transparent border border-primary-foreground/40 text-[10px] px-3 py-1.5 w-28 placeholder:text-primary-foreground/50 text-primary-foreground"

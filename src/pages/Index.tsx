@@ -1,12 +1,20 @@
+import { lazy, Suspense } from "react";
 import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import HeroSection from "@/components/home/HeroSection";
-import ModularitySection from "@/components/home/ModularitySection";
-import ProductsGrid from "@/components/home/ProductsGrid";
-import ProjectsSection from "@/components/home/ProjectsSection";
-import BlogSection from "@/components/home/BlogSection";
-import ContactSection from "@/components/home/ContactSection";
-import FooterSection from "@/components/home/FooterSection";
+
+const ModularitySection = lazy(() => import("@/components/home/ModularitySection"));
+const ProductsGrid = lazy(() => import("@/components/home/ProductsGrid"));
+const ProjectsSection = lazy(() => import("@/components/home/ProjectsSection"));
+const BlogSection = lazy(() => import("@/components/home/BlogSection"));
+const ContactSection = lazy(() => import("@/components/home/ContactSection"));
+const FooterSection = lazy(() => import("@/components/home/FooterSection"));
+
+const LazySection = ({ children }: { children: React.ReactNode }) => (
+  <Suspense fallback={<div className="min-h-[200px]" />}>
+    {children}
+  </Suspense>
+);
 
 const Index = () => {
   return (
@@ -19,12 +27,12 @@ const Index = () => {
       <Header />
       <main>
         <HeroSection />
-        <ModularitySection />
-        <ProductsGrid />
-        <ProjectsSection />
-        <BlogSection />
-        <ContactSection />
-        <FooterSection />
+        <LazySection><ModularitySection /></LazySection>
+        <LazySection><ProductsGrid /></LazySection>
+        <LazySection><ProjectsSection /></LazySection>
+        <LazySection><BlogSection /></LazySection>
+        <LazySection><ContactSection /></LazySection>
+        <LazySection><FooterSection /></LazySection>
       </main>
     </div>
   );

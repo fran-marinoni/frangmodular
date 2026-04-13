@@ -27,7 +27,7 @@ const RelatedProducts = () => {
               <div className="overflow-hidden">
                 <img
                   src={product.image}
-                  alt={product.name}
+                  alt={`Silla ${product.name}`}
                   loading="lazy"
                   width={512}
                   height={512}
