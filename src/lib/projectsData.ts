@@ -52,7 +52,9 @@ export function getProjectImagePaths(folder: string): string[] {
 }
 
 function thumbPath(filename: string): string {
-  return `/src/assets/projects/${filename}`;
+  // Use optimized thumbnail if available (e.g. "foo.webp" -> "foo-opt.webp")
+  const optName = filename.replace('.webp', '-opt.webp');
+  return `/src/assets/projects/${optName}`;
 }
 
 function makeSlug(name: string): string {
