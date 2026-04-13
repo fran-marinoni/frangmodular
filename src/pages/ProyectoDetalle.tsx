@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
@@ -6,6 +6,7 @@ import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import FooterSection from "@/components/home/FooterSection";
 import { getProjectBySlug, getProjectImagePaths, resolveImage } from "@/lib/projectsData";
+import { useImagePreloader } from "@/hooks/useImagePreloader";
 import NotFound from "@/pages/NotFound";
 
 const useResolvedImages = (paths: string[]) => {
@@ -28,18 +29,37 @@ const useResolvedImages = (paths: string[]) => {
   return resolved;
 };
 
+const SectionLoader = () => (
+  <div className="flex flex-col items-center justify-center py-32 gap-6">
+    <h2 className="font-display text-[2rem] md:text-[2.5rem] font-black tracking-tighter text-foreground leading-none">
+      Generación<br />
+      <span className="font-normal italic">Modular.</span>
+    </h2>
+    <div className="w-48 md:w-64 h-[3px] bg-muted rounded-full overflow-hidden">
+      <div className="h-full bg-primary rounded-full animate-loading-grow" />
+    </div>
+    <p className="text-muted-foreground text-xs tracking-widest uppercase">Cargando proyecto</p>
+  </div>
+);
+
 const ProyectoDetalle = () => {
   const { projectSlug } = useParams();
   const project = projectSlug ? getProjectBySlug(projectSlug) : undefined;
 
-  // Get all images from the project's folder
   const allImagePaths = project ? getProjectImagePaths(project.imageFolder) : [];
-
-  // First 2 images are fixed, rest go to carousel
   const fixedPaths = allImagePaths.slice(0, 2);
   const carouselPaths = allImagePaths.length > 2 ? allImagePaths.slice(2) : allImagePaths;
 
   const resolvedImages = useResolvedImages(allImagePaths);
+
+  // Collect all resolved URLs for preloading
+  const resolvedUrls = useMemo(
+    () => allImagePaths.map((p) => resolvedImages[p]).filter(Boolean),
+    [resolvedImages, allImagePaths.length]
+  );
+
+  // Wait for all images to be in browser cache
+  const imagesReady = useImagePreloader(resolvedUrls, 800);
 
   // Carousel
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
@@ -97,84 +117,81 @@ const ProyectoDetalle = () => {
           </div>
         </section>
 
-        {/* Two Fixed Images */}
-        <section className="border-t border-border">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border">
-            {fixedPaths.map((path, i) => (
-              <div key={i} className="overflow-hidden bg-background">
-                <img
-                  src={resolvedImages[path] || "/placeholder.svg"}
-                  alt={`${displayName} - Vista ${i + 1}`}
-                  loading={i === 0 ? undefined : "lazy"}
-                  className="w-full h-[300px] md:h-[450px] lg:h-[520px] object-cover"
-                />
+        {!imagesReady ? (
+          <SectionLoader />
+        ) : (
+          <>
+            {/* Two Fixed Images */}
+            <section className="border-t border-border">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border">
+                {fixedPaths.map((path, i) => (
+                  <div key={i} className="overflow-hidden bg-background">
+                    <img
+                      src={resolvedImages[path] || "/placeholder.svg"}
+                      alt={`${displayName} - Vista ${i + 1}`}
+                      className="w-full h-[300px] md:h-[450px] lg:h-[520px] object-cover"
+                    />
+                  </div>
+                ))}
+                {fixedPaths.length === 1 && (
+                  <div className="overflow-hidden bg-background">
+                    <img
+                      src={resolvedImages[fixedPaths[0]] || "/placeholder.svg"}
+                      alt={`${displayName} - Vista 2`}
+                      className="w-full h-[300px] md:h-[450px] lg:h-[520px] object-cover object-[70%_center]"
+                    />
+                  </div>
+                )}
               </div>
-            ))}
-            {/* If only 1 image, duplicate it */}
-            {fixedPaths.length === 1 && (
-              <div className="overflow-hidden bg-background">
-                <img
-                  src={resolvedImages[fixedPaths[0]] || "/placeholder.svg"}
-                  alt={`${displayName} - Vista 2`}
-                  loading="lazy"
-                  className="w-full h-[300px] md:h-[450px] lg:h-[520px] object-cover object-[70%_center]"
-                />
-              </div>
-            )}
-          </div>
-        </section>
+            </section>
 
-        {/* Carousel + Text */}
-        {carouselPaths.length > 0 && (
-          <section className="border-t border-border">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border">
-              {/* Left: Carousel */}
-              <div className="bg-background relative">
-                <div ref={emblaRef} className="overflow-hidden">
-                  <div className="flex">
-                    {carouselPaths.map((path, i) => (
-                      <div key={i} className="flex-[0_0_100%] min-w-0">
-                        <img
-                          src={resolvedImages[path] || "/placeholder.svg"}
-                          alt={`${displayName} - Slide ${i + 1}`}
-                          loading="lazy"
-                          className="w-full h-[350px] md:h-[450px] lg:h-[520px] object-cover"
-                        />
+            {/* Carousel + Text */}
+            {carouselPaths.length > 0 && (
+              <section className="border-t border-border">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border">
+                  <div className="bg-background relative">
+                    <div ref={emblaRef} className="overflow-hidden">
+                      <div className="flex">
+                        {carouselPaths.map((path, i) => (
+                          <div key={i} className="flex-[0_0_100%] min-w-0">
+                            <img
+                              src={resolvedImages[path] || "/placeholder.svg"}
+                              alt={`${displayName} - Slide ${i + 1}`}
+                              className="w-full h-[350px] md:h-[450px] lg:h-[520px] object-cover"
+                            />
+                          </div>
+                        ))}
                       </div>
+                    </div>
+                    <div className="absolute bottom-4 left-4 flex gap-2">
+                      <button
+                        onClick={scrollPrev}
+                        className="w-10 h-10 bg-primary text-primary-foreground flex items-center justify-center hover:bg-primary/80 transition-colors"
+                      >
+                        <ArrowLeft className="w-5 h-5" />
+                      </button>
+                      <button
+                        onClick={scrollNext}
+                        className="w-10 h-10 bg-primary text-primary-foreground flex items-center justify-center hover:bg-primary/80 transition-colors"
+                      >
+                        <ArrowRight className="w-5 h-5" />
+                      </button>
+                    </div>
+                  </div>
+                  <div className="bg-background p-8 md:p-12 lg:p-16 flex flex-col justify-center">
+                    {project.description?.map((paragraph, i) => (
+                      <p
+                        key={i}
+                        className="text-sm md:text-base leading-relaxed text-foreground/80 mb-6 last:mb-0 text-center"
+                      >
+                        {paragraph}
+                      </p>
                     ))}
                   </div>
                 </div>
-
-                {/* Carousel Controls */}
-                <div className="absolute bottom-4 left-4 flex gap-2">
-                  <button
-                    onClick={scrollPrev}
-                    className="w-10 h-10 bg-primary text-primary-foreground flex items-center justify-center hover:bg-primary/80 transition-colors"
-                  >
-                    <ArrowLeft className="w-5 h-5" />
-                  </button>
-                  <button
-                    onClick={scrollNext}
-                    className="w-10 h-10 bg-primary text-primary-foreground flex items-center justify-center hover:bg-primary/80 transition-colors"
-                  >
-                    <ArrowRight className="w-5 h-5" />
-                  </button>
-                </div>
-              </div>
-
-              {/* Right: Description */}
-              <div className="bg-background p-8 md:p-12 lg:p-16 flex flex-col justify-center">
-                {project.description?.map((paragraph, i) => (
-                  <p
-                    key={i}
-                    className="text-sm md:text-base leading-relaxed text-foreground/80 mb-6 last:mb-0 text-center"
-                  >
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
-            </div>
-          </section>
+              </section>
+            )}
+          </>
         )}
 
         {/* CTA Bar */}
