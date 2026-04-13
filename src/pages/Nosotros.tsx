@@ -2,15 +2,15 @@ import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import FooterSection from "@/components/home/FooterSection";
 
-import foundersImg from "@/assets/nosotros/founders.webp";
-import equipmentImg from "@/assets/nosotros/equipment.webp";
-import cncImg from "@/assets/nosotros/cnc.webp";
-import machineImg from "@/assets/nosotros/machine.webp";
-import workersImg from "@/assets/nosotros/workers.webp";
-import teamProjectImg from "@/assets/nosotros/team-project.webp";
-import factoryImg from "@/assets/nosotros/factory.webp";
-import showroomImg from "@/assets/nosotros/showroom.webp";
-import truckImg from "@/assets/nosotros/truck.webp";
+import foundersImg from "@/assets/nosotros/founders-opt.webp";
+import equipmentImg from "@/assets/nosotros/equipment-opt.webp";
+import cncImg from "@/assets/nosotros/cnc-opt.webp";
+import machineImg from "@/assets/nosotros/machine-opt.webp";
+import workersImg from "@/assets/nosotros/workers-opt.webp";
+import teamProjectImg from "@/assets/nosotros/team-project-opt.webp";
+import factoryImg from "@/assets/nosotros/factory-opt.webp";
+import showroomImg from "@/assets/nosotros/showroom-opt.webp";
+import truckImg from "@/assets/nosotros/truck-opt.webp";
 
 const Nosotros = () => {
   return (
