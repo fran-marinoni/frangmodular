@@ -70,8 +70,8 @@ const App = () => {
             <Route path="/blog/:slug" element={<LazyRoute><DynamicBlogArticle /></LazyRoute>} />
             <Route path="/contacto" element={<LazyRoute><Contacto /></LazyRoute>} />
             <Route path="/proyectos" element={<LazyRoute><Proyectos /></LazyRoute>} />
-            <Route path="/proyectos/:category/:year" element={<LazyRoute><ProyectoCategoria /></LazyRoute>} />
-            <Route path="/proyecto/:projectSlug" element={<LazyRoute><ProyectoDetalle /></LazyRoute>} />
+            <Route path="/proyectos/:category/:year" element={<Suspense fallback={null}><ProyectoCategoria /></Suspense>} />
+            <Route path="/proyecto/:projectSlug" element={<Suspense fallback={null}><ProyectoDetalle /></Suspense>} />
             <Route path="/admin" element={<LazyRoute><AdminLogin /></LazyRoute>} />
             <Route path="/admin/dashboard" element={<LazyRoute><ProtectedRoute><AdminDashboard /></ProtectedRoute></LazyRoute>} />
             <Route path="/admin/blogs" element={<LazyRoute><ProtectedRoute><AdminBlogs /></ProtectedRoute></LazyRoute>} />
