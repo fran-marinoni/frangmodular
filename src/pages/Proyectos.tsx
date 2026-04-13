@@ -5,15 +5,15 @@ import Header from "@/components/Header";
 import FooterSection from "@/components/home/FooterSection";
 import { getAllCategories } from "@/lib/projectsData";
 
-import servDiseno from "@/assets/projects/serv-diseno.png";
-import servOffice from "@/assets/projects/serv-office.png";
-import servConsultoria from "@/assets/projects/serv-consultoria.png";
+import servDiseno from "@/assets/projects/serv-diseno.webp";
+import servOffice from "@/assets/projects/serv-office.webp";
+import servConsultoria from "@/assets/projects/serv-consultoria.webp";
 
-import proyCorporativo from "@/assets/projects/proy-corporativo.png";
-import proyEducacion from "@/assets/projects/proy-educacion.png";
-import proySalud from "@/assets/projects/proy-salud.png";
-import proyHospitalidad from "@/assets/projects/proy-hospitalidad.png";
-import proyRetail from "@/assets/projects/proy-retail.png";
+import proyCorporativo from "@/assets/projects/proy-corporativo.webp";
+import proyEducacion from "@/assets/projects/proy-educacion.webp";
+import proySalud from "@/assets/projects/proy-salud.webp";
+import proyHospitalidad from "@/assets/projects/proy-hospitalidad.webp";
+import proyRetail from "@/assets/projects/proy-retail.webp";
 
 const services = [
   { title: "Diseño\nArquitectónico.", image: servDiseno },

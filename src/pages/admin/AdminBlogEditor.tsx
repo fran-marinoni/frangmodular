@@ -5,8 +5,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import AdminLayout from "@/components/admin/AdminLayout";
 import { createPost, getPostById, updatePost, getDefaultSections, type BlogSection } from "@/lib/blogStore";
 
-import airportImg from "@/assets/blog/airport.jpg";
-import chairsImg from "@/assets/blog/chairs.jpg";
+import airportImg from "@/assets/blog/airport.webp";
+import chairsImg from "@/assets/blog/chairs.webp";
 
 /* ── helpers ── */
 const placeholder = (text: string) =>
