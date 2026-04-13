@@ -1,6 +1,6 @@
-import contact1 from "@/assets/home/contact-1.webp";
-import contact2 from "@/assets/home/contact-2.webp";
-import logo from "@/assets/logo.webp";
+import contact1 from "@/assets/home/contact-1-opt.webp";
+import contact2 from "@/assets/home/contact-2-opt.webp";
+import logo from "@/assets/logo-opt.webp";
 
 const ContactSection = () => {
   return (
