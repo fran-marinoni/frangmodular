@@ -1,4 +1,4 @@
-import blogImage from "@/assets/home/blog-image-opt.webp";
+import blogImage from "@/assets/home/blog-image.webp";
 
 const BlogSection = () => {
   return (

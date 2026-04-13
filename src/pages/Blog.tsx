@@ -3,10 +3,10 @@ import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import FooterSection from "@/components/home/FooterSection";
 
-import heroImg from "@/assets/home/blog-image-opt.webp";
-import airportImg from "@/assets/blog/airport-opt.webp";
-import chairsImg from "@/assets/blog/chairs-opt.webp";
-import loungeImg from "@/assets/blog/lounge-opt.webp";
+import heroImg from "@/assets/home/blog-image.webp";
+import airportImg from "@/assets/blog/airport.webp";
+import chairsImg from "@/assets/blog/chairs.webp";
+import loungeImg from "@/assets/blog/lounge.webp";
 
 const blogPosts = [
   {

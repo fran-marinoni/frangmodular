@@ -2,13 +2,13 @@ import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import FooterSection from "@/components/home/FooterSection";
 
-import heroImg from "@/assets/home/blog-image-opt.webp";
-import retroImg from "@/assets/blog/retro-items-opt.webp";
-import yellowArtImg from "@/assets/blog/yellow-art-opt.webp";
-import officeMeetingImg from "@/assets/blog/office-meeting-opt.webp";
-import darkOfficeImg from "@/assets/blog/dark-office-opt.webp";
-import airportImg from "@/assets/blog/airport-opt.webp";
-import chairsImg from "@/assets/blog/chairs-opt.webp";
+import heroImg from "@/assets/home/blog-image.webp";
+import retroImg from "@/assets/blog/retro-items.webp";
+import yellowArtImg from "@/assets/blog/yellow-art.webp";
+import officeMeetingImg from "@/assets/blog/office-meeting.webp";
+import darkOfficeImg from "@/assets/blog/dark-office.webp";
+import airportImg from "@/assets/blog/airport.webp";
+import chairsImg from "@/assets/blog/chairs.webp";
 
 const BlogArticle90s = () => {
   return (

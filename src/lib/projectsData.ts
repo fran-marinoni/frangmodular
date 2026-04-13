@@ -52,8 +52,8 @@ export function getProjectImagePaths(folder: string): string[] {
 }
 
 function thumbPath(filename: string): string {
-  // Use optimized thumbnail if available (e.g. "foo.webp" -> "foo-opt.webp")
-  const optName = filename.replace('.webp', '-opt.webp');
+  // Use optimized thumbnail if available (e.g. "foo.webp" -> "foo.webp")
+  const optName = filename.replace('.webp', '.webp');
   return `/src/assets/projects/${optName}`;
 }
 
