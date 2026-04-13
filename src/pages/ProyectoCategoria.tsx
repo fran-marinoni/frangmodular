@@ -38,6 +38,8 @@ const ProyectoCategoria = () => {
 
   const imagesReady = useImagePreloader(resolvedUrls, 600);
 
+  console.log("[ProyectoCategoria] imagesReady:", imagesReady, "resolvedUrls:", resolvedUrls.length, "items:", items.length);
+
   if (!data || !year || !data.years.includes(year)) return <NotFound />;
 
   return (
