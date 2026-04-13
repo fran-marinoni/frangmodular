@@ -59,7 +59,7 @@ const ProyectoDetalle = () => {
   );
 
   // Wait for all images to be in browser cache
-  const imagesReady = useImagePreloader(resolvedUrls, 800);
+  const imagesReady = useImagePreloader(resolvedUrls, 1200);
 
   // Carousel
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });

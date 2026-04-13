@@ -2,28 +2,29 @@ import { useState, useEffect, useRef } from "react";
 
 /**
  * Preloads an array of image URLs into the browser cache.
- * Returns `true` only when ALL images have been loaded (or errored).
- * 
- * @param urls - resolved image URLs to preload
- * @param minDelay - minimum ms to wait (matches preloader duration), default 0
+ * Returns `true` only when ALL images have been loaded (or errored)
+ * AND the minimum delay has passed since the hook first received URLs.
  */
 export function useImagePreloader(urls: string[], minDelay = 0): boolean {
   const [ready, setReady] = useState(false);
   const prevKey = useRef("");
+  const mountTime = useRef(Date.now());
 
   useEffect(() => {
     const filtered = urls.filter(Boolean);
     const key = filtered.join("|");
 
-    // Skip if same set or empty
+    // Same set already loaded
     if (key === prevKey.current && ready) return;
+    // No URLs yet — keep waiting
     if (filtered.length === 0) return;
 
     prevKey.current = key;
     setReady(false);
+    // Reset mount time when URLs change
+    mountTime.current = Date.now();
 
     let cancelled = false;
-    const start = Date.now();
 
     const imagePromises = filtered.map(
       (url) =>
