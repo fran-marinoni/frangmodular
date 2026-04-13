@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import claimLeft from "@/assets/home/claim-left.webp";
-import claimRight from "@/assets/home/claim-right.webp";
+import claimLeft from "@/assets/home/claim-left-opt.webp";
+import claimRight from "@/assets/home/claim-right-opt.webp";
 
 const WORDS = ["MODULARIDAD", "FUNCIONALIDAD", "VIDA", "COMODIDAD"];
 const TRANSITION_COOLDOWN = 800;
