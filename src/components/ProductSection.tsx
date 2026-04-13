@@ -1,13 +1,13 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { ChevronDown } from "lucide-react";
-import chairFeatures from "@/assets/chair-features.webp";
-import chairFeature1 from "@/assets/chair-feature-1.webp";
-import chairFeature2 from "@/assets/chair-feature-2.webp";
-import chairFeature3 from "@/assets/chair-feature-3.webp";
-import chairFeature4 from "@/assets/chair-feature-4.webp";
-import chairThumb1 from "@/assets/chair-apollo-thumb1.webp";
-import chairThumb2 from "@/assets/chair-apollo-thumb2.webp";
-import chairThumb3 from "@/assets/chair-apollo-thumb3.webp";
+import chairFeatures from "@/assets/chair-features-opt.webp";
+import chairFeature1 from "@/assets/chair-feature-1-opt.webp";
+import chairFeature2 from "@/assets/chair-feature-2-opt.webp";
+import chairFeature3 from "@/assets/chair-feature-3-opt.webp";
+import chairFeature4 from "@/assets/chair-feature-4-opt.webp";
+import chairThumb1 from "@/assets/chair-apollo-thumb1-opt.webp";
+import chairThumb2 from "@/assets/chair-apollo-thumb2-opt.webp";
+import chairThumb3 from "@/assets/chair-apollo-thumb3-opt.webp";
 
 const thumbnails = [chairThumb1, chairThumb2, chairThumb3];
 const categories = ["VISITA", "EJECUTIVA", "OPERATIVA"];
