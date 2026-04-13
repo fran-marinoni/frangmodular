@@ -14,7 +14,48 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      analytics_events: {
+        Row: {
+          campaign: string | null
+          created_at: string
+          device_type: string | null
+          event_name: string
+          id: string
+          medium: string | null
+          metadata: Json | null
+          page_path: string | null
+          page_title: string | null
+          referrer: string | null
+          source: string | null
+        }
+        Insert: {
+          campaign?: string | null
+          created_at?: string
+          device_type?: string | null
+          event_name: string
+          id?: string
+          medium?: string | null
+          metadata?: Json | null
+          page_path?: string | null
+          page_title?: string | null
+          referrer?: string | null
+          source?: string | null
+        }
+        Update: {
+          campaign?: string | null
+          created_at?: string
+          device_type?: string | null
+          event_name?: string
+          id?: string
+          medium?: string | null
+          metadata?: Json | null
+          page_path?: string | null
+          page_title?: string | null
+          referrer?: string | null
+          source?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
