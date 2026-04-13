@@ -37,7 +37,7 @@ const LazyFallback = () => (
         <span className="font-normal italic">Modular.</span>
       </h1>
       <div className="w-48 md:w-64 h-[3px] bg-muted rounded-full overflow-hidden">
-        <div className="h-full bg-primary rounded-full animate-pulse w-2/3" />
+        <div className="h-full bg-primary rounded-full w-full origin-left animate-[loading-slide_1.2s_ease-in-out_infinite]" />
       </div>
       <p className="text-muted-foreground text-xs tracking-widest uppercase">Cargando</p>
     </div>
