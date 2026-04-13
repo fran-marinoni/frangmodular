@@ -16,7 +16,7 @@ const SEOHead = ({
   title,
   description,
   canonical,
-  ogImage = "/og-image.jpg",
+  ogImage = "https://storage.googleapis.com/gpt-engineer-file-uploads/0yXXeOFykUVPAOIE0B5RXXt5g4z1/social-images/social-1776040966729-C5014PS-WH_474_135_2-2.webp",
   ogType = "website",
   jsonLd,
   noindex = false,
