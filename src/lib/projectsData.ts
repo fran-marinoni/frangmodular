@@ -20,7 +20,7 @@ export interface CategoryData {
 
 // Glob all project images lazily from the real folder structure
 const allProjectImages = import.meta.glob<{ default: string }>(
-  '/src/assets/3. PROYECTOS/**/*.{jpg,jpeg,png}',
+  '/src/assets/3. PROYECTOS/**/*.{webp,jpg,jpeg,png}',
   { eager: false }
 );
 
