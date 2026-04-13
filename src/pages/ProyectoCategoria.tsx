@@ -9,7 +9,7 @@ import { useImagePreloader } from "@/hooks/useImagePreloader";
 import NotFound from "@/pages/NotFound";
 
 const SectionLoader = () => (
-  <div className="flex flex-col items-center justify-center py-32 gap-6">
+  <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-background gap-6">
     <h2 className="font-display text-[2rem] md:text-[2.5rem] font-black tracking-tighter text-foreground leading-none">
       Generación<br />
       <span className="font-normal italic">Modular.</span>
