@@ -29,8 +29,23 @@ const ProtectedRoute = lazy(() => import("./components/admin/ProtectedRoute.tsx"
 
 const queryClient = new QueryClient();
 
+const LazyFallback = () => (
+  <div className="fixed inset-0 z-[9998] flex flex-col items-center justify-center bg-background">
+    <div className="flex flex-col items-center gap-6">
+      <h1 className="font-display text-[2.5rem] md:text-[3.5rem] font-black tracking-tighter text-foreground leading-none">
+        Generación<br />
+        <span className="font-normal italic">Modular.</span>
+      </h1>
+      <div className="w-48 md:w-64 h-[3px] bg-muted rounded-full overflow-hidden">
+        <div className="h-full bg-primary rounded-full animate-pulse w-2/3" />
+      </div>
+      <p className="text-muted-foreground text-xs tracking-widest uppercase">Cargando</p>
+    </div>
+  </div>
+);
+
 const LazyRoute = ({ children }: { children: React.ReactNode }) => (
-  <Suspense fallback={<div className="min-h-screen bg-background" />}>
+  <Suspense fallback={<LazyFallback />}>
     {children}
   </Suspense>
 );
