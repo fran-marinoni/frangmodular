@@ -64,7 +64,7 @@ const Nosotros = () => {
               src={workersImg}
               alt="Trabajadores"
               loading="lazy"
-              className="w-full h-full object-cover"
+              className="w-[688px] h-[662px] object-cover"
             />
           </div>
 
