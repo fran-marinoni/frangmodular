@@ -206,11 +206,20 @@ const Header = () => {
                   <div className="flex items-baseline gap-2 mb-3">
                     <span className="text-3xl font-black">01</span>
                   </div>
-                  <h3 className="text-2xl font-black mb-3">Sillas.</h3>
+                   <Link to="/sillas" onClick={() => setProductsOpen(false)} className="text-2xl font-black mb-3 block hover:text-primary transition-colors">Sillas.</Link>
                   <ul className="space-y-1">
-                    {productCategories[0].items.map((item) => (
-                      <li key={item} className="text-xs text-foreground">{item}</li>
-                    ))}
+                    {productCategories[0].items.map((item) => {
+                      const href = chairCategoryLinks[item];
+                      return (
+                        <li key={item}>
+                          {href ? (
+                            <Link to={href} onClick={() => setProductsOpen(false)} className="text-xs text-foreground hover:text-primary transition-colors">{item}</Link>
+                          ) : (
+                            <span className="text-xs text-foreground">{item}</span>
+                          )}
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
                 <div className="relative h-48 overflow-hidden">
