@@ -100,6 +100,7 @@ const ProyectoDetalle = () => {
         </section>
 
         {resolvedUrls.length > 0 && (
+          <>
             {/* Two Fixed Images */}
             <section className="border-t border-border">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border">
