@@ -7,7 +7,7 @@ import RelatedProducts from "@/components/RelatedProducts";
 import SectionLoader from "@/components/SectionLoader";
 import { getProductBySlug, ChairVariant, ChairProduct } from "@/lib/chairsData";
 import { useResolvedChairImages } from "@/hooks/useResolvedChairImages";
-import { useImagePreloader } from "@/hooks/useImagePreloader";
+import { useCriticalImagePreloader } from "@/hooks/useImagePreloader";
 import NotFound from "@/pages/NotFound";
 
 // Reuse the same feature assets as Apollo
@@ -78,13 +78,13 @@ const ChairDetailContent = memo(function ChairDetailContent({
   const [openAccordion, setOpenAccordion] = useState<string | null>(null);
   const [activeFeature, setActiveFeature] = useState<number | null>(null);
 
-  // Resolve all images for this variant in one batch
-  const { gallery, ambientadas, colores, allUrls, loading } = useResolvedChairImages(activeVariant.assetFolder);
+  // Resolve all images for this variant in two phases
+  const { gallery, ambientadas, colores, criticalUrls, loading } = useResolvedChairImages(activeVariant.assetFolder);
 
-  // Preload resolved URLs into browser cache, with branded loader
-  const imagesReady = useImagePreloader(allUrls, 800);
+  // Only wait for the first (main) image to show the page
+  const heroReady = useCriticalImagePreloader(criticalUrls, 1, 300);
 
-  const showLoader = loading || !imagesReady;
+  const showLoader = loading || !heroReady;
 
   const currentMainImage = gallery[mainImageIndex] || gallery[0] || "";
 
@@ -151,6 +151,7 @@ const ChairDetailContent = memo(function ChairDetailContent({
                       <img
                         src={thumb}
                         alt={`Ambientada ${i + 1}`}
+                        loading="lazy"
                         width={64}
                         height={64}
                         className="w-full h-full object-cover"
@@ -168,6 +169,7 @@ const ChairDetailContent = memo(function ChairDetailContent({
                       <img
                         src={thumb}
                         alt={`Vista ${i + 1}`}
+                        loading="lazy"
                         width={64}
                         height={64}
                         className={`w-full h-full object-cover ${i < 2 ? "object-[center_82%]" : ""}`}
@@ -251,6 +253,7 @@ const DetailsPanel = memo(function DetailsPanel({
                 key={i}
                 src={img}
                 alt={`Característica ${i + 1}`}
+                loading="lazy"
                 width={180}
                 height={180}
                 className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-300 ${activeFeature === i ? "opacity-100" : "opacity-0"}`}
@@ -282,7 +285,7 @@ const DetailsPanel = memo(function DetailsPanel({
           <div className="flex gap-3 flex-wrap">
             {colores.map((src, i) => (
               <div key={i} className="w-16 h-12 rounded-sm overflow-hidden border border-border">
-                <img src={src} alt={`Color ${i + 1}`} className="w-full h-full object-cover" />
+                <img src={src} alt={`Color ${i + 1}`} loading="lazy" className="w-full h-full object-cover" />
               </div>
             ))}
           </div>
