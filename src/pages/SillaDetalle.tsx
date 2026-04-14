@@ -48,8 +48,10 @@ const SillaDetalle = () => {
       <Header />
       <main className="border-t border-border">
         <ChairDetailContent
+          key={activeVariant.id}
           product={product}
           activeVariant={activeVariant}
+          allVariants={product.variants}
           onVariantChange={setVariant}
         />
         <RelatedProducts />
@@ -61,10 +63,12 @@ const SillaDetalle = () => {
 function ChairDetailContent({
   product,
   activeVariant,
+  allVariants,
   onVariantChange,
 }: {
   product: ReturnType<typeof getProductBySlug> & {};
   activeVariant: ChairVariant;
+  allVariants: ChairVariant[];
   onVariantChange: (id: string) => void;
 }) {
   const [mainImageIndex, setMainImageIndex] = useState(0);
