@@ -34,14 +34,14 @@ const PreloadScreen = ({ onFinished }: PreloadScreenProps) => {
       img.src = url;
     });
 
-    // Minimum 2.5s display, then fade out
+    // Minimum 1.5s display, then fade out
     const timer = setTimeout(() => {
       setProgress(100);
       setTimeout(() => {
         setVisible(false);
-        setTimeout(onFinished, 500); // wait for exit animation
-      }, 400);
-    }, 2500);
+        setTimeout(onFinished, 500);
+      }, 300);
+    }, 1500);
 
     return () => clearTimeout(timer);
   }, [onFinished]);

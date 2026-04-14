@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { getCategoryBySlug, getProductBySlug } from "@/lib/chairsData";
+import SectionLoader from "@/components/SectionLoader";
 
 const SillasCategoria = lazy(() => import("./SillasCategoria"));
 const SillaDetalle = lazy(() => import("./SillaDetalle"));
@@ -14,19 +15,17 @@ const SillasResolver = () => {
 
   if (!param) return <NotFound />;
 
-  // Check if it's a category first
   if (getCategoryBySlug(param)) {
     return (
-      <Suspense fallback={<div>Cargando categoría...</div>}>
+      <Suspense fallback={<SectionLoader label="Cargando categoría" />}>
         <SillasCategoria />
       </Suspense>
     );
   }
 
-  // Otherwise try as a product
   if (getProductBySlug(param)) {
     return (
-      <Suspense fallback={<div>Cargando producto...</div>}>
+      <Suspense fallback={<SectionLoader label="Cargando producto" />}>
         <SillaDetalle />
       </Suspense>
     );
