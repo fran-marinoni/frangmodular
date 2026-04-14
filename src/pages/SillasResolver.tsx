@@ -17,7 +17,7 @@ const SillasResolver = () => {
   // Check if it's a category first
   if (getCategoryBySlug(param)) {
     return (
-      <Suspense fallback={<div>Cargando categoría...</div>}>
+      <Suspense fallback={null}>
         <SillasCategoria />
       </Suspense>
     );
@@ -26,7 +26,7 @@ const SillasResolver = () => {
   // Otherwise try as a product
   if (getProductBySlug(param)) {
     return (
-      <Suspense fallback={<div>Cargando producto...</div>}>
+      <Suspense fallback={null}>
         <SillaDetalle />
       </Suspense>
     );
