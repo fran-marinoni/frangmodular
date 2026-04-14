@@ -6,9 +6,6 @@ import RelatedProducts from "@/components/RelatedProducts";
 
 // Ambient photos
 import fotoA from "@/assets/2. ESTACIONES/3. LEGAN/Fotos/A.webp";
-import fotoB from "@/assets/2. ESTACIONES/3. LEGAN/Fotos/B.webp";
-import fotoC from "@/assets/2. ESTACIONES/3. LEGAN/Fotos/C.webp";
-import fotoD from "@/assets/2. ESTACIONES/3. LEGAN/Fotos/D.webp";
 
 // Configurations
 import configGerencia1 from "@/assets/2. ESTACIONES/3. LEGAN/Configuraciones/Gerencia/1 ok.webp";
@@ -20,7 +17,6 @@ import configMesa3 from "@/assets/2. ESTACIONES/3. LEGAN/Configuraciones/Mesa Re
 // Materials
 import materiales from "@/assets/2. ESTACIONES/3. LEGAN/Materiales/Axonometra.webp";
 
-const heroPhoto = fotoA;
 const configImages = [
   { src: configGerencia1, label: "Gerencia" },
   { src: configGerencia2, label: "Gerencia" },
@@ -56,22 +52,22 @@ const EstacionLegan = () => {
       <Header />
 
       <main className="border-t border-border">
-        {/* Hero Section: Photo left + Info right */}
-        <section className="relative">
+        {/* BLOQUE SUPERIOR — Hero Producto */}
+        <section>
           <div className="grid grid-cols-1 md:grid-cols-2 w-full min-h-[85vh]">
-            {/* Left — Ambient photo */}
+            {/* Izquierda — Foto lifestyle */}
             <div className="relative overflow-hidden min-h-[50vh] md:min-h-0">
               <img
-                src={heroPhoto}
+                src={fotoA}
                 alt="Estación Legan ambientada"
                 className="w-full h-full object-cover absolute inset-0"
               />
             </div>
 
-            {/* Right — Product info + config preview */}
-            <div className="flex flex-col">
-              {/* Top: Title + Description + Button */}
-              <div className="px-6 py-8 md:py-12 flex-1 flex flex-col justify-center">
+            {/* Derecha — Info + Acordeones */}
+            <div className="flex flex-col border-l border-border">
+              {/* Título + Descripción + Botón */}
+              <div className="px-8 py-10 md:py-14 flex-1 flex flex-col justify-center">
                 <h1 className="font-display text-6xl md:text-7xl lg:text-8xl font-black tracking-tight leading-none mb-4">
                   Legan.
                 </h1>
@@ -79,81 +75,58 @@ const EstacionLegan = () => {
                   Legan esta pensada para espacios donde la mesa es el elemento central del proyecto. Sus proporciones y presencia formal lo hacen adecuado tanto para despachos ejecutivos como para salas de reunión corporativas.
                 </p>
                 <div>
-                  <button className="border-2 border-primary text-primary font-bold text-sm px-8 py-2.5 hover:bg-primary hover:text-primary-foreground transition-colors">
+                  <button className="bg-primary text-primary-foreground font-bold text-sm px-8 py-2.5 hover:bg-primary/90 transition-colors">
                     Button
                   </button>
                 </div>
               </div>
 
-              {/* Bottom: Accordions left + Config images right */}
-              <div className="border-t border-border grid grid-cols-1 md:grid-cols-2">
-                {/* Accordions */}
-                <div>
-                  {["Características", "Materiales", "Colores disponibles"].map((item) => (
-                    <div key={item} className="border-b border-border last:border-b-0">
-                      <button
-                        onClick={() => toggleAccordion(item)}
-                        className="w-full flex items-center justify-between px-6 py-4"
-                      >
-                        <span className="font-extrabold text-sm text-foreground">{item}</span>
-                        <ChevronDown
-                          className={`w-5 h-5 text-primary transition-transform ${
-                            openAccordion === item ? "rotate-180" : ""
-                          }`}
-                        />
-                      </button>
-                      {openAccordion === item && (
-                        <div className="px-6 pb-4">
-                          {item === "Materiales" ? (
-                            <img
-                              src={materiales}
-                              alt="Materiales Legan"
-                              className="w-full max-w-md object-contain"
-                            />
-                          ) : item === "Colores disponibles" ? (
-                            <p className="text-xs text-muted-foreground">
-                              Consulta con nuestro equipo las opciones de color disponibles para Legan.
-                            </p>
-                          ) : (
-                            <p className="text-xs text-muted-foreground">
-                              Información sobre {item.toLowerCase()} del producto Legan.
-                            </p>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-
-                {/* Config images preview */}
-                <div className="hidden md:grid grid-rows-2 border-l border-border">
-                  <div className="border-b border-border p-4 flex items-center justify-center bg-background">
-                    <img
-                      src={configImages[0].src}
-                      alt={configImages[0].label}
-                      className="w-full h-full object-contain"
-                      loading="lazy"
-                    />
+              {/* Acordeones — ancho completo */}
+              <div className="border-t border-border">
+                {["Características", "Materiales", "Colores disponibles"].map((item) => (
+                  <div key={item} className="border-b border-border last:border-b-0">
+                    <button
+                      onClick={() => toggleAccordion(item)}
+                      className="w-full flex items-center justify-between px-8 py-4"
+                    >
+                      <span className="font-extrabold text-sm text-foreground">{item}</span>
+                      <ChevronDown
+                        className={`w-5 h-5 text-primary transition-transform ${
+                          openAccordion === item ? "rotate-180" : ""
+                        }`}
+                      />
+                    </button>
+                    {openAccordion === item && (
+                      <div className="px-8 pb-4">
+                        {item === "Materiales" ? (
+                          <img
+                            src={materiales}
+                            alt="Materiales Legan"
+                            className="w-full max-w-md object-contain"
+                          />
+                        ) : item === "Colores disponibles" ? (
+                          <p className="text-xs text-muted-foreground">
+                            Consulta con nuestro equipo las opciones de color disponibles para Legan.
+                          </p>
+                        ) : (
+                          <p className="text-xs text-muted-foreground">
+                            Información sobre {item.toLowerCase()} del producto Legan.
+                          </p>
+                        )}
+                      </div>
+                    )}
                   </div>
-                  <div className="p-4 flex items-center justify-center bg-background">
-                    <img
-                      src={configImages[1].src}
-                      alt={configImages[1].label}
-                      className="w-full h-full object-contain"
-                      loading="lazy"
-                    />
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>
         </section>
 
-        {/* Configurations Carousel Section */}
+        {/* BLOQUE INFERIOR — Contenido + Carrusel */}
         <section className="border-t border-border">
           <div className="grid grid-cols-1 md:grid-cols-2 min-h-[70vh]">
-            {/* Left — Tagline + Links + Button */}
-            <div className="flex flex-col justify-end p-8 md:p-12 bg-background">
+            {/* Izquierda — Tagline + Links + Botón */}
+            <div className="flex flex-col justify-end p-8 md:p-12 bg-muted/40">
               <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-black text-foreground leading-tight mb-8">
                 Nuevos espacios<br />
                 <span className="italic font-normal">para nuevos</span><br />
@@ -174,7 +147,7 @@ const EstacionLegan = () => {
               </div>
             </div>
 
-            {/* Right — Carousel */}
+            {/* Derecha — Carrusel */}
             <div className="relative flex items-center justify-center bg-background border-l border-border min-h-[50vh] md:min-h-0">
               <img
                 src={configImages[carouselIndex].src}
@@ -183,26 +156,26 @@ const EstacionLegan = () => {
                 loading="lazy"
               />
 
-              {/* Navigation arrows */}
+              {/* Flechas rojas cuadradas */}
               <button
                 onClick={prevSlide}
-                className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center text-primary hover:text-primary/80 transition-colors"
+                className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
                 aria-label="Anterior"
               >
-                <ChevronLeft className="w-8 h-8" />
+                <ChevronLeft className="w-5 h-5" />
               </button>
               <button
                 onClick={nextSlide}
-                className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center text-primary hover:text-primary/80 transition-colors"
+                className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
                 aria-label="Siguiente"
               >
-                <ChevronRight className="w-8 h-8" />
+                <ChevronRight className="w-5 h-5" />
               </button>
             </div>
           </div>
         </section>
 
-        {/* Related Products */}
+        {/* Productos relacionados */}
         <RelatedProducts />
       </main>
     </div>
