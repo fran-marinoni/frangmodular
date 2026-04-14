@@ -36,22 +36,10 @@ const ambientPhotos = [fotoB, fotoC, fotoD];
 const EstacionLegan = () => {
   const [openAccordion, setOpenAccordion] = useState<string | null>(null);
 
-  const allImages = [heroPhoto, ...configImages.map((c) => c.src), ...ambientPhotos, materiales];
-  const imagesReady = useImagePreloader(allImages, 800);
-
   const toggleAccordion = useCallback(
     (name: string) => setOpenAccordion((prev) => (prev === name ? null : name)),
     []
   );
-
-  if (!imagesReady) {
-    return (
-      <div className="min-h-screen bg-background">
-        <Header />
-        <SectionLoader label="Cargando estación" />
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-background">
