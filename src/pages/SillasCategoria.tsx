@@ -1,16 +1,28 @@
 import { useParams, Link } from "react-router-dom";
+import { useState } from "react";
 import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
-import { getCategoryBySlug } from "@/lib/chairsData";
+import { getCategoryBySlug, chairCategories } from "@/lib/chairsData";
 import { useChairMainImage } from "@/hooks/useChairImages";
 import NotFound from "@/pages/NotFound";
-import { ArrowRight } from "lucide-react";
+
+const categoryNumber: Record<string, string> = {
+  ejecutivas: "01",
+  operativas: "02",
+  visitas: "03",
+  barra: "04",
+  lounge: "05",
+  estadio: "06",
+};
 
 const SillasCategoria = () => {
   const { category } = useParams();
   const cat = category ? getCategoryBySlug(category) : undefined;
+  const [selected, setSelected] = useState<string | null>(null);
 
   if (!cat) return <NotFound />;
+
+  const num = categoryNumber[cat.slug] || "01";
 
   return (
     <div className="min-h-screen bg-background">
@@ -20,21 +32,35 @@ const SillasCategoria = () => {
         canonical={`/sillas/${cat.slug}`}
       />
       <Header />
-      <main className="border-t border-border">
-        {/* Hero */}
-        <section className="px-6 md:px-8 py-12 md:py-20">
-          <Link to="/sillas" className="text-xs text-muted-foreground hover:text-foreground transition-colors mb-4 inline-block">
-            ← Sillas
-          </Link>
-          <h1 className="font-display text-[2.5rem] md:text-[4rem] lg:text-[5rem] font-black tracking-tight leading-none text-foreground">
-            {cat.name}.
-          </h1>
+      <main>
+        {/* Hero section */}
+        <section className="px-6 md:px-8 pt-10 pb-8 md:pt-16 md:pb-12 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+          <div>
+            <h1 className="font-display text-[3rem] md:text-[4.5rem] lg:text-[5.5rem] font-black italic tracking-tight leading-none text-foreground">
+              {cat.name}.
+            </h1>
+          </div>
+          <div className="flex flex-col md:flex-row md:items-end gap-4 md:gap-10">
+            <p className="text-xs leading-relaxed text-muted-foreground max-w-xs">
+              En Generación Modular damos vida a tus proyectos a través de un asesoramiento integral en cuanto a planificación, diseño y fabricación de mobiliario.
+            </p>
+            <div className="text-right whitespace-nowrap">
+              <span className="text-xs font-bold text-foreground">{num}</span>
+              <span className="text-xs text-muted-foreground ml-1">Sillas.</span>
+            </div>
+          </div>
         </section>
 
         {/* Grid */}
-        <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-px bg-border border-t border-border">
+        <section className="grid grid-cols-2 md:grid-cols-3 border-t border-border">
           {cat.chairs.map((chair) => (
-            <ChairCard key={chair.slug} chair={chair} categorySlug={cat.slug} />
+            <ChairCard
+              key={chair.slug}
+              chair={chair}
+              categorySlug={cat.slug}
+              isSelected={selected === chair.slug}
+              onSelect={() => setSelected(selected === chair.slug ? null : chair.slug)}
+            />
           ))}
         </section>
       </main>
@@ -42,33 +68,50 @@ const SillasCategoria = () => {
   );
 };
 
-function ChairCard({ chair, categorySlug }: { chair: { name: string; slug: string; assetFolder: string }; categorySlug: string }) {
+function ChairCard({
+  chair,
+  categorySlug,
+  isSelected,
+  onSelect,
+}: {
+  chair: { name: string; slug: string; assetFolder: string };
+  categorySlug: string;
+  isSelected: boolean;
+  onSelect: () => void;
+}) {
   const mainImage = useChairMainImage(chair.assetFolder);
 
   return (
     <Link
       to={`/sillas/${categorySlug}/${chair.slug}`}
-      className="group bg-background flex flex-col"
+      className="group bg-background flex flex-col border-b border-r border-border"
+      onMouseEnter={onSelect}
     >
-      <div className="relative aspect-square overflow-hidden bg-muted">
+      {/* Chair name */}
+      <div className="px-4 pt-4 pb-2">
+        <h3 className="font-display text-lg md:text-xl font-black text-foreground leading-tight">
+          {chair.name}.
+        </h3>
+      </div>
+
+      {/* Image */}
+      <div
+        className={`relative aspect-[4/5] overflow-hidden mx-4 mb-4 transition-all duration-200 ${
+          isSelected ? "ring-2 ring-primary" : ""
+        }`}
+      >
         {mainImage ? (
           <img
             src={mainImage}
             alt={chair.name}
             loading="lazy"
-            className="absolute inset-0 w-full h-full object-contain p-6 group-hover:scale-105 transition-transform duration-500"
+            className="absolute inset-0 w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500"
           />
         ) : (
-          <div className="absolute inset-0 flex items-center justify-center text-muted-foreground text-xs">
+          <div className="absolute inset-0 flex items-center justify-center text-muted-foreground text-xs bg-muted">
             {chair.name}
           </div>
         )}
-      </div>
-      <div className="px-4 py-4 border-t border-border">
-        <div className="flex items-center justify-between">
-          <h3 className="font-bold text-sm text-foreground">{chair.name}</h3>
-          <ArrowRight className="w-3.5 h-3.5 text-muted-foreground group-hover:text-primary transition-colors" />
-        </div>
       </div>
     </Link>
   );
