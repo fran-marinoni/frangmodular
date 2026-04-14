@@ -12,6 +12,12 @@ dist
 dist-ssr
 *.local
 
+# Heavy source files (not needed for web)
+*.tif
+*.pdf
+*.pptx
+*.zip
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
