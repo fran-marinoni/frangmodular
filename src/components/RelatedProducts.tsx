@@ -11,7 +11,7 @@ const products = [
 const RelatedProducts = () => {
   return (
     <section className="border-t border-border">
-      <div className="max-w-7xl mx-auto">
+      <div>
         <h2 className="font-display text-4xl md:text-5xl px-8 py-10 font-extrabold text-foreground">
           Te podría interesar.
         </h2>
