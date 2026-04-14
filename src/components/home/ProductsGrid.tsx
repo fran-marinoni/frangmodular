@@ -18,7 +18,7 @@ const ProductsGrid = () => {
           {/* Row 1 */}
           <div className="grid grid-cols-1 gap-px md:[grid-template-columns:330fr_330fr_619fr]">
             {[
-              { img: prodSillas, label: "Sillas Ergonómicas.", to: "/productos/apollo" },
+              { img: prodSillas, label: "Sillas Ergonómicas.", to: "/sillas" },
               { img: prodFlexible, label: "Flexible Spaces.", to: "/productos" },
               { img: prodGerenciales, label: "Líneas de oficina gerenciales.", to: "/productos" },
             ].map((item) => (
