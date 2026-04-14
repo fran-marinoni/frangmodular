@@ -109,6 +109,7 @@ const EstacionLegan = () => {
                           <img
                             src={materiales}
                             alt="Materiales Legan"
+                loading="lazy"
                             className="w-full max-w-md object-contain"
                           />
                         ) : item === "Colores disponibles" ? (
@@ -137,6 +138,7 @@ const EstacionLegan = () => {
               <img
                 src={fotoB}
                 alt="Espacio Legan"
+                loading="lazy"
                 className="w-full h-full object-cover absolute inset-0"
               />
               <div className="absolute inset-0 bg-foreground/30" />
@@ -161,6 +163,7 @@ const EstacionLegan = () => {
                   <img
                     src={config.src}
                     alt={config.label}
+                loading="lazy"
                     className="w-full h-full object-contain p-4 bg-background"
                   />
                 </div>
