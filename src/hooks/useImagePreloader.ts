@@ -8,7 +8,6 @@ import { useState, useEffect, useRef } from "react";
 export function useImagePreloader(urls: string[], minDelay = 0): boolean {
   const [ready, setReady] = useState(false);
   const prevKey = useRef("");
-  const mountTime = useRef(Date.now());
 
   useEffect(() => {
     const filtered = urls.filter(Boolean);
@@ -21,8 +20,6 @@ export function useImagePreloader(urls: string[], minDelay = 0): boolean {
 
     prevKey.current = key;
     setReady(false);
-    // Reset mount time when URLs change
-    mountTime.current = Date.now();
 
     let cancelled = false;
 
@@ -51,4 +48,13 @@ export function useImagePreloader(urls: string[], minDelay = 0): boolean {
   }, [urls.filter(Boolean).join("|"), minDelay]);
 
   return ready;
+}
+
+/**
+ * Preloads only the FIRST N images for fast above-the-fold rendering.
+ * Returns true when those critical images are ready.
+ */
+export function useCriticalImagePreloader(urls: string[], count = 1, minDelay = 0): boolean {
+  const critical = urls.filter(Boolean).slice(0, count);
+  return useImagePreloader(critical, minDelay);
 }
