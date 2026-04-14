@@ -1,10 +1,13 @@
-import { useParams, Link, useSearchParams } from "react-router-dom";
-import { useState, useEffect, useMemo } from "react";
+import { useParams, useSearchParams } from "react-router-dom";
+import { useState, useCallback, memo } from "react";
 import { ChevronDown } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import RelatedProducts from "@/components/RelatedProducts";
-import { getProductBySlug, getVariantImagePaths, resolveChairImage, ChairVariant } from "@/lib/chairsData";
+import SectionLoader from "@/components/SectionLoader";
+import { getProductBySlug, ChairVariant, ChairProduct } from "@/lib/chairsData";
+import { useResolvedChairImages } from "@/hooks/useResolvedChairImages";
+import { useImagePreloader } from "@/hooks/useImagePreloader";
 import NotFound from "@/pages/NotFound";
 
 // Reuse the same feature assets as Apollo
@@ -27,15 +30,15 @@ const SillaDetalle = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const product = param ? getProductBySlug(param) : undefined;
 
+  const setVariant = useCallback((id: string) => {
+    setSearchParams({ variant: id }, { replace: true });
+  }, [setSearchParams]);
+
   if (!product) return <NotFound />;
 
   const variantParam = searchParams.get("variant");
   const activeVariantId = product.variants.find((v) => v.id === variantParam)?.id || product.defaultVariant;
   const activeVariant = product.variants.find((v) => v.id === activeVariantId)!;
-
-  const setVariant = (id: string) => {
-    setSearchParams({ variant: id }, { replace: true });
-  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -60,13 +63,13 @@ const SillaDetalle = () => {
   );
 };
 
-function ChairDetailContent({
+const ChairDetailContent = memo(function ChairDetailContent({
   product,
   activeVariant,
   allVariants,
   onVariantChange,
 }: {
-  product: ReturnType<typeof getProductBySlug> & {};
+  product: ChairProduct;
   activeVariant: ChairVariant;
   allVariants: ChairVariant[];
   onVariantChange: (id: string) => void;
@@ -75,53 +78,151 @@ function ChairDetailContent({
   const [openAccordion, setOpenAccordion] = useState<string | null>(null);
   const [activeFeature, setActiveFeature] = useState<number | null>(null);
 
-  // Get image paths for the active variant
-  const imagePaths = useMemo(() => getVariantImagePaths(activeVariant.assetFolder), [activeVariant.assetFolder]);
+  // Resolve all images for this variant in one batch
+  const { gallery, ambientadas, colores, allUrls, loading } = useResolvedChairImages(activeVariant.assetFolder);
 
-  const galleryPaths = imagePaths.gallery.slice(0, 6);
-  const ambientadaPaths = imagePaths.ambientadas.slice(0, 3);
-  const coloresPaths = imagePaths.colores;
+  // Preload resolved URLs into browser cache, with branded loader
+  const imagesReady = useImagePreloader(allUrls, 800);
 
-  const [resolvedGallery, setResolvedGallery] = useState<string[]>([]);
-  const [resolvedAmbientadas, setResolvedAmbientadas] = useState<string[]>([]);
-  const [resolvedColores, setResolvedColores] = useState<string[]>([]);
+  const showLoader = loading || !imagesReady;
 
-  // No need for mainImageIndex reset — key={activeVariant.id} forces remount
+  const currentMainImage = gallery[mainImageIndex] || gallery[0] || "";
 
-  // Resolve gallery images
-  useEffect(() => {
-    let cancelled = false;
-    Promise.all(galleryPaths.map((p) => resolveChairImage(p))).then((urls) => {
-      if (!cancelled) setResolvedGallery(urls.filter(Boolean));
-    });
-    return () => { cancelled = true; };
-  }, [galleryPaths.join(",")]);
+  const toggleAccordion = useCallback((name: string) => {
+    setOpenAccordion((prev) => (prev === name ? null : name));
+  }, []);
 
-  // Resolve ambientadas
-  useEffect(() => {
-    let cancelled = false;
-    Promise.all(ambientadaPaths.map((p) => resolveChairImage(p))).then((urls) => {
-      if (!cancelled) setResolvedAmbientadas(urls.filter(Boolean));
-    });
-    return () => { cancelled = true; };
-  }, [ambientadaPaths.join(",")]);
+  if (showLoader) {
+    return <SectionLoader label="Cargando silla" />;
+  }
 
-  // Resolve colores
-  useEffect(() => {
-    let cancelled = false;
-    Promise.all(coloresPaths.map((p) => resolveChairImage(p))).then((urls) => {
-      if (!cancelled) setResolvedColores(urls.filter(Boolean));
-    });
-    return () => { cancelled = true; };
-  }, [coloresPaths.join(",")]);
+  return (
+    <>
+      <section className="relative">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 w-full min-h-screen">
+          {/* Left Column */}
+          <div className="px-4 md:px-6 py-3 md:py-4 md:border-r border-border flex flex-col justify-center min-h-0">
+            <h1 className="font-display text-6xl md:text-7xl lg:text-8xl xl:text-9xl leading-none mb-2 md:mb-3 font-black tracking-tight text-center">
+              {product.name}.
+            </h1>
 
-  const currentMainImage = resolvedGallery[mainImageIndex] || resolvedGallery[0] || "";
+            {/* Variant selector tabs — only show if multiple variants */}
+            {allVariants.length > 1 && (
+              <div className="flex mt-4 md:mt-6 mb-2 md:mb-3 justify-between w-full max-w-xs mx-auto">
+                {allVariants.map((v) => (
+                  <button
+                    key={v.id}
+                    onClick={() => onVariantChange(v.id)}
+                    className={`text-xs tracking-wider font-medium pb-1 transition-all border-b-2 uppercase ${
+                      activeVariant.id === v.id
+                        ? "border-primary font-bold text-foreground"
+                        : "border-transparent text-muted-foreground"
+                    }`}
+                  >
+                    {v.label}
+                  </button>
+                ))}
+              </div>
+            )}
 
-  const toggleAccordion = (name: string) => {
-    setOpenAccordion(openAccordion === name ? null : name);
-  };
+            {/* Main Image */}
+            <div className="relative flex items-center justify-center flex-1 min-h-[200px]">
+              {currentMainImage ? (
+                <img
+                  src={currentMainImage}
+                  alt={product.name}
+                  className="w-full max-w-xs md:max-w-2xl mx-auto max-h-[45vh] md:max-h-[60vh] object-contain"
+                />
+              ) : (
+                <div className="w-64 h-64 bg-muted rounded flex items-center justify-center text-muted-foreground text-sm">
+                  {product.name}
+                </div>
+              )}
+            </div>
 
-  const renderDetailsContent = () => (
+            {/* Thumbnails — AMBIENTADAS images */}
+            <div className="flex gap-3 mt-1 md:mt-2 justify-center">
+              {ambientadas.length > 0
+                ? ambientadas.map((thumb, i) => (
+                    <div
+                      key={i}
+                      className="w-11 h-11 md:w-14 md:h-14 border border-border overflow-hidden"
+                    >
+                      <img
+                        src={thumb}
+                        alt={`Ambientada ${i + 1}`}
+                        width={64}
+                        height={64}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  ))
+                : gallery.slice(0, 3).map((thumb, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setMainImageIndex(i)}
+                      className={`w-11 h-11 md:w-14 md:h-14 border overflow-hidden ${
+                        mainImageIndex === i ? "border-primary" : "border-border"
+                      }`}
+                    >
+                      <img
+                        src={thumb}
+                        alt={`Vista ${i + 1}`}
+                        width={64}
+                        height={64}
+                        className={`w-full h-full object-cover ${i < 2 ? "object-[center_82%]" : ""}`}
+                      />
+                    </button>
+                  ))}
+            </div>
+          </div>
+
+          {/* Right Column — desktop only */}
+          <div className="hidden md:flex flex-col overflow-y-auto">
+            <DetailsPanel
+              product={product}
+              colores={colores}
+              activeFeature={activeFeature}
+              setActiveFeature={setActiveFeature}
+              openAccordion={openAccordion}
+              toggleAccordion={toggleAccordion}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Mobile: details content flows after */}
+      <div className="md:hidden border-t border-border">
+        <DetailsPanel
+          product={product}
+          colores={colores}
+          activeFeature={activeFeature}
+          setActiveFeature={setActiveFeature}
+          openAccordion={openAccordion}
+          toggleAccordion={toggleAccordion}
+        />
+      </div>
+    </>
+  );
+});
+
+/** Right-side details panel — extracted to avoid inline render function */
+const DetailsPanel = memo(function DetailsPanel({
+  product,
+  colores,
+  activeFeature,
+  setActiveFeature,
+  openAccordion,
+  toggleAccordion,
+}: {
+  product: ChairProduct;
+  colores: string[];
+  activeFeature: number | null;
+  setActiveFeature: (i: number | null) => void;
+  openAccordion: string | null;
+  toggleAccordion: (name: string) => void;
+}) {
+  return (
     <>
       {/* Descripción */}
       <div className="px-6 py-6 border-b border-border">
@@ -175,11 +276,11 @@ function ChairDetailContent({
       </div>
 
       {/* Colores disponibles — dynamic from COLORES folder */}
-      {resolvedColores.length > 0 && (
+      {colores.length > 0 && (
         <div className="px-6 py-6 border-b border-border">
           <h3 className="font-extrabold text-base mb-3 text-foreground">Colores disponibles:</h3>
           <div className="flex gap-3 flex-wrap">
-            {resolvedColores.map((src, i) => (
+            {colores.map((src, i) => (
               <div key={i} className="w-16 h-12 rounded-sm overflow-hidden border border-border">
                 <img src={src} alt={`Color ${i + 1}`} className="w-full h-full object-cover" />
               </div>
@@ -187,7 +288,6 @@ function ChairDetailContent({
           </div>
         </div>
       )}
-
 
       {/* Accordion sections */}
       <div className="flex flex-col">
@@ -214,103 +314,6 @@ function ChairDetailContent({
       </div>
     </>
   );
-
-  return (
-    <>
-      <section className="relative">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 w-full min-h-screen">
-          {/* Left Column */}
-          <div className="px-4 md:px-6 py-3 md:py-4 md:border-r border-border flex flex-col justify-center min-h-0">
-            <h1 className="font-display text-6xl md:text-7xl lg:text-8xl xl:text-9xl leading-none mb-2 md:mb-3 font-black tracking-tight text-center">
-              {product.name}.
-            </h1>
-
-            {/* Variant selector tabs — only show if multiple variants */}
-            {allVariants.length > 1 && (
-              <div className="flex mt-4 md:mt-6 mb-2 md:mb-3 justify-between w-full max-w-xs mx-auto">
-                {allVariants.map((v) => (
-                  <button
-                    key={v.id}
-                    onClick={() => onVariantChange(v.id)}
-                    className={`text-xs tracking-wider font-medium pb-1 transition-all border-b-2 uppercase ${
-                      activeVariant.id === v.id
-                        ? "border-primary font-bold text-foreground"
-                        : "border-transparent text-muted-foreground"
-                    }`}
-                  >
-                    {v.label}
-                  </button>
-                ))}
-              </div>
-            )}
-
-            {/* Main Image */}
-            <div className="relative flex items-center justify-center flex-1 min-h-[200px]">
-              {currentMainImage ? (
-                <img
-                  src={currentMainImage}
-                  alt={product.name}
-                  className="w-full max-w-xs md:max-w-2xl mx-auto max-h-[45vh] md:max-h-[60vh] object-contain"
-                />
-              ) : (
-                <div className="w-64 h-64 bg-muted rounded flex items-center justify-center text-muted-foreground text-sm">
-                  {product.name}
-                </div>
-              )}
-            </div>
-
-            {/* Thumbnails — AMBIENTADAS images */}
-            <div className="flex gap-3 mt-1 md:mt-2 justify-center">
-              {resolvedAmbientadas.map((thumb, i) => (
-                <div
-                  key={i}
-                  className="w-11 h-11 md:w-14 md:h-14 border border-border overflow-hidden"
-                >
-                  <img
-                    src={thumb}
-                    alt={`Ambientada ${i + 1}`}
-                    loading="lazy"
-                    width={64}
-                    height={64}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              ))}
-              {/* Fallback: gallery thumbs if no ambientadas */}
-              {resolvedAmbientadas.length === 0 && resolvedGallery.slice(0, 3).map((thumb, i) => (
-                <button
-                  key={i}
-                  onClick={() => setMainImageIndex(i)}
-                  className={`w-11 h-11 md:w-14 md:h-14 border overflow-hidden ${
-                    mainImageIndex === i ? "border-primary" : "border-border"
-                  }`}
-                >
-                  <img
-                    src={thumb}
-                    alt={`Vista ${i + 1}`}
-                    loading="lazy"
-                    width={64}
-                    height={64}
-                    className={`w-full h-full object-cover ${i < 2 ? "object-[center_82%]" : ""}`}
-                  />
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Right Column — desktop only */}
-          <div className="hidden md:flex flex-col overflow-y-auto">
-            {renderDetailsContent()}
-          </div>
-        </div>
-      </section>
-
-      {/* Mobile: details content flows after */}
-      <div className="md:hidden border-t border-border">
-        {renderDetailsContent()}
-      </div>
-    </>
-  );
-}
+});
 
 export default SillaDetalle;
