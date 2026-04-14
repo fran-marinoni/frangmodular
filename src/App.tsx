@@ -29,6 +29,13 @@ const ProtectedRoute = lazy(() => import("./components/admin/ProtectedRoute.tsx"
 const Sillas = lazy(() => import("./pages/Sillas.tsx"));
 const SillasResolver = lazy(() => import("./pages/SillasResolver.tsx"));
 const EstacionLegan = lazy(() => import("./pages/EstacionLegan.tsx"));
+const EstacionQoni = lazy(() => import("./pages/EstacionQoni.tsx"));
+const EstacionObliqMadera = lazy(() => import("./pages/EstacionObliqMadera.tsx"));
+const EstacionObliqMetal = lazy(() => import("./pages/EstacionObliqMetal.tsx"));
+const EstacionWyre = lazy(() => import("./pages/EstacionWyre.tsx"));
+const EstacionExecutive = lazy(() => import("./pages/EstacionExecutive.tsx"));
+const EstacionErgoflex = lazy(() => import("./pages/EstacionErgoflex.tsx"));
+const EstacionHomeOffice = lazy(() => import("./pages/EstacionHomeOffice.tsx"));
 
 const queryClient = new QueryClient();
 
@@ -70,6 +77,13 @@ const App = () => {
             <Route path="/sillas" element={<LazyRoute><Sillas /></LazyRoute>} />
             <Route path="/sillas/:param" element={<LazyRoute><SillasResolver /></LazyRoute>} />
             <Route path="/estaciones/legan" element={<LazyRoute><EstacionLegan /></LazyRoute>} />
+            <Route path="/estaciones/qoni" element={<LazyRoute><EstacionQoni /></LazyRoute>} />
+            <Route path="/estaciones/obliq-madera" element={<LazyRoute><EstacionObliqMadera /></LazyRoute>} />
+            <Route path="/estaciones/obliq-metal" element={<LazyRoute><EstacionObliqMetal /></LazyRoute>} />
+            <Route path="/estaciones/wyre" element={<LazyRoute><EstacionWyre /></LazyRoute>} />
+            <Route path="/estaciones/executive" element={<LazyRoute><EstacionExecutive /></LazyRoute>} />
+            <Route path="/estaciones/ergoflex" element={<LazyRoute><EstacionErgoflex /></LazyRoute>} />
+            <Route path="/estaciones/home-office" element={<LazyRoute><EstacionHomeOffice /></LazyRoute>} />
             <Route path="/nosotros" element={<LazyRoute><Nosotros /></LazyRoute>} />
             <Route path="/blog" element={<LazyRoute><Blog /></LazyRoute>} />
             <Route path="/blog/back-to-the-90s" element={<LazyRoute><BlogArticle90s /></LazyRoute>} />
