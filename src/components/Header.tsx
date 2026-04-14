@@ -93,13 +93,22 @@ const MobileProductsAccordion = ({ categories, onClose }: { categories: typeof p
               </button>
               {openCat === cat.number && (
                 <ul className="pl-12 pr-6 pb-2 space-y-1">
-                  {cat.items.map((item) => (
-                    <li key={item}>
-                      <button onClick={onClose} className="text-xs text-foreground/70 hover:text-foreground py-0.5">
-                        {item}
-                      </button>
-                    </li>
-                  ))}
+                  {cat.items.map((item) => {
+                    const href = chairCategoryLinks[item];
+                    return (
+                      <li key={item}>
+                        {href ? (
+                          <Link to={href} onClick={onClose} className="text-xs text-foreground/70 hover:text-foreground py-0.5 block">
+                            {item}
+                          </Link>
+                        ) : (
+                          <button onClick={onClose} className="text-xs text-foreground/70 hover:text-foreground py-0.5">
+                            {item}
+                          </button>
+                        )}
+                      </li>
+                    );
+                  })}
                 </ul>
               )}
             </div>
