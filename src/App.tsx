@@ -27,8 +27,7 @@ const AdminProductEditor = lazy(() => import("./pages/admin/AdminProductEditor.t
 const DynamicProduct = lazy(() => import("./pages/DynamicProduct.tsx"));
 const ProtectedRoute = lazy(() => import("./components/admin/ProtectedRoute.tsx"));
 const Sillas = lazy(() => import("./pages/Sillas.tsx"));
-const SillasCategoria = lazy(() => import("./pages/SillasCategoria.tsx"));
-const SillaDetalle = lazy(() => import("./pages/SillaDetalle.tsx"));
+const SillasResolver = lazy(() => import("./pages/SillasResolver.tsx"));
 
 const queryClient = new QueryClient();
 
