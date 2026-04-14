@@ -26,6 +26,9 @@ const AdminProducts = lazy(() => import("./pages/admin/AdminProducts.tsx"));
 const AdminProductEditor = lazy(() => import("./pages/admin/AdminProductEditor.tsx"));
 const DynamicProduct = lazy(() => import("./pages/DynamicProduct.tsx"));
 const ProtectedRoute = lazy(() => import("./components/admin/ProtectedRoute.tsx"));
+const Sillas = lazy(() => import("./pages/Sillas.tsx"));
+const SillasCategoria = lazy(() => import("./pages/SillasCategoria.tsx"));
+const SillaDetalle = lazy(() => import("./pages/SillaDetalle.tsx"));
 
 const queryClient = new QueryClient();
 
@@ -64,6 +67,9 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/productos/apollo" element={<LazyRoute><ApolloProduct /></LazyRoute>} />
+            <Route path="/sillas" element={<LazyRoute><Sillas /></LazyRoute>} />
+            <Route path="/sillas/:category" element={<LazyRoute><SillasCategoria /></LazyRoute>} />
+            <Route path="/sillas/:category/:slug" element={<LazyRoute><SillaDetalle /></LazyRoute>} />
             <Route path="/nosotros" element={<LazyRoute><Nosotros /></LazyRoute>} />
             <Route path="/blog" element={<LazyRoute><Blog /></LazyRoute>} />
             <Route path="/blog/back-to-the-90s" element={<LazyRoute><BlogArticle90s /></LazyRoute>} />
