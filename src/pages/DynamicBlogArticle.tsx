@@ -1,4 +1,5 @@
 import { useParams, Link } from "react-router-dom";
+import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import FooterSection from "@/components/home/FooterSection";
 import { getPostBySlug, getAllPosts } from "@/lib/blogStore";
@@ -15,6 +16,26 @@ const DynamicBlogArticle = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <SEOHead
+        title={post.title}
+        description={post.subtitle || `${post.title} – Artículo del blog de Generación Modular.`}
+        canonical={`/blog/${post.slug}`}
+        ogType="article"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Article",
+          headline: post.title,
+          description: post.subtitle || post.title,
+          image: post.coverImage,
+          datePublished: post.createdAt,
+          dateModified: post.updatedAt,
+          publisher: {
+            "@type": "Organization",
+            name: "Generación Modular",
+            url: "https://generacionmodular.com",
+          },
+        }}
+      />
       <Header />
 
       {/* Hero Title */}

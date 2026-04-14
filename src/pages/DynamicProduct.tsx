@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import RelatedProducts from "@/components/RelatedProducts";
 import { getProductBySlug } from "@/lib/productStore";
@@ -17,6 +18,21 @@ const DynamicProduct = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title={`${product.name} – Producto`}
+        description={product.description || `${product.name} de Generación Modular. Diseño y fabricación de mobiliario modular.`}
+        canonical={`/productos/${product.slug}`}
+        ogType="product"
+        ogImage={product.coverPoster || undefined}
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Product",
+          name: product.name,
+          description: product.description,
+          image: product.coverPoster,
+          brand: { "@type": "Brand", name: "Generación Modular" },
+        }}
+      />
       <Header />
       <main className="border-t border-border">
         <section className="relative">
