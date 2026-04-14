@@ -43,10 +43,18 @@ const SillaDetalle = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title={`${product.name} – Silla ${activeVariant.label.toLowerCase()} | Generación Modular`}
+        title={`${product.name} – Silla ${activeVariant.label.toLowerCase()}`}
         description={`${product.description} Así es ${product.name}.`}
         canonical={`/sillas/${product.slug}`}
         ogType="product"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Product",
+          name: product.name,
+          description: product.description,
+          brand: { "@type": "Brand", name: "Generación Modular" },
+          category: activeVariant.label,
+        }}
       />
       <Header />
       <main className="border-t border-border">
@@ -82,7 +90,7 @@ const ChairDetailContent = memo(function ChairDetailContent({
   const { gallery, ambientadas, colores, allUrls, loading } = useResolvedChairImages(activeVariant.assetFolder);
 
   // Preload resolved URLs into browser cache, with branded loader
-  const imagesReady = useImagePreloader(allUrls, 800);
+  const imagesReady = useImagePreloader(allUrls, 300);
 
   const showLoader = loading || !imagesReady;
 

@@ -30,7 +30,7 @@ const SectionLoader = () => (
 );
 
 const Nosotros = () => {
-  const imagesReady = useImagePreloader(allImages, 1200);
+  const imagesReady = useImagePreloader(allImages, 300);
 
   if (!imagesReady) return <SectionLoader />;
 

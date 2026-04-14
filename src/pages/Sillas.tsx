@@ -41,7 +41,7 @@ const Sillas = () => {
     () => Object.values(thumbnails).flat().filter(Boolean),
     [thumbnails]
   );
-  const imagesReady = useImagePreloader(allUrls, 800);
+  const imagesReady = useImagePreloader(allUrls, 300);
   const showLoader = resolving || !imagesReady;
 
   return (

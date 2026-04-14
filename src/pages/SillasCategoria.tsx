@@ -58,7 +58,7 @@ const SillasCategoria = () => {
 
   // Preload all resolved thumbnail URLs
   const thumbUrls = useMemo(() => Object.values(thumbnails).filter(Boolean), [thumbnails]);
-  const imagesReady = useImagePreloader(thumbUrls, 600);
+  const imagesReady = useImagePreloader(thumbUrls, 300);
 
   if (!cat) return <NotFound />;
 
