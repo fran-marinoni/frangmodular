@@ -2,8 +2,7 @@ import { useMemo } from "react";
 import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import FooterSection from "@/components/home/FooterSection";
-import SectionLoader from "@/components/SectionLoader";
-import { useCriticalImagePreloader } from "@/hooks/useImagePreloader";
+import { useImagePreloader } from "@/hooks/useImagePreloader";
 
 import foundersImg from "@/assets/nosotros/founders.webp";
 import equipmentImg from "@/assets/nosotros/equipment.webp";
@@ -17,18 +16,12 @@ import truckImg from "@/assets/nosotros/truck.webp";
 
 const allImages = [foundersImg, equipmentImg, cncImg, machineImg, workersImg, teamProjectImg, factoryImg, showroomImg, truckImg];
 
-const Nosotros = () => {
-  // Only wait for the hero image (founders) to show the page
-  const heroReady = useCriticalImagePreloader(allImages, 1, 300);
+import SectionLoader from "@/components/SectionLoader";
 
-  if (!heroReady) {
-    return (
-      <div className="min-h-screen bg-background">
-        <Header />
-        <SectionLoader label="Cargando" />
-      </div>
-    );
-  }
+const Nosotros = () => {
+  const imagesReady = useImagePreloader(allImages, 300);
+
+  if (!imagesReady) return <SectionLoader />;
 
   return (
     <div className="min-h-screen bg-background text-foreground">

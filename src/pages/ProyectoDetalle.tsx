@@ -5,11 +5,30 @@ import useEmblaCarousel from "embla-carousel-react";
 import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import FooterSection from "@/components/home/FooterSection";
-import { getProjectBySlug, getProjectImagePaths } from "@/lib/projectsData";
-import { useResolvedImages } from "@/hooks/useResolvedImage";
-import { useCriticalImagePreloader } from "@/hooks/useImagePreloader";
+import { getProjectBySlug, getProjectImagePaths, resolveImage } from "@/lib/projectsData";
+import { useImagePreloader } from "@/hooks/useImagePreloader";
 import SectionLoader from "@/components/SectionLoader";
 import NotFound from "@/pages/NotFound";
+
+const useResolvedImages = (paths: string[]) => {
+  const [resolved, setResolved] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    let cancelled = false;
+    if (paths.length === 0) return;
+    Promise.all(
+      paths.map(async (p) => {
+        const src = await resolveImage(p);
+        return [p, src] as const;
+      })
+    ).then((entries) => {
+      if (!cancelled) setResolved(Object.fromEntries(entries));
+    });
+    return () => { cancelled = true; };
+  }, [paths.join("|")]);
+
+  return resolved;
+};
 
 const ProyectoDetalle = () => {
   const { projectSlug } = useParams();
@@ -21,13 +40,14 @@ const ProyectoDetalle = () => {
 
   const resolvedImages = useResolvedImages(allImagePaths);
 
-  // Only preload the first 2 fixed (above-fold) images for fast rendering
-  const fixedUrls = useMemo(
-    () => fixedPaths.map((p) => resolvedImages[p]).filter(Boolean),
-    [resolvedImages, fixedPaths.length]
+  // Collect all resolved URLs for preloading
+  const resolvedUrls = useMemo(
+    () => allImagePaths.map((p) => resolvedImages[p]).filter(Boolean),
+    [resolvedImages, allImagePaths.length]
   );
 
-  const heroReady = useCriticalImagePreloader(fixedUrls, 2, 400);
+  // Wait for all images to be in browser cache
+  const imagesReady = useImagePreloader(resolvedUrls, 300);
 
   // Carousel
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
@@ -85,7 +105,7 @@ const ProyectoDetalle = () => {
           </div>
         </section>
 
-        {!heroReady ? (
+        {!imagesReady ? (
           <SectionLoader label="Cargando proyecto" />
         ) : (
           <>
@@ -125,7 +145,6 @@ const ProyectoDetalle = () => {
                             <img
                               src={resolvedImages[path] || "/placeholder.svg"}
                               alt={`${displayName} - Slide ${i + 1}`}
-                              loading="lazy"
                               className="w-full h-[350px] md:h-[450px] lg:h-[520px] object-cover"
                             />
                           </div>

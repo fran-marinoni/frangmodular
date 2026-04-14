@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import FooterSection from "@/components/home/FooterSection";
 
@@ -13,6 +14,19 @@ import chairsImg from "@/assets/blog/chairs.webp";
 const BlogArticle90s = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <SEOHead
+        title="Back to the 90s – Blog"
+        description="Un recorrido por la década en la que nació Generación Modular. La estética, la cultura y la innovación de los 90 siguen influyendo en nuestra nueva campaña."
+        canonical="/blog/back-to-the-90s"
+        ogType="article"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Article",
+          headline: "Back to the 90s",
+          description: "Un recorrido por la década en la que nació Generación Modular.",
+          publisher: { "@type": "Organization", name: "Generación Modular", url: "https://generacionmodular.com" },
+        }}
+      />
       <Header />
 
       {/* Hero Title */}

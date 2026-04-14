@@ -4,7 +4,7 @@ import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import SectionLoader from "@/components/SectionLoader";
 import { getCategoryBySlug, getProductsForCategory, getPreferredVariant, getVariantImagePaths, resolveChairImage, ChairProduct } from "@/lib/chairsData";
-import { useCriticalImagePreloader } from "@/hooks/useImagePreloader";
+import { useImagePreloader } from "@/hooks/useImagePreloader";
 import NotFound from "@/pages/NotFound";
 
 const categoryNumber: Record<string, string> = {
@@ -21,6 +21,7 @@ const SillasCategoria = () => {
   const cat = param ? getCategoryBySlug(param) : undefined;
   const [selected, setSelected] = useState<string | null>(null);
 
+  // Get products and resolve their thumbnail images
   const products = useMemo(() => (cat ? getProductsForCategory(cat.slug) : []), [cat?.slug]);
 
   const [thumbnails, setThumbnails] = useState<Record<string, string>>({});
@@ -55,9 +56,9 @@ const SillasCategoria = () => {
     return () => { cancelled = true; };
   }, [cat?.slug, products.length]);
 
-  // Only preload first 6 thumbnails (above-fold in 3-col grid)
+  // Preload all resolved thumbnail URLs
   const thumbUrls = useMemo(() => Object.values(thumbnails).filter(Boolean), [thumbnails]);
-  const imagesReady = useCriticalImagePreloader(thumbUrls, 6, 300);
+  const imagesReady = useImagePreloader(thumbUrls, 300);
 
   if (!cat) return <NotFound />;
 
@@ -96,7 +97,7 @@ const SillasCategoria = () => {
 
         {/* Grid */}
         <section className="grid grid-cols-2 md:grid-cols-3 border-t border-border">
-          {products.map((product, i) => (
+          {products.map((product) => (
             <ChairCard
               key={product.slug}
               product={product}
@@ -104,7 +105,6 @@ const SillasCategoria = () => {
               thumbnailUrl={thumbnails[product.slug] || ""}
               isSelected={selected === product.slug}
               onSelect={() => setSelected(selected === product.slug ? null : product.slug)}
-              lazy={i >= 6}
             />
           ))}
         </section>
@@ -119,14 +119,12 @@ const ChairCard = memo(function ChairCard({
   thumbnailUrl,
   isSelected,
   onSelect,
-  lazy,
 }: {
   product: ChairProduct;
   categorySlug: string;
   thumbnailUrl: string;
   isSelected: boolean;
   onSelect: () => void;
-  lazy: boolean;
 }) {
   const preferredVariantId = getPreferredVariant(product, categorySlug);
 
@@ -153,7 +151,6 @@ const ChairCard = memo(function ChairCard({
           <img
             src={thumbnailUrl}
             alt={product.name}
-            loading={lazy ? "lazy" : undefined}
             className="absolute inset-0 w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500"
           />
         ) : (

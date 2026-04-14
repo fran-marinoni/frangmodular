@@ -23,6 +23,20 @@ const Index = () => {
         title="Generación Modular | Mobiliario modular para oficinas desde 1990"
         description="Diseño y fabricación de mobiliario modular para oficinas, espacios educativos, de salud, hospitalidad y retail. Más de 35 años de experiencia en Ecuador."
         canonical="/"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "Generación Modular",
+          url: "https://generacionmodular.com",
+          description: "Diseño y fabricación de mobiliario modular para oficinas desde 1990. Más de 35 años de experiencia en Ecuador.",
+          foundingDate: "1990",
+          areaServed: "EC",
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: "Quito",
+            addressCountry: "EC",
+          },
+        }}
       />
       <Header />
       <main>
