@@ -1,12 +1,12 @@
 /**
- * optimize-chairs-images.js
+ * optimize-assets-images.cjs
  *
  * Convierte recursivamente todas las imágenes (.jpg, .jpeg, .png)
- * dentro de src/assets/1. SILLAS a formato .webp de alta calidad.
+ * dentro de las carpetas de assets a formato .webp de alta calidad.
  *
  * Uso:
- *   node scripts/optimize-chairs-images.js              (solo convierte)
- *   node scripts/optimize-chairs-images.js --delete      (convierte y borra originales)
+ *   node scripts/optimize-chairs-images.cjs              (solo convierte)
+ *   node scripts/optimize-chairs-images.cjs --delete      (convierte y borra originales)
  */
 
 const fs = require("fs");
@@ -15,7 +15,17 @@ const sharp = require("sharp");
 
 // ─── Configuración ───────────────────────────────────────────────────────────
 
-const SOURCE_DIR = path.resolve(__dirname, "..", "src", "assets", "1. SILLAS");
+const ASSETS_DIR = path.resolve(__dirname, "..", "src", "assets");
+const SOURCE_DIRS = [
+  "1. SILLAS",
+  "2. ESTACIONES",
+  "3. FLEXIBLE SPACES",
+  "4. ARCHIVO",
+  "5. BOOTHS",
+  "6. REVESTIMIENTOS",
+  "7. EDUCACIÓN",
+  "8. ACCESORIOS",
+].map((name) => path.join(ASSETS_DIR, name)).filter((dir) => fs.existsSync(dir));
 const VALID_EXTENSIONS = new Set([".jpg", ".jpeg", ".png"]);
 const WEBP_QUALITY = 85; // Balance ideal entre peso y calidad visual premium
 const DELETE_ORIGINALS = process.argv.includes("--delete");
@@ -125,23 +135,23 @@ async function processBatch(images, concurrency) {
 
 async function main() {
   console.log("═══════════════════════════════════════════════════════════");
-  console.log("  Optimización de imágenes — src/assets/1. SILLAS");
+  console.log("  Optimización de imágenes — src/assets/*");
   console.log("═══════════════════════════════════════════════════════════");
   console.log(`  Calidad WebP: ${WEBP_QUALITY}`);
   console.log(`  Concurrencia: ${CONCURRENCY}`);
   console.log(`  Borrar originales: ${DELETE_ORIGINALS ? "SÍ" : "NO"}`);
+  console.log(`  Carpetas: ${SOURCE_DIRS.map((d) => path.basename(d)).join(", ")}`);
   console.log("═══════════════════════════════════════════════════════════\n");
 
-  // Verificar que la carpeta existe
-  if (!fs.existsSync(SOURCE_DIR)) {
-    console.error(`ERROR: No se encontró la carpeta: ${SOURCE_DIR}`);
-    process.exit(1);
-  }
-
-  // Recolectar imágenes
+  // Recolectar imágenes de todas las carpetas
   console.log("Escaneando imágenes...\n");
-  const images = collectImages(SOURCE_DIR);
-  console.log(`Encontradas: ${images.length} imágenes\n`);
+  const images = [];
+  for (const dir of SOURCE_DIRS) {
+    const found = collectImages(dir);
+    console.log(`  ${path.basename(dir)}: ${found.length} imágenes`);
+    images.push(...found);
+  }
+  console.log(`\nTotal: ${images.length} imágenes\n`);
 
   if (images.length === 0) {
     console.log("No hay imágenes para procesar.");
@@ -172,7 +182,7 @@ async function main() {
       skipped++;
       if (data.reason) {
         console.log(
-          `  ⊘ SKIP (${data.reason}): ${path.relative(SOURCE_DIR, data.filePath)}`
+          `  ⊘ SKIP (${data.reason}): ${path.relative(ASSETS_DIR, data.filePath)}`
         );
       }
       continue;
@@ -182,7 +192,7 @@ async function main() {
     totalOriginalSize += data.originalSize;
     totalNewSize += data.newSize;
 
-    const rel = path.relative(SOURCE_DIR, data.filePath);
+    const rel = path.relative(ASSETS_DIR, data.filePath);
     console.log(
       `  ✓ ${rel}  ${formatBytes(data.originalSize)} → ${formatBytes(data.newSize)}  (−${data.reduction})`
     );
