@@ -21,7 +21,14 @@ const chairCategoryLinks: Record<string, string> = {
   "Barra": "/sillas/barra",
   "Lounge: Sofas y Poltronas": "/sillas/lounge",
   "Estadio": "/sillas/estadio",
+  "Qoni": "/estaciones/qoni",
+  "Obliq Madera": "/estaciones/obliq-madera",
+  "Obliq Metal": "/estaciones/obliq-metal",
   "Legan": "/estaciones/legan",
+  "Wyre": "/estaciones/wyre",
+  "Executive": "/estaciones/executive",
+  "Ergoflex": "/estaciones/ergoflex",
+  "Home Office": "/estaciones/home-office",
 };
 
 const productCategories = [
@@ -34,7 +41,7 @@ const productCategories = [
   {
     number: "02",
     title: "Estaciones.",
-    items: ["Qoni", "Obliq", "Legan", "Wyre", "Ergoflex", "Home Office"],
+    items: ["Qoni", "Obliq Madera", "Obliq Metal", "Legan", "Wyre", "Executive", "Ergoflex", "Home Office"],
   },
   {
     number: "03",
