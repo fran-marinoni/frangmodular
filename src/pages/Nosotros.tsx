@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import FooterSection from "@/components/home/FooterSection";
@@ -65,7 +66,7 @@ const Nosotros = () => {
               src={workersImg}
               alt="Trabajadores"
               loading="lazy"
-              className="w-[688px] h-[662px] object-cover"
+              className="w-full h-[662px] object-cover object-right"
             />
           </div>
 
@@ -209,9 +210,12 @@ const Nosotros = () => {
         <h2 className="text-3xl md:text-5xl font-black leading-tight mb-8">
           35 años dando vida<br />a tus proyectos.
         </h2>
-        <button className="bg-primary text-primary-foreground text-[11px] font-bold px-8 py-3 rounded-[10px] border-2 border-foreground hover:bg-primary/80 hover:-translate-y-1 transition-all duration-200 tracking-wider">
+        <Link
+          to="/contacto"
+          className="bg-primary text-primary-foreground text-[11px] font-bold px-8 py-3 rounded-[10px] border-2 border-foreground hover:bg-primary/80 hover:-translate-y-1 transition-all duration-200 tracking-wider"
+        >
           Cuéntanos tu proyecto
-        </button>
+        </Link>
       </section>
 
       <FooterSection />

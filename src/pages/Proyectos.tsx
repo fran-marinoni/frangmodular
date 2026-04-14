@@ -1,5 +1,5 @@
 import { ArrowRight } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import FooterSection from "@/components/home/FooterSection";
@@ -88,9 +88,9 @@ const Proyectos = () => {
                 <h3 className="font-display text-lg md:text-xl font-black text-foreground whitespace-pre-line leading-tight mb-4">
                   {service.title}
                 </h3>
-                <button className="self-start bg-primary text-primary-foreground text-[10px] font-bold px-5 py-2 border-2 border-foreground hover:bg-primary/80 transition-colors tracking-wider mt-auto rounded-[8px]">
+                <Link to="/coming-soon" className="self-start bg-primary text-primary-foreground text-[10px] font-bold px-5 py-2 border-2 border-foreground hover:bg-primary/80 transition-colors tracking-wider mt-auto rounded-[8px]">
                   Ver más
-                </button>
+                </Link>
               </div>
             ))}
           </div>
@@ -106,9 +106,9 @@ const Proyectos = () => {
                   <h3 className="font-display text-lg font-black text-foreground whitespace-pre-line leading-tight mb-3">
                     {service.title}
                   </h3>
-                  <button className="self-start bg-primary text-primary-foreground text-[10px] font-bold px-5 py-2 border-2 border-foreground hover:bg-primary/80 transition-colors tracking-wider rounded-[8px]">
+                  <Link to="/coming-soon" className="self-start bg-primary text-primary-foreground text-[10px] font-bold px-5 py-2 border-2 border-foreground hover:bg-primary/80 transition-colors tracking-wider rounded-[8px]">
                     Ver más
-                  </button>
+                  </Link>
                 </div>
               </div>
             ))}

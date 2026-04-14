@@ -15,9 +15,14 @@ const FooterSection = () => {
           </h3>
           <div className="flex items-center gap-5">
             <span className="font-bold text-lg md:text-xl tracking-wide text-foreground">098-747-8458</span>
-            <button className="bg-primary text-primary-foreground text-[11px] font-bold px-8 py-3 rounded-[10px] border-2 border-foreground hover:bg-primary/80 hover:-translate-y-1 transition-all duration-200 tracking-wider">
+            <a
+              href="https://wa.me/593987478458?text=Hola%2C%20me%20interesa%20conocer%20más%20sobre%20sus%20productos%20de%20mobiliario."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-primary text-primary-foreground text-[11px] font-bold px-8 py-3 rounded-[10px] border-2 border-foreground hover:bg-primary/80 hover:-translate-y-1 transition-all duration-200 tracking-wider"
+            >
               Whatsapp
-            </button>
+            </a>
           </div>
         </div>
       </section>
@@ -32,7 +37,7 @@ const FooterSection = () => {
                 <img src={footerLogo} alt="Generación Modular" width={120} height={32} className="h-8 object-contain" />
               </div>
               <div className="flex items-center gap-3 mb-6">
-                <a href="#" aria-label="Instagram" className="hover:opacity-80 transition-opacity">
+                <a href="https://www.instagram.com/generacion.modular/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hover:opacity-80 transition-opacity">
                   <img src={igIcon} alt="" width={18} height={18} className="w-[18px] h-[18px] object-contain" />
                 </a>
                 <a href="#" aria-label="Pinterest" className="hover:opacity-80 transition-opacity">
@@ -79,11 +84,11 @@ const FooterSection = () => {
             <div className="md:col-span-4">
               <h4 className="font-bold text-[12px] mb-3 tracking-wide">Mapa del sitio</h4>
               <ul className="text-[10px] opacity-70 space-y-2">
-                <li><a href="/productos/apollo" className="hover:opacity-100 transition-opacity">Productos</a></li>
-                <li><a href="#" className="hover:opacity-100 transition-opacity">Proyectos</a></li>
-                <li><a href="#" className="hover:opacity-100 transition-opacity">Nosotros</a></li>
-                <li><a href="#" className="hover:opacity-100 transition-opacity">Blog</a></li>
-                <li><a href="#" className="hover:opacity-100 transition-opacity">Contacto</a></li>
+                <li><a href="/sillas" className="hover:opacity-100 transition-opacity">Productos</a></li>
+                <li><a href="/proyectos" className="hover:opacity-100 transition-opacity">Proyectos</a></li>
+                <li><a href="/nosotros" className="hover:opacity-100 transition-opacity">Nosotros</a></li>
+                <li><a href="/blog" className="hover:opacity-100 transition-opacity">Blog</a></li>
+                <li><a href="/contacto" className="hover:opacity-100 transition-opacity">Contacto</a></li>
               </ul>
             </div>
           </div>

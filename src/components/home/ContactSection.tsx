@@ -34,10 +34,10 @@ const ContactSection = () => {
           </div>
 
           <div className="flex justify-center gap-3">
-            <a href="#" className="text-xs font-bold bg-[#333333] text-white px-4 py-2 rounded-[10px] border border-foreground hover:opacity-90 transition-opacity">
+            <a href="/contacto" className="text-xs font-bold bg-[#333333] text-white px-4 py-2 rounded-[10px] border border-foreground hover:opacity-90 transition-opacity">
               Load more
             </a>
-            <a href="#" className="text-xs font-bold bg-[#528BCC] text-white px-4 py-2 rounded-[10px] border border-foreground hover:opacity-90 transition-opacity">
+            <a href="https://www.instagram.com/generacion.modular/" target="_blank" rel="noopener noreferrer" className="text-xs font-bold bg-[#528BCC] text-white px-4 py-2 rounded-[10px] border border-foreground hover:opacity-90 transition-opacity">
               Follow on Instagram
             </a>
           </div>

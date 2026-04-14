@@ -509,6 +509,14 @@ export function getVariantImagePaths(assetFolder: string): {
     groups[cat].push(p);
   }
 
+  // Prefer PNG (transparent bg) over JPG when both exist in gallery
+  const hasPNG = groups.gallery.some((p) => p.toUpperCase().includes("/PNG/"));
+  if (hasPNG) {
+    groups.gallery = groups.gallery.filter((p) =>
+      p.toUpperCase().includes("/PNG/")
+    );
+  }
+
   for (const k of Object.keys(groups)) groups[k].sort();
 
   return {

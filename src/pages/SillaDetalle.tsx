@@ -81,13 +81,16 @@ const ChairDetailContent = memo(function ChairDetailContent({
   onVariantChange: (id: string) => void;
 }) {
   const [mainImageIndex, setMainImageIndex] = useState(0);
+  const [selectedAmbientada, setSelectedAmbientada] = useState<number | null>(null);
   const [openAccordion, setOpenAccordion] = useState<string | null>(null);
   const [activeFeature, setActiveFeature] = useState<number | null>(null);
 
   // Resolve all images for this variant — no blocking loader
   const { gallery, ambientadas, colores } = useResolvedChairImages(activeVariant.assetFolder);
 
-  const currentMainImage = gallery[mainImageIndex] || gallery[0] || "";
+  const currentMainImage = selectedAmbientada !== null
+    ? ambientadas[selectedAmbientada]
+    : gallery[mainImageIndex] || gallery[0] || "";
 
   const toggleAccordion = useCallback((name: string) => {
     setOpenAccordion((prev) => (prev === name ? null : name));
@@ -141,9 +144,12 @@ const ChairDetailContent = memo(function ChairDetailContent({
             <div className="flex gap-3 mt-1 md:mt-2 justify-center">
               {ambientadas.length > 0
                 ? ambientadas.map((thumb, i) => (
-                    <div
+                    <button
                       key={i}
-                      className="w-11 h-11 md:w-14 md:h-14 border border-border overflow-hidden"
+                      onClick={() => { setSelectedAmbientada(i); setMainImageIndex(0); }}
+                      className={`w-11 h-11 md:w-14 md:h-14 border overflow-hidden ${
+                        selectedAmbientada === i ? "border-primary" : "border-border"
+                      }`}
                     >
                       <img
                         src={thumb}
@@ -153,14 +159,14 @@ const ChairDetailContent = memo(function ChairDetailContent({
                         loading="lazy"
                         className="w-full h-full object-cover"
                       />
-                    </div>
+                    </button>
                   ))
                 : gallery.slice(0, 3).map((thumb, i) => (
                     <button
                       key={i}
-                      onClick={() => setMainImageIndex(i)}
+                      onClick={() => { setMainImageIndex(i); setSelectedAmbientada(null); }}
                       className={`w-11 h-11 md:w-14 md:h-14 border overflow-hidden ${
-                        mainImageIndex === i ? "border-primary" : "border-border"
+                        mainImageIndex === i && selectedAmbientada === null ? "border-primary" : "border-border"
                       }`}
                     >
                       <img

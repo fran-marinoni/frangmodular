@@ -8,6 +8,7 @@ import PreloadScreen from "@/components/PreloadScreen";
 import SectionLoader from "@/components/SectionLoader";
 import Index from "./pages/Index.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import ComingSoon from "./pages/ComingSoon.tsx";
 
 // Lazy-loaded routes
 const ApolloProduct = lazy(() => import("./pages/ApolloProduct.tsx"));
@@ -73,7 +74,8 @@ const App = () => {
             <Route path="/admin/products/new" element={<LazyRoute><ProtectedRoute><AdminProductEditor /></ProtectedRoute></LazyRoute>} />
             <Route path="/admin/products/edit/:id" element={<LazyRoute><ProtectedRoute><AdminProductEditor /></ProtectedRoute></LazyRoute>} />
             <Route path="/productos/:slug" element={<LazyRoute><DynamicProduct /></LazyRoute>} />
-            <Route path="*" element={<NotFound />} />
+            <Route path="/coming-soon" element={<ComingSoon />} />
+            <Route path="*" element={<ComingSoon />} />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>

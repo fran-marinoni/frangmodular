@@ -182,7 +182,7 @@ const ProyectoDetalle = () => {
             </h3>
             <span className="font-bold text-lg md:text-xl tracking-wide">098-747-8458</span>
             <a
-              href="https://wa.me/5939877490249"
+              href="https://wa.me/593987478458?text=Hola%2C%20me%20interesa%20cotizar%20un%20proyecto%20de%20mobiliario."
               target="_blank"
               rel="noopener noreferrer"
               className="bg-primary-foreground text-foreground text-[11px] font-bold px-8 py-3 rounded-[10px] border-2 border-primary-foreground hover:opacity-90 hover:-translate-y-1 transition-all duration-200 tracking-wider"

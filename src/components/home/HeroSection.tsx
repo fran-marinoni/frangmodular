@@ -100,12 +100,12 @@ const HeroSection = () => {
                   <span className="font-normal italic">but</span> tec.
                 </h1>
                 <p className="text-sm md:text-base font-bold text-foreground mt-3 tracking-wide">desde 1990.</p>
-                <Link
-                  to="/productos/apollo"
+                <button
+                  onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); window.dispatchEvent(new Event('open-products-menu')); }}
                   className="mt-5 inline-block bg-primary text-primary-foreground text-[11px] font-bold px-8 py-3 rounded-[10px] border-2 border-foreground hover:bg-primary/80 hover:-translate-y-1 transition-all duration-200 tracking-wider"
                 >
                   Compra ahora
-                </Link>
+                </button>
               </div>
               <div className="absolute right-[5%] md:right-[10%] lg:right-[12%] xl:right-[14%] bottom-0 z-[5]">
                 <img

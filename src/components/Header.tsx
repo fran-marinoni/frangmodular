@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown, ChevronUp } from "lucide-react";
 import logo from "@/assets/logo.webp";
-import productsChairImg from "@/assets/1. SILLAS/1. EJECUTIVAS/1. DELPHI/509MAA49VP FL_1-AndresArellano.webp";
+import productsChairImg from "@/assets/1. SILLAS/1. EJECUTIVAS/1. DELPHI/509MAA49VP FL_1-AndresArellano-nobg.webp";
 import productsOfficeImg from "@/assets/products-menu-office.webp";
 
 const navLinks = [
@@ -126,6 +126,12 @@ const Header = () => {
   const location = useLocation();
 
   useEffect(() => {
+    const handler = () => setProductsOpen(true);
+    window.addEventListener("open-products-menu", handler);
+    return () => window.removeEventListener("open-products-menu", handler);
+  }, []);
+
+  useEffect(() => {
     if (productsOpen || mobileOpen) {
       document.body.style.overflow = "hidden";
     } else {
@@ -202,13 +208,13 @@ const Header = () => {
           >
             <div className="grid grid-cols-[1fr_1.2fr_1fr_1fr] border-border">
               {/* Column 1: Sillas + image */}
-              <div className="border-r border-border">
+              <div className="border-r border-border flex flex-col">
                 <div className="p-6 pb-4">
-                  <div className="flex items-baseline gap-2 mb-3">
+                  <div className="flex items-baseline gap-2 mb-2">
                     <span className="text-3xl font-black">01</span>
                   </div>
-                   <Link to="/sillas" onClick={() => setProductsOpen(false)} className="text-2xl font-black mb-3 block hover:text-primary transition-colors">Sillas.</Link>
-                  <ul className="space-y-1">
+                   <Link to="/sillas" onClick={() => setProductsOpen(false)} className="text-2xl font-black mb-2 block hover:text-primary transition-colors">Sillas.</Link>
+                  <ul className="space-y-0.5">
                     {productCategories[0].items.map((item) => {
                       const href = chairCategoryLinks[item];
                       return (
@@ -223,13 +229,12 @@ const Header = () => {
                     })}
                   </ul>
                 </div>
-                <div className="relative h-48 overflow-hidden">
+                <div className="flex items-center justify-center">
                   <img
                     src={productsChairImg}
                     alt="Silla ejecutiva"
-                    width={300}
-                    height={192}
-                    className="absolute bottom-0 left-0 w-full h-auto object-contain"
+                    style={{ width: 321, height: 279 }}
+                    className="object-contain"
                   />
                 </div>
               </div>
@@ -246,11 +251,11 @@ const Header = () => {
                   />
                 </div>
                 <div className="p-6">
-                  <div className="flex items-baseline gap-2 mb-3">
+                  <div className="flex items-baseline gap-2 mb-2">
                     <span className="text-3xl font-black">02</span>
                   </div>
-                  <h3 className="text-2xl font-black mb-3">Estaciones.</h3>
-                  <ul className="space-y-1">
+                  <h3 className="text-2xl font-black mb-2">Estaciones.</h3>
+                  <ul className="space-y-0.5">
                     {productCategories[1].items.map((item) => {
                       const href = chairCategoryLinks[item];
                       return (

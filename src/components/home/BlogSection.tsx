@@ -1,8 +1,9 @@
+import { Link } from "react-router-dom";
 import blogImage from "@/assets/home/blog-image.webp";
 
 const BlogSection = () => {
   return (
-    <section className="border-t border-border">
+    <Link to="/blog" className="block border-t border-border hover:bg-muted/50 transition-colors">
       <div className="flex flex-col md:flex-row md:items-stretch md:h-[204px]">
         {/* "Blog." — left */}
         <div className="flex items-center px-6 md:px-8 py-6 md:py-0">
@@ -29,7 +30,7 @@ const BlogSection = () => {
           <img src={blogImage} alt="Artículo Back to the 90s" loading="lazy" width={245} height={204} className="w-full h-full object-cover" />
         </div>
       </div>
-    </section>
+    </Link>
   );
 };
 
