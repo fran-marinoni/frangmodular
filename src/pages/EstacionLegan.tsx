@@ -1,10 +1,8 @@
 import { useState, useCallback } from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import RelatedProducts from "@/components/RelatedProducts";
-import SectionLoader from "@/components/SectionLoader";
-import { useImagePreloader } from "@/hooks/useImagePreloader";
 
 // Ambient photos
 import fotoA from "@/assets/2. ESTACIONES/3. LEGAN/Fotos/A.webp";
@@ -31,15 +29,22 @@ const configImages = [
   { src: configMesa3, label: "Mesa de Reuniones" },
 ];
 
-const ambientPhotos = [fotoB, fotoC, fotoD];
-
 const EstacionLegan = () => {
   const [openAccordion, setOpenAccordion] = useState<string | null>(null);
+  const [carouselIndex, setCarouselIndex] = useState(0);
 
   const toggleAccordion = useCallback(
     (name: string) => setOpenAccordion((prev) => (prev === name ? null : name)),
     []
   );
+
+  const prevSlide = useCallback(() => {
+    setCarouselIndex((prev) => (prev === 0 ? configImages.length - 1 : prev - 1));
+  }, []);
+
+  const nextSlide = useCallback(() => {
+    setCarouselIndex((prev) => (prev === configImages.length - 1 ? 0 : prev + 1));
+  }, []);
 
   return (
     <div className="min-h-screen bg-background">
@@ -63,95 +68,136 @@ const EstacionLegan = () => {
               />
             </div>
 
-            {/* Right — Product info */}
+            {/* Right — Product info + config preview */}
             <div className="flex flex-col">
-              {/* Title + Description */}
+              {/* Top: Title + Description + Button */}
               <div className="px-6 py-8 md:py-12 flex-1 flex flex-col justify-center">
                 <h1 className="font-display text-6xl md:text-7xl lg:text-8xl font-black tracking-tight leading-none mb-4">
                   Legan.
                 </h1>
                 <p className="text-xs leading-relaxed text-muted-foreground max-w-sm mb-6">
-                  Legan reúne premisas de modularidad, diseño y cuidado del producto. Tus colaboradores disfrutarán de la comodidad que la tecnología le aporta. Usa un sistema modular para descubrir espacios con valor en tu entorno corporativo.
+                  Legan esta pensada para espacios donde la mesa es el elemento central del proyecto. Sus proporciones y presencia formal lo hacen adecuado tanto para despachos ejecutivos como para salas de reunión corporativas.
                 </p>
+                <div>
+                  <button className="border-2 border-primary text-primary font-bold text-sm px-8 py-2.5 hover:bg-primary hover:text-primary-foreground transition-colors">
+                    Button
+                  </button>
+                </div>
               </div>
 
-              {/* Accordions */}
-              <div className="border-t border-border">
-                {["Complementos", "Materiales", "Colores disponibles"].map((item) => (
-                  <div key={item} className="border-b border-border last:border-b-0">
-                    <button
-                      onClick={() => toggleAccordion(item)}
-                      className="w-full flex items-center justify-between px-6 py-4"
-                    >
-                      <span className="font-extrabold text-sm text-foreground">{item}</span>
-                      <ChevronDown
-                        className={`w-5 h-5 text-primary transition-transform ${
-                          openAccordion === item ? "rotate-180" : ""
-                        }`}
-                      />
-                    </button>
-                    {openAccordion === item && (
-                      <div className="px-6 pb-4">
-                        {item === "Materiales" ? (
-                          <img
-                            src={materiales}
-                            alt="Materiales Legan"
-                            className="w-full max-w-md object-contain"
-                          />
-                        ) : item === "Colores disponibles" ? (
-                          <p className="text-xs text-muted-foreground">
-                            Consulta con nuestro equipo las opciones de color disponibles para Legan.
-                          </p>
-                        ) : (
-                          <p className="text-xs text-muted-foreground">
-                            Información sobre {item.toLowerCase()} del producto Legan.
-                          </p>
-                        )}
-                      </div>
-                    )}
+              {/* Bottom: Accordions left + Config images right */}
+              <div className="border-t border-border grid grid-cols-1 md:grid-cols-2">
+                {/* Accordions */}
+                <div>
+                  {["Características", "Materiales", "Colores disponibles"].map((item) => (
+                    <div key={item} className="border-b border-border last:border-b-0">
+                      <button
+                        onClick={() => toggleAccordion(item)}
+                        className="w-full flex items-center justify-between px-6 py-4"
+                      >
+                        <span className="font-extrabold text-sm text-foreground">{item}</span>
+                        <ChevronDown
+                          className={`w-5 h-5 text-primary transition-transform ${
+                            openAccordion === item ? "rotate-180" : ""
+                          }`}
+                        />
+                      </button>
+                      {openAccordion === item && (
+                        <div className="px-6 pb-4">
+                          {item === "Materiales" ? (
+                            <img
+                              src={materiales}
+                              alt="Materiales Legan"
+                              className="w-full max-w-md object-contain"
+                            />
+                          ) : item === "Colores disponibles" ? (
+                            <p className="text-xs text-muted-foreground">
+                              Consulta con nuestro equipo las opciones de color disponibles para Legan.
+                            </p>
+                          ) : (
+                            <p className="text-xs text-muted-foreground">
+                              Información sobre {item.toLowerCase()} del producto Legan.
+                            </p>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+
+                {/* Config images preview */}
+                <div className="hidden md:grid grid-rows-2 border-l border-border">
+                  <div className="border-b border-border p-4 flex items-center justify-center bg-background">
+                    <img
+                      src={configImages[0].src}
+                      alt={configImages[0].label}
+                      className="w-full h-full object-contain"
+                      loading="lazy"
+                    />
                   </div>
-                ))}
+                  <div className="p-4 flex items-center justify-center bg-background">
+                    <img
+                      src={configImages[1].src}
+                      alt={configImages[1].label}
+                      className="w-full h-full object-contain"
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Configurations Section */}
+        {/* Configurations Carousel Section */}
         <section className="border-t border-border">
           <div className="grid grid-cols-1 md:grid-cols-2 min-h-[70vh]">
-            {/* Left — Ambient photo with tagline */}
-            <div className="relative overflow-hidden min-h-[50vh] md:min-h-0 bg-muted">
-              <img
-                src={fotoB}
-                alt="Espacio Legan"
-                className="w-full h-full object-cover absolute inset-0"
-              />
-              <div className="absolute inset-0 bg-foreground/30" />
-              <div className="absolute bottom-0 left-0 p-8 md:p-12 z-10">
-                <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight">
-                  Nuevos espacios<br />
-                  <span className="italic font-normal">para nuevos</span><br />
-                  líderes.
-                </h2>
+            {/* Left — Tagline + Links + Button */}
+            <div className="flex flex-col justify-end p-8 md:p-12 bg-background">
+              <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-black text-foreground leading-tight mb-8">
+                Nuevos espacios<br />
+                <span className="italic font-normal">para nuevos</span><br />
+                líderes.
+              </h2>
+              <div className="flex items-center gap-6 mb-6">
+                <a href="#" className="text-sm text-foreground underline underline-offset-4 hover:text-primary transition-colors">
+                  Link
+                </a>
+                <a href="#" className="text-sm text-foreground underline underline-offset-4 hover:text-primary transition-colors">
+                  Link
+                </a>
+              </div>
+              <div>
+                <button className="bg-primary text-primary-foreground font-bold text-sm px-10 py-3 hover:bg-primary/90 transition-colors w-full md:w-auto">
+                  Button
+                </button>
               </div>
             </div>
 
-            {/* Right — Configuration grid */}
-            <div className="grid grid-cols-2 grid-rows-2">
-              {configImages.slice(0, 4).map((config, i) => (
-                <div
-                  key={i}
-                  className={`relative overflow-hidden border-border ${
-                    i % 2 === 0 ? "border-r" : ""
-                  } ${i < 2 ? "border-b" : ""}`}
-                >
-                  <img
-                    src={config.src}
-                    alt={config.label}
-                    className="w-full h-full object-contain p-4 bg-background"
-                  />
-                </div>
-              ))}
+            {/* Right — Carousel */}
+            <div className="relative flex items-center justify-center bg-background border-l border-border min-h-[50vh] md:min-h-0">
+              <img
+                src={configImages[carouselIndex].src}
+                alt={configImages[carouselIndex].label}
+                className="w-full h-full object-contain p-8 md:p-12"
+                loading="lazy"
+              />
+
+              {/* Navigation arrows */}
+              <button
+                onClick={prevSlide}
+                className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center text-primary hover:text-primary/80 transition-colors"
+                aria-label="Anterior"
+              >
+                <ChevronLeft className="w-8 h-8" />
+              </button>
+              <button
+                onClick={nextSlide}
+                className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center text-primary hover:text-primary/80 transition-colors"
+                aria-label="Siguiente"
+              >
+                <ChevronRight className="w-8 h-8" />
+              </button>
             </div>
           </div>
         </section>
