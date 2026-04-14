@@ -6,7 +6,7 @@ import FooterSection from "@/components/home/FooterSection";
 import SectionLoader from "@/components/SectionLoader";
 import { getCategoryBySlug } from "@/lib/projectsData";
 import { useResolvedImages } from "@/hooks/useResolvedImage";
-import { useImagePreloader } from "@/hooks/useImagePreloader";
+import { useCriticalImagePreloader } from "@/hooks/useImagePreloader";
 import NotFound from "@/pages/NotFound";
 
 const ProyectoCategoria = () => {
@@ -18,13 +18,13 @@ const ProyectoCategoria = () => {
   const imagePaths = items.map((item) => item.image);
   const resolvedImages = useResolvedImages(imagePaths);
 
-  // Collect resolved URLs for preloading
+  // Only preload the first 3 visible thumbnails (above-fold in grid)
   const resolvedUrls = useMemo(
     () => imagePaths.map((p) => resolvedImages[p]).filter(Boolean),
     [resolvedImages, imagePaths.length]
   );
 
-  const imagesReady = useImagePreloader(resolvedUrls, 1200);
+  const imagesReady = useCriticalImagePreloader(resolvedUrls, 3, 400);
 
   if (!data || !year || !data.years.includes(year)) return <NotFound />;
 
@@ -64,6 +64,7 @@ const ProyectoCategoria = () => {
                       <img
                         src={resolvedImages[item.image]}
                         alt={item.name}
+                        loading={i < 3 ? undefined : "lazy"}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                     )}

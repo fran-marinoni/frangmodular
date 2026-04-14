@@ -5,7 +5,7 @@ import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import SectionLoader from "@/components/SectionLoader";
 import { chairCategories, getProductBySlug, getVariantImagePaths, resolveChairImage, ChairCategory } from "@/lib/chairsData";
-import { useImagePreloader } from "@/hooks/useImagePreloader";
+import { useCriticalImagePreloader } from "@/hooks/useImagePreloader";
 
 const Sillas = () => {
   const [thumbnails, setThumbnails] = useState<Record<string, string[]>>({});
@@ -37,11 +37,12 @@ const Sillas = () => {
     return () => { cancelled = true; };
   }, []);
 
+  // Only preload first 2 category rows (6 images) for fast above-fold
   const allUrls = useMemo(
     () => Object.values(thumbnails).flat().filter(Boolean),
     [thumbnails]
   );
-  const imagesReady = useImagePreloader(allUrls, 800);
+  const imagesReady = useCriticalImagePreloader(allUrls, 6, 300);
   const showLoader = resolving || !imagesReady;
 
   return (
@@ -97,6 +98,7 @@ const CategoryRow = memo(function CategoryRow({
               <img
                 src={thumbs[i]}
                 alt={`${category.name} ${i + 1}`}
+                loading="lazy"
                 className="absolute inset-0 w-full h-full object-contain p-4"
               />
             ) : (

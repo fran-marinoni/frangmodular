@@ -4,7 +4,7 @@ import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import RelatedProducts from "@/components/RelatedProducts";
 import SectionLoader from "@/components/SectionLoader";
-import { useImagePreloader } from "@/hooks/useImagePreloader";
+import { useCriticalImagePreloader } from "@/hooks/useImagePreloader";
 
 // Ambient photos
 import fotoA from "@/assets/2. ESTACIONES/3. LEGAN/Fotos/A.webp";
@@ -37,7 +37,8 @@ const EstacionLegan = () => {
   const [openAccordion, setOpenAccordion] = useState<string | null>(null);
 
   const allImages = [heroPhoto, ...configImages.map((c) => c.src), ...ambientPhotos, materiales];
-  const imagesReady = useImagePreloader(allImages, 800);
+  // Only wait for the hero photo to render the page
+  const imagesReady = useCriticalImagePreloader(allImages, 1, 300);
 
   const toggleAccordion = useCallback(
     (name: string) => setOpenAccordion((prev) => (prev === name ? null : name)),
@@ -108,6 +109,7 @@ const EstacionLegan = () => {
                           <img
                             src={materiales}
                             alt="Materiales Legan"
+                loading="lazy"
                             className="w-full max-w-md object-contain"
                           />
                         ) : item === "Colores disponibles" ? (
@@ -136,6 +138,7 @@ const EstacionLegan = () => {
               <img
                 src={fotoB}
                 alt="Espacio Legan"
+                loading="lazy"
                 className="w-full h-full object-cover absolute inset-0"
               />
               <div className="absolute inset-0 bg-foreground/30" />
@@ -160,6 +163,7 @@ const EstacionLegan = () => {
                   <img
                     src={config.src}
                     alt={config.label}
+                loading="lazy"
                     className="w-full h-full object-contain p-4 bg-background"
                   />
                 </div>

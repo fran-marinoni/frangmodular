@@ -7,7 +7,7 @@ import Header from "@/components/Header";
 import FooterSection from "@/components/home/FooterSection";
 import { getProjectBySlug, getProjectImagePaths } from "@/lib/projectsData";
 import { useResolvedImages } from "@/hooks/useResolvedImage";
-import { useImagePreloader } from "@/hooks/useImagePreloader";
+import { useCriticalImagePreloader } from "@/hooks/useImagePreloader";
 import SectionLoader from "@/components/SectionLoader";
 import NotFound from "@/pages/NotFound";
 
@@ -21,14 +21,13 @@ const ProyectoDetalle = () => {
 
   const resolvedImages = useResolvedImages(allImagePaths);
 
-  // Collect all resolved URLs for preloading
-  const resolvedUrls = useMemo(
-    () => allImagePaths.map((p) => resolvedImages[p]).filter(Boolean),
-    [resolvedImages, allImagePaths.length]
+  // Only preload the first 2 fixed (above-fold) images for fast rendering
+  const fixedUrls = useMemo(
+    () => fixedPaths.map((p) => resolvedImages[p]).filter(Boolean),
+    [resolvedImages, fixedPaths.length]
   );
 
-  // Wait for all images to be in browser cache
-  const imagesReady = useImagePreloader(resolvedUrls, 1200);
+  const heroReady = useCriticalImagePreloader(fixedUrls, 2, 400);
 
   // Carousel
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
@@ -86,7 +85,7 @@ const ProyectoDetalle = () => {
           </div>
         </section>
 
-        {!imagesReady ? (
+        {!heroReady ? (
           <SectionLoader label="Cargando proyecto" />
         ) : (
           <>
@@ -126,6 +125,7 @@ const ProyectoDetalle = () => {
                             <img
                               src={resolvedImages[path] || "/placeholder.svg"}
                               alt={`${displayName} - Slide ${i + 1}`}
+                              loading="lazy"
                               className="w-full h-[350px] md:h-[450px] lg:h-[520px] object-cover"
                             />
                           </div>

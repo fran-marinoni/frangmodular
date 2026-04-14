@@ -4,7 +4,7 @@ import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import RelatedProducts from "@/components/RelatedProducts";
 import SectionLoader from "@/components/SectionLoader";
-import { useImagePreloader } from "@/hooks/useImagePreloader";
+import { useCriticalImagePreloader } from "@/hooks/useImagePreloader";
 
 // Ambient photos
 import foto1 from "@/assets/2. ESTACIONES/1. QONI/Fotos/1.webp";
@@ -36,7 +36,7 @@ const ambientPhotos = [foto2, foto3, foto4, foto5];
 const EstacionQoni = () => {
   const [openAccordion, setOpenAccordion] = useState<string | null>(null);
   const allImages = [heroPhoto, ...configImages.map((c) => c.src), ...ambientPhotos, materiales];
-  const imagesReady = useImagePreloader(allImages, 800);
+  const imagesReady = useCriticalImagePreloader(allImages, 1, 300);
   const toggleAccordion = useCallback(
     (name: string) => setOpenAccordion((prev) => (prev === name ? null : name)),
     []

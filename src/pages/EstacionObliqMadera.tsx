@@ -4,7 +4,7 @@ import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import RelatedProducts from "@/components/RelatedProducts";
 import SectionLoader from "@/components/SectionLoader";
-import { useImagePreloader } from "@/hooks/useImagePreloader";
+import { useCriticalImagePreloader } from "@/hooks/useImagePreloader";
 
 import fotoA from "@/assets/2. ESTACIONES/2. OBLIQ/1. MADERA/Fotos/A.webp";
 import fotoB from "@/assets/2. ESTACIONES/2. OBLIQ/1. MADERA/Fotos/B.webp";
@@ -29,7 +29,7 @@ const ambientPhotos = [fotoB, fotoC];
 const EstacionObliqMadera = () => {
   const [openAccordion, setOpenAccordion] = useState<string | null>(null);
   const allImages = [heroPhoto, ...configImages.map((c) => c.src), ...ambientPhotos, materiales];
-  const imagesReady = useImagePreloader(allImages, 800);
+  const imagesReady = useCriticalImagePreloader(allImages, 1, 300);
   const toggleAccordion = useCallback(
     (name: string) => setOpenAccordion((prev) => (prev === name ? null : name)),
     []
