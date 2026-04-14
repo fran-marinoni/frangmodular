@@ -14,10 +14,20 @@ const navLinks = [
   { label: "CONTACTO", to: "/contacto" },
 ];
 
+const chairCategoryLinks: Record<string, string> = {
+  "Ejecutivas": "/sillas/ejecutivas",
+  "Operativas": "/sillas/operativas",
+  "Visitas": "/sillas/visitas",
+  "Barra": "/sillas/barra",
+  "Lounge: Sofas y Poltronas": "/sillas/lounge",
+  "Estadio": "/sillas/estadio",
+};
+
 const productCategories = [
   {
     number: "01",
     title: "Sillas.",
+    titleLink: "/sillas",
     items: ["Ejecutivas", "Operativas", "Visitas", "Barra", "Lounge: Sofas y Poltronas", "Estadio"],
   },
   {
