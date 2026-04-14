@@ -1,13 +1,28 @@
 import { useParams, Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
-import { getChairBySlugs, getChairImagePaths } from "@/lib/chairsData";
-import { useResolvedImages } from "@/hooks/useResolvedImage";
-import { resolveChairImage } from "@/lib/chairsData";
+import RelatedProducts from "@/components/RelatedProducts";
+import { getChairBySlugs, getChairImagePaths, resolveChairImage } from "@/lib/chairsData";
 import NotFound from "@/pages/NotFound";
-import { useEffect } from "react";
+
+// Reuse the same feature assets as Apollo
+import chairFeatures from "@/assets/chair-features.webp";
+import chairFeature1 from "@/assets/chair-feature-1.webp";
+import chairFeature2 from "@/assets/chair-feature-2.webp";
+import chairFeature3 from "@/assets/chair-feature-3.webp";
+import chairFeature4 from "@/assets/chair-feature-4.webp";
+
+const featureImages = [chairFeature1, chairFeature2, chairFeature3, chairFeature4];
+const featureItems = [
+  { num: "1", label: "Cabecero." },
+  { num: "2", label: "Apoya brazos fijos." },
+  { num: "3", label: "Mecanismo Knee Tilt." },
+  { num: "4", label: "Base de aluminio negro." },
+];
+
+const categories = ["VISITA", "EJECUTIVA", "OPERATIVA"];
 
 const SillaDetalle = () => {
   const { category, slug } = useParams();
@@ -22,7 +37,7 @@ const SillaDetalle = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title={`${chair.name} – Silla ${cat.name.toLowerCase()} | Generación Modular`}
-        description={chair.description}
+        description={`Silla ${cat.name.toLowerCase()} ${chair.name} de Generación Modular. Diseño ergonómico con cabecero, apoyabrazos fijos, mecanismo Knee Tilt y base de aluminio.`}
         canonical={`/sillas/${cat.slug}/${chair.slug}`}
         ogType="product"
       />
@@ -33,6 +48,7 @@ const SillaDetalle = () => {
           category={cat}
           imagePaths={imagePaths}
         />
+        <RelatedProducts />
       </main>
     </div>
   );
@@ -47,8 +63,10 @@ function ChairDetailContent({
   category: { name: string; slug: string };
   imagePaths: ReturnType<typeof getChairImagePaths>;
 }) {
+  const [activeCategory, setActiveCategory] = useState("EJECUTIVA");
   const [mainImageIndex, setMainImageIndex] = useState(0);
   const [openAccordion, setOpenAccordion] = useState<string | null>(null);
+  const [activeFeature, setActiveFeature] = useState<number | null>(null);
 
   // Resolve images
   const mainPaths = imagePaths.main.slice(0, 6);
@@ -69,11 +87,103 @@ function ChairDetailContent({
 
   const currentMainImage = resolvedMain[mainImageIndex] || resolvedMain[0] || "";
 
-  const accordionSections = [
-    { title: "Garantía", content: `Información sobre la garantía de ${chair.name}.` },
-    { title: "Certificados", content: `Información sobre certificados de ${chair.name}.` },
-    { title: "Catálogo", content: `Descarga el catálogo de ${chair.name}.` },
-  ];
+  const toggleAccordion = (name: string) => {
+    setOpenAccordion(openAccordion === name ? null : name);
+  };
+
+  const renderDetailsContent = () => (
+    <>
+      {/* Descripción */}
+      <div className="px-6 py-6 border-b border-border">
+        <p className="text-xs leading-relaxed text-muted-foreground max-w-md">
+          Diseñada para impresionar y brindar el máximo confort, esta silla ejecutiva combina
+          elegancia con funcionalidad. Su tapizado en piel, respaldo alto con cabecera y base de
+          aluminio la convierten en la opción ideal para espacios ejecutivos donde el estilo y el
+          bienestar van de la mano. Así es {chair.name}.
+        </p>
+      </div>
+
+      {/* Características */}
+      <div className="px-6 py-6 border-b border-border">
+        <h3 className="font-extrabold text-base mb-4 text-foreground">Características:</h3>
+        <div
+          className="flex gap-6 items-start"
+          onMouseLeave={() => setActiveFeature(null)}
+        >
+          <div className="relative w-40 h-40 flex-shrink-0">
+            {/* Default image */}
+            <img
+              src={chairFeatures}
+              alt="Diagrama de características"
+              width={180}
+              height={180}
+              className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-300 ${activeFeature === null ? "opacity-100" : "opacity-0"}`}
+            />
+            {/* Feature images */}
+            {featureImages.map((img, i) => (
+              <img
+                key={i}
+                src={img}
+                alt={`Característica ${i + 1}`}
+                width={180}
+                height={180}
+                className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-300 ${activeFeature === i ? "opacity-100" : "opacity-0"}`}
+              />
+            ))}
+          </div>
+          <ul className="text-xs w-full">
+            {featureItems.map((item, i) => (
+              <li
+                key={i}
+                onMouseEnter={() => setActiveFeature(i)}
+                onTouchEnd={(e) => {
+                  e.preventDefault();
+                  setActiveFeature(activeFeature === i ? null : i);
+                }}
+                className={`cursor-pointer transition-colors duration-200 select-none py-3 px-3 -mx-2 rounded min-h-[44px] flex items-center ${activeFeature === i ? "text-primary font-bold bg-primary/5" : ""}`}
+              >
+                <span className="text-primary font-bold mr-1">{item.num}.</span> {item.label}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      {/* Colores disponibles */}
+      <div className="px-6 py-6 border-b border-border">
+        <h3 className="font-extrabold text-base mb-3 text-foreground">Colores disponibles:</h3>
+        <div className="flex gap-3">
+          <div className="w-16 h-12 rounded-sm" style={{ backgroundColor: "#B5ADBA" }} />
+          <div className="w-16 h-12 rounded-sm" style={{ backgroundColor: "#1E1E1E" }} />
+          <div className="w-16 h-12 rounded-sm" style={{ backgroundColor: "#E9E9E9" }} />
+        </div>
+      </div>
+
+      {/* Accordion sections */}
+      <div className="flex flex-col">
+        {["Garantía", "Certificados", "Catálogo"].map((item) => (
+          <div key={item} className={`${item !== "Catálogo" ? "border-b border-border" : ""}`}>
+            <button
+              onClick={() => toggleAccordion(item)}
+              className="w-full flex items-center justify-between px-6 py-3"
+            >
+              <span className="font-extrabold text-sm text-foreground">{item}</span>
+              <ChevronDown
+                className={`w-5 h-5 text-primary transition-transform ${
+                  openAccordion === item ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+            {openAccordion === item && (
+              <div className="px-6 pb-3 text-xs text-muted-foreground">
+                Información sobre {item.toLowerCase()} del producto {chair.name}.
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </>
+  );
 
   return (
     <>
@@ -81,24 +191,24 @@ function ChairDetailContent({
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 w-full min-h-screen">
           {/* Left Column */}
           <div className="px-4 md:px-6 py-3 md:py-4 md:border-r border-border flex flex-col justify-center min-h-0">
-            {/* Breadcrumb */}
-            <div className="flex items-center gap-2 text-xs text-muted-foreground mb-4">
-              <Link to="/sillas" className="hover:text-foreground transition-colors">Sillas</Link>
-              <span>/</span>
-              <Link to={`/sillas/${category.slug}`} className="hover:text-foreground transition-colors">{category.name}</Link>
-              <span>/</span>
-              <span className="text-foreground">{chair.name}</span>
-            </div>
-
             <h1 className="font-display text-6xl md:text-7xl lg:text-8xl xl:text-9xl leading-none mb-2 md:mb-3 font-black tracking-tight text-center">
               {chair.name}.
             </h1>
 
-            {/* Category label */}
-            <div className="flex mt-4 md:mt-6 mb-2 md:mb-3 justify-center w-full">
-              <span className="text-xs tracking-wider font-bold pb-1 border-b-2 border-primary text-foreground uppercase">
-                {category.name}
-              </span>
+            <div className="flex mt-4 md:mt-6 mb-2 md:mb-3 justify-between w-full max-w-xs mx-auto">
+              {categories.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setActiveCategory(cat)}
+                  className={`text-xs tracking-wider font-medium pb-1 transition-all border-b-2 ${
+                    activeCategory === cat
+                      ? "border-primary font-bold text-foreground"
+                      : "border-transparent text-muted-foreground"
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
             </div>
 
             {/* Main Image */}
@@ -122,7 +232,7 @@ function ChairDetailContent({
                 <button
                   key={i}
                   onClick={() => setMainImageIndex(i)}
-                  className={`w-11 h-11 md:w-14 md:h-14 border overflow-hidden transition-all ${
+                  className={`w-11 h-11 md:w-14 md:h-14 border overflow-hidden ${
                     mainImageIndex === i ? "border-primary" : "border-border"
                   }`}
                 >
@@ -130,80 +240,25 @@ function ChairDetailContent({
                     src={thumb}
                     alt={`Vista ${i + 1}`}
                     loading="lazy"
-                    className="w-full h-full object-contain p-1"
+                    width={64}
+                    height={64}
+                    className={`w-full h-full object-cover ${i < 2 ? "object-[center_82%]" : ""}`}
                   />
                 </button>
               ))}
             </div>
           </div>
 
-          {/* Right Column — desktop */}
+          {/* Right Column — desktop only */}
           <div className="hidden md:flex flex-col overflow-y-auto">
-            <DetailsPanel
-              chair={chair}
-              accordionSections={accordionSections}
-              openAccordion={openAccordion}
-              setOpenAccordion={setOpenAccordion}
-            />
+            {renderDetailsContent()}
           </div>
         </div>
       </section>
 
-      {/* Mobile details */}
+      {/* Mobile: details content flows after */}
       <div className="md:hidden border-t border-border">
-        <DetailsPanel
-          chair={chair}
-          accordionSections={accordionSections}
-          openAccordion={openAccordion}
-          setOpenAccordion={setOpenAccordion}
-        />
-      </div>
-    </>
-  );
-}
-
-function DetailsPanel({
-  chair,
-  accordionSections,
-  openAccordion,
-  setOpenAccordion,
-}: {
-  chair: { name: string; description: string };
-  accordionSections: { title: string; content: string }[];
-  openAccordion: string | null;
-  setOpenAccordion: (v: string | null) => void;
-}) {
-  return (
-    <>
-      {/* Description */}
-      <div className="px-6 py-6 border-b border-border">
-        <p className="text-xs leading-relaxed text-muted-foreground max-w-md">
-          {chair.description}
-        </p>
-      </div>
-
-      {/* Accordion */}
-      <div className="flex flex-col">
-        {accordionSections.map((section, i) => (
-          <div key={i} className={i < accordionSections.length - 1 ? "border-b border-border" : ""}>
-            <button
-              onClick={() => setOpenAccordion(openAccordion === section.title ? null : section.title)}
-              className="w-full flex items-center justify-between px-6 py-3"
-            >
-              <span className="font-extrabold text-sm text-foreground">{section.title}</span>
-              <ChevronDown
-                className={`w-5 h-5 text-primary transition-transform ${
-                  openAccordion === section.title ? "rotate-180" : ""
-                }`}
-              />
-            </button>
-            {openAccordion === section.title && (
-              <div className="px-6 pb-3 text-xs text-muted-foreground">
-                {section.content}
-              </div>
-            )}
-          </div>
-        ))}
+        {renderDetailsContent()}
       </div>
     </>
   );
