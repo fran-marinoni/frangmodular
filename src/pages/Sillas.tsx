@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import { useRef, useState, useEffect } from "react";
 import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import { chairCategories } from "@/lib/chairsData";
