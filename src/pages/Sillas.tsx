@@ -1,17 +1,14 @@
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import { useState, useEffect, useMemo, memo } from "react";
+import { useState, useEffect, memo } from "react";
 import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
-import SectionLoader from "@/components/SectionLoader";
 import { chairCategories, getProductBySlug, getVariantImagePaths, resolveChairImage, ChairCategory } from "@/lib/chairsData";
-import { useImagePreloader } from "@/hooks/useImagePreloader";
 
 const Sillas = () => {
   const [thumbnails, setThumbnails] = useState<Record<string, string[]>>({});
-  const [resolving, setResolving] = useState(true);
 
-  // Resolve first 3 chair thumbnails per category
+  // Resolve first 3 chair thumbnails per category — non-blocking
   useEffect(() => {
     let cancelled = false;
     const work = chairCategories.map(async (cat) => {
@@ -31,18 +28,10 @@ const Sillas = () => {
     Promise.all(work).then((entries) => {
       if (!cancelled) {
         setThumbnails(Object.fromEntries(entries));
-        setResolving(false);
       }
     });
     return () => { cancelled = true; };
   }, []);
-
-  const allUrls = useMemo(
-    () => Object.values(thumbnails).flat().filter(Boolean),
-    [thumbnails]
-  );
-  const imagesReady = useImagePreloader(allUrls, 300);
-  const showLoader = resolving || !imagesReady;
 
   return (
     <div className="min-h-screen bg-background">
@@ -53,9 +42,7 @@ const Sillas = () => {
       />
       <Header />
 
-      {showLoader && <SectionLoader label="Cargando sillas" />}
-
-      <main className="border-t border-border" style={{ visibility: showLoader ? "hidden" : "visible" }}>
+      <main className="border-t border-border">
         {/* Hero */}
         <section className="px-6 md:px-8 py-16 md:py-24">
           <h1 className="font-display text-[3rem] md:text-[4.5rem] lg:text-[6rem] font-black tracking-tight leading-none text-foreground">
@@ -97,10 +84,11 @@ const CategoryRow = memo(function CategoryRow({
               <img
                 src={thumbs[i]}
                 alt={`${category.name} ${i + 1}`}
+                loading="lazy"
                 className="absolute inset-0 w-full h-full object-contain p-4"
               />
             ) : (
-              <div className="absolute inset-0 flex items-center justify-center text-muted-foreground text-xs">
+              <div className="absolute inset-0 flex items-center justify-center text-muted-foreground text-xs animate-pulse">
                 —
               </div>
             )}

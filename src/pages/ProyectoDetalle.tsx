@@ -6,8 +6,6 @@ import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import FooterSection from "@/components/home/FooterSection";
 import { getProjectBySlug, getProjectImagePaths, resolveImage } from "@/lib/projectsData";
-import { useImagePreloader } from "@/hooks/useImagePreloader";
-import SectionLoader from "@/components/SectionLoader";
 import NotFound from "@/pages/NotFound";
 
 const useResolvedImages = (paths: string[]) => {
@@ -40,14 +38,10 @@ const ProyectoDetalle = () => {
 
   const resolvedImages = useResolvedImages(allImagePaths);
 
-  // Collect all resolved URLs for preloading
   const resolvedUrls = useMemo(
     () => allImagePaths.map((p) => resolvedImages[p]).filter(Boolean),
     [resolvedImages, allImagePaths.length]
   );
-
-  // Wait for all images to be in browser cache
-  const imagesReady = useImagePreloader(resolvedUrls, 300);
 
   // Carousel
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
@@ -105,9 +99,7 @@ const ProyectoDetalle = () => {
           </div>
         </section>
 
-        {!imagesReady ? (
-          <SectionLoader label="Cargando proyecto" />
-        ) : (
+        {resolvedUrls.length > 0 && (
           <>
             {/* Two Fixed Images */}
             <section className="border-t border-border">

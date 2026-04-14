@@ -2,9 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { useState, useMemo, useEffect, memo } from "react";
 import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
-import SectionLoader from "@/components/SectionLoader";
 import { getCategoryBySlug, getProductsForCategory, getPreferredVariant, getVariantImagePaths, resolveChairImage, ChairProduct } from "@/lib/chairsData";
-import { useImagePreloader } from "@/hooks/useImagePreloader";
 import NotFound from "@/pages/NotFound";
 
 const categoryNumber: Record<string, string> = {
@@ -21,16 +19,13 @@ const SillasCategoria = () => {
   const cat = param ? getCategoryBySlug(param) : undefined;
   const [selected, setSelected] = useState<string | null>(null);
 
-  // Get products and resolve their thumbnail images
   const products = useMemo(() => (cat ? getProductsForCategory(cat.slug) : []), [cat?.slug]);
 
   const [thumbnails, setThumbnails] = useState<Record<string, string>>({});
-  const [resolving, setResolving] = useState(true);
 
   useEffect(() => {
-    if (!cat || products.length === 0) { setResolving(false); return; }
+    if (!cat || products.length === 0) return;
     let cancelled = false;
-    setResolving(true);
 
     const entries = products.map((product) => {
       const preferredId = getPreferredVariant(product, cat.slug);
@@ -49,21 +44,15 @@ const SillasCategoria = () => {
     ).then((results) => {
       if (!cancelled) {
         setThumbnails(Object.fromEntries(results));
-        setResolving(false);
       }
     });
 
     return () => { cancelled = true; };
   }, [cat?.slug, products.length]);
 
-  // Preload all resolved thumbnail URLs
-  const thumbUrls = useMemo(() => Object.values(thumbnails).filter(Boolean), [thumbnails]);
-  const imagesReady = useImagePreloader(thumbUrls, 300);
-
   if (!cat) return <NotFound />;
 
   const num = categoryNumber[cat.slug] || "01";
-  const showLoader = resolving || !imagesReady;
 
   return (
     <div className="min-h-screen bg-background">
@@ -74,9 +63,7 @@ const SillasCategoria = () => {
       />
       <Header />
 
-      {showLoader && <SectionLoader label="Cargando categoría" />}
-
-      <main style={{ visibility: showLoader ? "hidden" : "visible" }}>
+      <main>
         {/* Hero section */}
         <section className="px-6 md:px-8 pt-10 pb-8 md:pt-16 md:pb-12 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
           <div>
@@ -151,10 +138,11 @@ const ChairCard = memo(function ChairCard({
           <img
             src={thumbnailUrl}
             alt={product.name}
+            loading="lazy"
             className="absolute inset-0 w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500"
           />
         ) : (
-          <div className="absolute inset-0 flex items-center justify-center text-muted-foreground text-xs bg-muted">
+          <div className="absolute inset-0 flex items-center justify-center text-muted-foreground text-xs bg-muted animate-pulse">
             {product.name}
           </div>
         )}

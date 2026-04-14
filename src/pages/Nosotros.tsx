@@ -1,8 +1,6 @@
-import { useMemo } from "react";
 import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import FooterSection from "@/components/home/FooterSection";
-import { useImagePreloader } from "@/hooks/useImagePreloader";
 
 import foundersImg from "@/assets/nosotros/founders.webp";
 import equipmentImg from "@/assets/nosotros/equipment.webp";
@@ -14,14 +12,7 @@ import factoryImg from "@/assets/nosotros/factory.webp";
 import showroomImg from "@/assets/nosotros/showroom.webp";
 import truckImg from "@/assets/nosotros/truck.webp";
 
-const allImages = [foundersImg, equipmentImg, cncImg, machineImg, workersImg, teamProjectImg, factoryImg, showroomImg, truckImg];
-
-import SectionLoader from "@/components/SectionLoader";
-
 const Nosotros = () => {
-  const imagesReady = useImagePreloader(allImages, 300);
-
-  if (!imagesReady) return <SectionLoader />;
 
   return (
     <div className="min-h-screen bg-background text-foreground">
