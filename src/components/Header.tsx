@@ -34,6 +34,8 @@ const productCategories = [
     number: "02",
     title: "Estaciones.",
     items: ["Qoni", "Obliq", "Legan", "Wyre", "Ergoflex", "Home Office"],
+    itemLinks: { "Legan": "/estaciones/legan" },
+  },
   },
   {
     number: "03",

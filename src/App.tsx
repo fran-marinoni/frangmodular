@@ -69,6 +69,7 @@ const App = () => {
             <Route path="/productos/apollo" element={<LazyRoute><ApolloProduct /></LazyRoute>} />
             <Route path="/sillas" element={<LazyRoute><Sillas /></LazyRoute>} />
             <Route path="/sillas/:param" element={<LazyRoute><SillasResolver /></LazyRoute>} />
+            <Route path="/estaciones/legan" element={<LazyRoute><EstacionLegan /></LazyRoute>} />
             <Route path="/nosotros" element={<LazyRoute><Nosotros /></LazyRoute>} />
             <Route path="/blog" element={<LazyRoute><Blog /></LazyRoute>} />
             <Route path="/blog/back-to-the-90s" element={<LazyRoute><BlogArticle90s /></LazyRoute>} />
