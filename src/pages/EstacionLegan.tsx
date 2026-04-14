@@ -65,7 +65,7 @@ const EstacionLegan = () => {
       <main className="border-t border-border">
         {/* Hero Section: Photo left + Info right */}
         <section className="relative">
-          <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 w-full min-h-[85vh]">
+          <div className="grid grid-cols-1 md:grid-cols-2 w-full min-h-[85vh]">
             {/* Left — Ambient photo */}
             <div className="relative overflow-hidden min-h-[50vh] md:min-h-0">
               <img
@@ -130,7 +130,7 @@ const EstacionLegan = () => {
 
         {/* Configurations Section */}
         <section className="border-t border-border">
-          <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 min-h-[70vh]">
+          <div className="grid grid-cols-1 md:grid-cols-2 min-h-[70vh]">
             {/* Left — Ambient photo with tagline */}
             <div className="relative overflow-hidden min-h-[50vh] md:min-h-0 bg-muted">
               <img
