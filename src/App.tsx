@@ -36,6 +36,7 @@ const EstacionWyre = lazy(() => import("./pages/EstacionWyre.tsx"));
 const EstacionExecutive = lazy(() => import("./pages/EstacionExecutive.tsx"));
 const EstacionErgoflex = lazy(() => import("./pages/EstacionErgoflex.tsx"));
 const EstacionHomeOffice = lazy(() => import("./pages/EstacionHomeOffice.tsx"));
+const ComingSoon = lazy(() => import("./pages/ComingSoon.tsx"));
 
 const queryClient = new QueryClient();
 
