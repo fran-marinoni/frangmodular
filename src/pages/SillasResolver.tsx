@@ -1,14 +1,12 @@
 import { useParams } from "react-router-dom";
-import { lazy, Suspense } from "react";
 import { getCategoryBySlug, getProductBySlug } from "@/lib/chairsData";
-import SectionLoader from "@/components/SectionLoader";
-
-const SillasCategoria = lazy(() => import("./SillasCategoria"));
-const SillaDetalle = lazy(() => import("./SillaDetalle"));
-const NotFound = lazy(() => import("./NotFound"));
+import SillasCategoria from "./SillasCategoria";
+import SillaDetalle from "./SillaDetalle";
+import NotFound from "./NotFound";
 
 /**
  * Resolves /sillas/:param — determines if param is a category slug or product slug.
+ * No extra Suspense layer — the parent LazyRoute already handles chunk loading.
  */
 const SillasResolver = () => {
   const { param } = useParams();
@@ -16,19 +14,11 @@ const SillasResolver = () => {
   if (!param) return <NotFound />;
 
   if (getCategoryBySlug(param)) {
-    return (
-      <Suspense fallback={<SectionLoader label="Cargando categoría" />}>
-        <SillasCategoria />
-      </Suspense>
-    );
+    return <SillasCategoria />;
   }
 
   if (getProductBySlug(param)) {
-    return (
-      <Suspense fallback={<SectionLoader label="Cargando producto" />}>
-        <SillaDetalle />
-      </Suspense>
-    );
+    return <SillaDetalle />;
   }
 
   return <NotFound />;

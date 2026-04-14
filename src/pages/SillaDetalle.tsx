@@ -4,10 +4,8 @@ import { ChevronDown } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import RelatedProducts from "@/components/RelatedProducts";
-import SectionLoader from "@/components/SectionLoader";
 import { getProductBySlug, ChairVariant, ChairProduct } from "@/lib/chairsData";
 import { useResolvedChairImages } from "@/hooks/useResolvedChairImages";
-import { useImagePreloader } from "@/hooks/useImagePreloader";
 import NotFound from "@/pages/NotFound";
 
 // Reuse the same feature assets as Apollo
@@ -86,23 +84,14 @@ const ChairDetailContent = memo(function ChairDetailContent({
   const [openAccordion, setOpenAccordion] = useState<string | null>(null);
   const [activeFeature, setActiveFeature] = useState<number | null>(null);
 
-  // Resolve all images for this variant in one batch
-  const { gallery, ambientadas, colores, allUrls, loading } = useResolvedChairImages(activeVariant.assetFolder);
-
-  // Preload resolved URLs into browser cache, with branded loader
-  const imagesReady = useImagePreloader(allUrls, 300);
-
-  const showLoader = loading || !imagesReady;
+  // Resolve all images for this variant — no blocking loader
+  const { gallery, ambientadas, colores } = useResolvedChairImages(activeVariant.assetFolder);
 
   const currentMainImage = gallery[mainImageIndex] || gallery[0] || "";
 
   const toggleAccordion = useCallback((name: string) => {
     setOpenAccordion((prev) => (prev === name ? null : name));
   }, []);
-
-  if (showLoader) {
-    return <SectionLoader label="Cargando silla" />;
-  }
 
   return (
     <>
@@ -142,7 +131,7 @@ const ChairDetailContent = memo(function ChairDetailContent({
                   className="w-full max-w-xs md:max-w-2xl mx-auto max-h-[45vh] md:max-h-[60vh] object-contain"
                 />
               ) : (
-                <div className="w-64 h-64 bg-muted rounded flex items-center justify-center text-muted-foreground text-sm">
+                <div className="w-64 h-64 bg-muted rounded flex items-center justify-center text-muted-foreground text-sm animate-pulse">
                   {product.name}
                 </div>
               )}
@@ -161,6 +150,7 @@ const ChairDetailContent = memo(function ChairDetailContent({
                         alt={`Ambientada ${i + 1}`}
                         width={64}
                         height={64}
+                        loading="lazy"
                         className="w-full h-full object-cover"
                       />
                     </div>
@@ -178,6 +168,7 @@ const ChairDetailContent = memo(function ChairDetailContent({
                         alt={`Vista ${i + 1}`}
                         width={64}
                         height={64}
+                        loading="lazy"
                         className={`w-full h-full object-cover ${i < 2 ? "object-[center_82%]" : ""}`}
                       />
                     </button>
@@ -290,7 +281,7 @@ const DetailsPanel = memo(function DetailsPanel({
           <div className="flex gap-3 flex-wrap">
             {colores.map((src, i) => (
               <div key={i} className="w-16 h-12 rounded-sm overflow-hidden border border-border">
-                <img src={src} alt={`Color ${i + 1}`} className="w-full h-full object-cover" />
+                <img src={src} alt={`Color ${i + 1}`} loading="lazy" className="w-full h-full object-cover" />
               </div>
             ))}
           </div>

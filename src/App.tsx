@@ -5,6 +5,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import PreloadScreen from "@/components/PreloadScreen";
+import SectionLoader from "@/components/SectionLoader";
 import Index from "./pages/Index.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
@@ -32,23 +33,8 @@ const EstacionLegan = lazy(() => import("./pages/EstacionLegan.tsx"));
 
 const queryClient = new QueryClient();
 
-const LazyFallback = () => (
-  <div className="fixed inset-0 z-[9998] flex flex-col items-center justify-center bg-background">
-    <div className="flex flex-col items-center gap-6">
-      <h1 className="font-display text-[2.5rem] md:text-[3.5rem] font-black tracking-tighter text-foreground leading-none">
-        Generación<br />
-        <span className="font-normal italic">Modular.</span>
-      </h1>
-      <div className="w-48 md:w-64 h-[3px] bg-muted rounded-full overflow-hidden">
-        <div className="h-full bg-primary rounded-full animate-loading-grow" />
-      </div>
-      <p className="text-muted-foreground text-xs tracking-widest uppercase">Cargando</p>
-    </div>
-  </div>
-);
-
 const LazyRoute = ({ children }: { children: React.ReactNode }) => (
-  <Suspense fallback={<LazyFallback />}>
+  <Suspense fallback={<SectionLoader />}>
     {children}
   </Suspense>
 );
@@ -76,8 +62,8 @@ const App = () => {
             <Route path="/blog/:slug" element={<LazyRoute><DynamicBlogArticle /></LazyRoute>} />
             <Route path="/contacto" element={<LazyRoute><Contacto /></LazyRoute>} />
             <Route path="/proyectos" element={<LazyRoute><Proyectos /></LazyRoute>} />
-            <Route path="/proyectos/:category/:year" element={<Suspense fallback={null}><ProyectoCategoria /></Suspense>} />
-            <Route path="/proyecto/:projectSlug" element={<Suspense fallback={null}><ProyectoDetalle /></Suspense>} />
+            <Route path="/proyectos/:category/:year" element={<LazyRoute><ProyectoCategoria /></LazyRoute>} />
+            <Route path="/proyecto/:projectSlug" element={<LazyRoute><ProyectoDetalle /></LazyRoute>} />
             <Route path="/admin" element={<LazyRoute><AdminLogin /></LazyRoute>} />
             <Route path="/admin/dashboard" element={<LazyRoute><ProtectedRoute><AdminDashboard /></ProtectedRoute></LazyRoute>} />
             <Route path="/admin/blogs" element={<LazyRoute><ProtectedRoute><AdminBlogs /></ProtectedRoute></LazyRoute>} />
