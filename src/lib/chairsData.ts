@@ -466,18 +466,14 @@ export const chairProducts: ChairProduct[] = [
 // ── Glob all chair images lazily ──
 
 const allChairImages = import.meta.glob<{ default: string }>(
-  "/src/assets/1. SILLAS/**/*.webp",
+  "/src/assets/1. SILLAS/**/*.{webp,jpg,jpeg,png}",
   { eager: false }
 );
 
-const chairImageCache: Record<string, string> = {};
-
 export async function resolveChairImage(fullPath: string): Promise<string> {
-  if (chairImageCache[fullPath]) return chairImageCache[fullPath];
   const loader = allChairImages[fullPath];
   if (loader) {
     const mod = await loader();
-    chairImageCache[fullPath] = mod.default;
     return mod.default;
   }
   return "";

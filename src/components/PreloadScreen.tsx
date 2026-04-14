@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-// Critical hero image preloaded eagerly
+// Preload critical images in the background
 const criticalImages = Object.values(
   import.meta.glob("@/assets/home/hero-chair.webp", { eager: true, query: "?url", import: "default" })
 ) as string[];
@@ -15,34 +15,33 @@ const PreloadScreen = ({ onFinished }: PreloadScreenProps) => {
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    // Only preload critical above-fold images (hero), not ALL home images
-    const criticalUrls = [
-      ...criticalImages,
-    ];
+    // Preload all home images in background
+    const imageModules = import.meta.glob("@/assets/home/*.webp", { eager: true, query: "?url", import: "default" });
+    const urls = Object.values(imageModules) as string[];
 
     let loaded = 0;
-    const total = criticalUrls.length || 1;
+    const total = urls.length || 1;
 
     const updateProgress = () => {
       loaded++;
       setProgress(Math.round((loaded / total) * 100));
     };
 
-    criticalUrls.forEach((url) => {
+    urls.forEach((url) => {
       const img = new Image();
       img.onload = updateProgress;
       img.onerror = updateProgress;
       img.src = url;
     });
 
-    // Minimum 1.5s display, then fade out
+    // Minimum 2.5s display, then fade out
     const timer = setTimeout(() => {
       setProgress(100);
       setTimeout(() => {
         setVisible(false);
-        setTimeout(onFinished, 500);
+        setTimeout(onFinished, 500); // wait for exit animation
       }, 400);
-    }, 1500);
+    }, 2500);
 
     return () => clearTimeout(timer);
   }, [onFinished]);
