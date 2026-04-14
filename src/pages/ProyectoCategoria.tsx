@@ -3,10 +3,8 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import FooterSection from "@/components/home/FooterSection";
-import SectionLoader from "@/components/SectionLoader";
 import { getCategoryBySlug } from "@/lib/projectsData";
 import { useResolvedImages } from "@/hooks/useResolvedImage";
-import { useImagePreloader } from "@/hooks/useImagePreloader";
 import NotFound from "@/pages/NotFound";
 
 const ProyectoCategoria = () => {
@@ -17,14 +15,6 @@ const ProyectoCategoria = () => {
   const items = (data && year) ? (data.projects[year] || []) : [];
   const imagePaths = items.map((item) => item.image);
   const resolvedImages = useResolvedImages(imagePaths);
-
-  // Collect resolved URLs for preloading
-  const resolvedUrls = useMemo(
-    () => imagePaths.map((p) => resolvedImages[p]).filter(Boolean),
-    [resolvedImages, imagePaths.length]
-  );
-
-  const imagesReady = useImagePreloader(resolvedUrls, 300);
 
   if (!data || !year || !data.years.includes(year)) return <NotFound />;
 
@@ -53,8 +43,6 @@ const ProyectoCategoria = () => {
             <div className="px-6 md:px-8 py-20 text-center">
               <p className="text-muted-foreground text-sm">No hay proyectos para este año.</p>
             </div>
-          ) : !imagesReady ? (
-            <SectionLoader />
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-3">
               {items.map((item, i) => (
