@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown, ChevronUp } from "lucide-react";
 import logo from "@/assets/logo.webp";
-import productsChairImg from "@/assets/products-menu-chair.webp";
+import productsChairImg from "@/assets/1. SILLAS/1. EJECUTIVAS/1. DELPHI/509MAA49VP FL_1-AndresArellano.webp";
 import productsOfficeImg from "@/assets/products-menu-office.webp";
 
 const navLinks = [
