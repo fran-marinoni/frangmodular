@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
-import { getChairImagePaths, resolveChairImage, ChairCategory } from "@/lib/chairsData";
+import { getVariantImagePaths, resolveChairImage, ChairCategory, ChairProduct, getProductBySlug } from "@/lib/chairsData";
 
 /**
- * Resolves the first main image for a chair (for grid/card thumbnails).
+ * Resolves the first gallery image for a product (for grid/card thumbnails).
  */
 export function useChairMainImage(assetFolder: string): string {
   const [src, setSrc] = useState("");
 
   useEffect(() => {
     let cancelled = false;
-    const paths = getChairImagePaths(assetFolder);
-    const first = paths.main[0];
+    const paths = getVariantImagePaths(assetFolder);
+    const first = paths.gallery[0];
     if (!first) return;
 
     resolveChairImage(first).then((url) => {
@@ -30,12 +30,15 @@ export function useChairCategoryThumbnails(category: ChairCategory): string[] {
 
   useEffect(() => {
     let cancelled = false;
-    const chairs = category.chairs.slice(0, 3);
+    const chairSlugs = category.chairs.slice(0, 3);
 
     Promise.all(
-      chairs.map((chair) => {
-        const paths = getChairImagePaths(chair.assetFolder);
-        const first = paths.main[0];
+      chairSlugs.map((slug) => {
+        const product = getProductBySlug(slug);
+        if (!product) return Promise.resolve("");
+        const folder = product.variants[0].assetFolder;
+        const paths = getVariantImagePaths(folder);
+        const first = paths.gallery[0];
         return first ? resolveChairImage(first) : Promise.resolve("");
       })
     ).then((urls) => {

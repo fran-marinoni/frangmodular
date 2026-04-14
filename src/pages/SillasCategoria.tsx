@@ -2,7 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { useState } from "react";
 import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
-import { getCategoryBySlug, chairCategories } from "@/lib/chairsData";
+import { getCategoryBySlug, getProductsForCategory, getPreferredVariant, ChairProduct } from "@/lib/chairsData";
 import { useChairMainImage } from "@/hooks/useChairImages";
 import NotFound from "@/pages/NotFound";
 
@@ -22,13 +22,14 @@ const SillasCategoria = () => {
 
   if (!cat) return <NotFound />;
 
+  const products = getProductsForCategory(cat.slug);
   const num = categoryNumber[cat.slug] || "01";
 
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
         title={`${cat.name} – Sillas | Generación Modular`}
-        description={`Sillas ${cat.name.toLowerCase()} de Generación Modular. ${cat.chairs.length} modelos disponibles.`}
+        description={`Sillas ${cat.name.toLowerCase()} de Generación Modular. ${products.length} modelos disponibles.`}
         canonical={`/sillas/${cat.slug}`}
       />
       <Header />
@@ -53,13 +54,13 @@ const SillasCategoria = () => {
 
         {/* Grid */}
         <section className="grid grid-cols-2 md:grid-cols-3 border-t border-border">
-          {cat.chairs.map((chair) => (
+          {products.map((product) => (
             <ChairCard
-              key={chair.slug}
-              chair={chair}
+              key={product.slug}
+              product={product}
               categorySlug={cat.slug}
-              isSelected={selected === chair.slug}
-              onSelect={() => setSelected(selected === chair.slug ? null : chair.slug)}
+              isSelected={selected === product.slug}
+              onSelect={() => setSelected(selected === product.slug ? null : product.slug)}
             />
           ))}
         </section>
@@ -69,28 +70,31 @@ const SillasCategoria = () => {
 };
 
 function ChairCard({
-  chair,
+  product,
   categorySlug,
   isSelected,
   onSelect,
 }: {
-  chair: { name: string; slug: string; assetFolder: string };
+  product: ChairProduct;
   categorySlug: string;
   isSelected: boolean;
   onSelect: () => void;
 }) {
-  const mainImage = useChairMainImage(chair.assetFolder);
+  // Show image from the variant that matches the current category
+  const preferredVariantId = getPreferredVariant(product, categorySlug);
+  const variant = product.variants.find((v) => v.id === preferredVariantId) || product.variants[0];
+  const mainImage = useChairMainImage(variant.assetFolder);
 
   return (
     <Link
-      to={`/sillas/${categorySlug}/${chair.slug}`}
+      to={`/sillas/${product.slug}?variant=${preferredVariantId}`}
       className="group bg-background flex flex-col border-b border-r border-border"
       onMouseEnter={onSelect}
     >
       {/* Chair name */}
       <div className="px-4 pt-4 pb-2">
         <h3 className="font-display text-lg md:text-xl font-black text-foreground leading-tight">
-          {chair.name}.
+          {product.name}.
         </h3>
       </div>
 
@@ -103,13 +107,13 @@ function ChairCard({
         {mainImage ? (
           <img
             src={mainImage}
-            alt={chair.name}
+            alt={product.name}
             loading="lazy"
             className="absolute inset-0 w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500"
           />
         ) : (
           <div className="absolute inset-0 flex items-center justify-center text-muted-foreground text-xs bg-muted">
-            {chair.name}
+            {product.name}
           </div>
         )}
       </div>
