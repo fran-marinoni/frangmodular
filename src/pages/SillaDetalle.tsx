@@ -30,15 +30,15 @@ const SillaDetalle = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const product = param ? getProductBySlug(param) : undefined;
 
+  const setVariant = useCallback((id: string) => {
+    setSearchParams({ variant: id }, { replace: true });
+  }, [setSearchParams]);
+
   if (!product) return <NotFound />;
 
   const variantParam = searchParams.get("variant");
   const activeVariantId = product.variants.find((v) => v.id === variantParam)?.id || product.defaultVariant;
   const activeVariant = product.variants.find((v) => v.id === activeVariantId)!;
-
-  const setVariant = useCallback((id: string) => {
-    setSearchParams({ variant: id }, { replace: true });
-  }, [setSearchParams]);
 
   return (
     <div className="min-h-screen bg-background">
