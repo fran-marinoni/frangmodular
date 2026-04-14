@@ -4,7 +4,7 @@ import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import RelatedProducts from "@/components/RelatedProducts";
 import SectionLoader from "@/components/SectionLoader";
-import { useImagePreloader } from "@/hooks/useImagePreloader";
+import { useCriticalImagePreloader } from "@/hooks/useImagePreloader";
 
 // Ambient photos
 import fotoA from "@/assets/2. ESTACIONES/3. LEGAN/Fotos/A.webp";
@@ -37,7 +37,8 @@ const EstacionLegan = () => {
   const [openAccordion, setOpenAccordion] = useState<string | null>(null);
 
   const allImages = [heroPhoto, ...configImages.map((c) => c.src), ...ambientPhotos, materiales];
-  const imagesReady = useImagePreloader(allImages, 800);
+  // Only wait for the hero photo to render the page
+  const imagesReady = useCriticalImagePreloader(allImages, 1, 300);
 
   const toggleAccordion = useCallback(
     (name: string) => setOpenAccordion((prev) => (prev === name ? null : name)),
