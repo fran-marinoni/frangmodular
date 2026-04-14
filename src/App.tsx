@@ -69,7 +69,7 @@ const App = () => {
             <Route path="/productos/apollo" element={<LazyRoute><ApolloProduct /></LazyRoute>} />
             <Route path="/sillas" element={<LazyRoute><Sillas /></LazyRoute>} />
             <Route path="/sillas/:category" element={<LazyRoute><SillasCategoria /></LazyRoute>} />
-            <Route path="/sillas/:category/:slug" element={<LazyRoute><SillaDetalle /></LazyRoute>} />
+            <Route path="/sillas/:slug" element={<LazyRoute><SillaDetalle /></LazyRoute>} />
             <Route path="/nosotros" element={<LazyRoute><Nosotros /></LazyRoute>} />
             <Route path="/blog" element={<LazyRoute><Blog /></LazyRoute>} />
             <Route path="/blog/back-to-the-90s" element={<LazyRoute><BlogArticle90s /></LazyRoute>} />
