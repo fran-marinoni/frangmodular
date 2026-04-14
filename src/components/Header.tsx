@@ -21,6 +21,7 @@ const chairCategoryLinks: Record<string, string> = {
   "Barra": "/sillas/barra",
   "Lounge: Sofas y Poltronas": "/sillas/lounge",
   "Estadio": "/sillas/estadio",
+  "Legan": "/estaciones/legan",
 };
 
 const productCategories = [
@@ -250,9 +251,18 @@ const Header = () => {
                   </div>
                   <h3 className="text-2xl font-black mb-3">Estaciones.</h3>
                   <ul className="space-y-1">
-                    {productCategories[1].items.map((item) => (
-                      <li key={item} className="text-xs text-foreground">{item}</li>
-                    ))}
+                    {productCategories[1].items.map((item) => {
+                      const href = chairCategoryLinks[item];
+                      return (
+                        <li key={item}>
+                          {href ? (
+                            <Link to={href} onClick={() => setProductsOpen(false)} className="text-xs text-foreground hover:text-primary transition-colors">{item}</Link>
+                          ) : (
+                            <span className="text-xs text-foreground">{item}</span>
+                          )}
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
               </div>
