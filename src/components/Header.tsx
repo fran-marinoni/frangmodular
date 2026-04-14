@@ -14,10 +14,20 @@ const navLinks = [
   { label: "CONTACTO", to: "/contacto" },
 ];
 
+const chairCategoryLinks: Record<string, string> = {
+  "Ejecutivas": "/sillas/ejecutivas",
+  "Operativas": "/sillas/operativas",
+  "Visitas": "/sillas/visitas",
+  "Barra": "/sillas/barra",
+  "Lounge: Sofas y Poltronas": "/sillas/lounge",
+  "Estadio": "/sillas/estadio",
+};
+
 const productCategories = [
   {
     number: "01",
     title: "Sillas.",
+    titleLink: "/sillas",
     items: ["Ejecutivas", "Operativas", "Visitas", "Barra", "Lounge: Sofas y Poltronas", "Estadio"],
   },
   {
@@ -83,13 +93,22 @@ const MobileProductsAccordion = ({ categories, onClose }: { categories: typeof p
               </button>
               {openCat === cat.number && (
                 <ul className="pl-12 pr-6 pb-2 space-y-1">
-                  {cat.items.map((item) => (
-                    <li key={item}>
-                      <button onClick={onClose} className="text-xs text-foreground/70 hover:text-foreground py-0.5">
-                        {item}
-                      </button>
-                    </li>
-                  ))}
+                  {cat.items.map((item) => {
+                    const href = chairCategoryLinks[item];
+                    return (
+                      <li key={item}>
+                        {href ? (
+                          <Link to={href} onClick={onClose} className="text-xs text-foreground/70 hover:text-foreground py-0.5 block">
+                            {item}
+                          </Link>
+                        ) : (
+                          <button onClick={onClose} className="text-xs text-foreground/70 hover:text-foreground py-0.5">
+                            {item}
+                          </button>
+                        )}
+                      </li>
+                    );
+                  })}
                 </ul>
               )}
             </div>
@@ -187,11 +206,20 @@ const Header = () => {
                   <div className="flex items-baseline gap-2 mb-3">
                     <span className="text-3xl font-black">01</span>
                   </div>
-                  <h3 className="text-2xl font-black mb-3">Sillas.</h3>
+                   <Link to="/sillas" onClick={() => setProductsOpen(false)} className="text-2xl font-black mb-3 block hover:text-primary transition-colors">Sillas.</Link>
                   <ul className="space-y-1">
-                    {productCategories[0].items.map((item) => (
-                      <li key={item} className="text-xs text-foreground">{item}</li>
-                    ))}
+                    {productCategories[0].items.map((item) => {
+                      const href = chairCategoryLinks[item];
+                      return (
+                        <li key={item}>
+                          {href ? (
+                            <Link to={href} onClick={() => setProductsOpen(false)} className="text-xs text-foreground hover:text-primary transition-colors">{item}</Link>
+                          ) : (
+                            <span className="text-xs text-foreground">{item}</span>
+                          )}
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
                 <div className="relative h-48 overflow-hidden">
