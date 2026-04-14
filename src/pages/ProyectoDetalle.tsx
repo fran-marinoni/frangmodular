@@ -105,8 +105,10 @@ const ProyectoDetalle = () => {
           </div>
         </section>
 
-        {!imagesReady ? (
-          <SectionLoader />
+        ) : (
+          <SectionLoader label="Cargando proyecto" />
+        )}
+        {imagesReady && (
         ) : (
           <>
             {/* Two Fixed Images */}
