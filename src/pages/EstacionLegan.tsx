@@ -74,11 +74,6 @@ const EstacionLegan = () => {
                 <p className="text-xs leading-relaxed text-muted-foreground max-w-sm mb-6">
                   Legan esta pensada para espacios donde la mesa es el elemento central del proyecto. Sus proporciones y presencia formal lo hacen adecuado tanto para despachos ejecutivos como para salas de reunión corporativas.
                 </p>
-                <div>
-                  <button className="bg-primary text-primary-foreground font-bold text-sm px-8 py-2.5 hover:bg-primary/90 transition-colors">
-                    Button
-                  </button>
-                </div>
               </div>
 
               {/* Acordeones — ancho completo */}
