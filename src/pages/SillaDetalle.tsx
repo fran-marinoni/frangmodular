@@ -23,9 +23,9 @@ const featureItems = [
 ];
 
 const SillaDetalle = () => {
-  const { slug } = useParams();
+  const { param } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
-  const product = slug ? getProductBySlug(slug) : undefined;
+  const product = param ? getProductBySlug(param) : undefined;
 
   if (!product) return <NotFound />;
 

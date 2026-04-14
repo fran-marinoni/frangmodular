@@ -16,8 +16,8 @@ const categoryNumber: Record<string, string> = {
 };
 
 const SillasCategoria = () => {
-  const { category } = useParams();
-  const cat = category ? getCategoryBySlug(category) : undefined;
+  const { param } = useParams();
+  const cat = param ? getCategoryBySlug(param) : undefined;
   const [selected, setSelected] = useState<string | null>(null);
 
   if (!cat) return <NotFound />;
