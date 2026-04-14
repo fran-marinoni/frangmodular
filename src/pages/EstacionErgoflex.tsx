@@ -4,7 +4,7 @@ import SEOHead from "@/components/SEOHead";
 import Header from "@/components/Header";
 import RelatedProducts from "@/components/RelatedProducts";
 import SectionLoader from "@/components/SectionLoader";
-import { useImagePreloader } from "@/hooks/useImagePreloader";
+import { useCriticalImagePreloader } from "@/hooks/useImagePreloader";
 
 import foto0 from "@/assets/2. ESTACIONES/6. ERGOFLEX/1. SIMPLE UP/0.webp";
 import foto1 from "@/assets/2. ESTACIONES/6. ERGOFLEX/1. SIMPLE UP/1.webp";
@@ -30,7 +30,7 @@ const ambientPhotos = [fotoDSC2, fotoUp2, fotoRoundB];
 const EstacionErgoflex = () => {
   const [openAccordion, setOpenAccordion] = useState<string | null>(null);
   const allImages = [heroPhoto, ...configImages.map((c) => c.src), ...ambientPhotos];
-  const imagesReady = useImagePreloader(allImages, 800);
+  const imagesReady = useCriticalImagePreloader(allImages, 1, 300);
   const toggleAccordion = useCallback(
     (name: string) => setOpenAccordion((prev) => (prev === name ? null : name)),
     []
