@@ -132,19 +132,6 @@ const EstacionLegan = () => {
                 <span className="italic font-normal">para nuevos</span><br />
                 líderes.
               </h2>
-              <div className="flex items-center gap-6 mb-6">
-                <a href="#" className="text-sm text-foreground underline underline-offset-4 hover:text-primary transition-colors">
-                  Link
-                </a>
-                <a href="#" className="text-sm text-foreground underline underline-offset-4 hover:text-primary transition-colors">
-                  Link
-                </a>
-              </div>
-              <div>
-                <button className="bg-primary text-primary-foreground font-bold text-sm px-10 py-3 hover:bg-primary/90 transition-colors w-full md:w-auto">
-                  Button
-                </button>
-              </div>
             </div>
 
             {/* Derecha — Carrusel */}
