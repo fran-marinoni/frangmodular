@@ -86,10 +86,7 @@ function ChairDetailContent({
   const [resolvedAmbientadas, setResolvedAmbientadas] = useState<string[]>([]);
   const [resolvedColores, setResolvedColores] = useState<string[]>([]);
 
-  // Reset image index when variant changes
-  useEffect(() => {
-    setMainImageIndex(0);
-  }, [activeVariant.id]);
+  // No need for mainImageIndex reset — key={activeVariant.id} forces remount
 
   // Resolve gallery images
   useEffect(() => {
@@ -191,17 +188,6 @@ function ChairDetailContent({
         </div>
       )}
 
-      {/* Fallback static colors if no COLORES folder */}
-      {resolvedColores.length === 0 && (
-        <div className="px-6 py-6 border-b border-border">
-          <h3 className="font-extrabold text-base mb-3 text-foreground">Colores disponibles:</h3>
-          <div className="flex gap-3">
-            <div className="w-16 h-12 rounded-sm" style={{ backgroundColor: "#B5ADBA" }} />
-            <div className="w-16 h-12 rounded-sm" style={{ backgroundColor: "#1E1E1E" }} />
-            <div className="w-16 h-12 rounded-sm" style={{ backgroundColor: "#E9E9E9" }} />
-          </div>
-        </div>
-      )}
 
       {/* Accordion sections */}
       <div className="flex flex-col">
@@ -239,22 +225,24 @@ function ChairDetailContent({
               {product.name}.
             </h1>
 
-            {/* Variant selector tabs */}
-            <div className="flex mt-4 md:mt-6 mb-2 md:mb-3 justify-between w-full max-w-xs mx-auto">
-              {product.variants.map((v) => (
-                <button
-                  key={v.id}
-                  onClick={() => onVariantChange(v.id)}
-                  className={`text-xs tracking-wider font-medium pb-1 transition-all border-b-2 uppercase ${
-                    activeVariant.id === v.id
-                      ? "border-primary font-bold text-foreground"
-                      : "border-transparent text-muted-foreground"
-                  }`}
-                >
-                  {v.label}
-                </button>
-              ))}
-            </div>
+            {/* Variant selector tabs — only show if multiple variants */}
+            {allVariants.length > 1 && (
+              <div className="flex mt-4 md:mt-6 mb-2 md:mb-3 justify-between w-full max-w-xs mx-auto">
+                {allVariants.map((v) => (
+                  <button
+                    key={v.id}
+                    onClick={() => onVariantChange(v.id)}
+                    className={`text-xs tracking-wider font-medium pb-1 transition-all border-b-2 uppercase ${
+                      activeVariant.id === v.id
+                        ? "border-primary font-bold text-foreground"
+                        : "border-transparent text-muted-foreground"
+                    }`}
+                  >
+                    {v.label}
+                  </button>
+                ))}
+              </div>
+            )}
 
             {/* Main Image */}
             <div className="relative flex items-center justify-center flex-1 min-h-[200px]">
