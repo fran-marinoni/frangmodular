@@ -1,33 +1,137 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://generacionmodular.com/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://generacionmodular.com/productos/apollo</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://generacionmodular.com/proyectos</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://generacionmodular.com/nosotros</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://generacionmodular.com/blog</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://generacionmodular.com/contacto</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
+  <!-- Core pages -->
+  <url><loc>https://generacionmodular.com/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://generacionmodular.com/nosotros</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/contacto</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://generacionmodular.com/blog</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://generacionmodular.com/blog/back-to-the-90s</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+
+  <!-- Sillas -->
+  <url><loc>https://generacionmodular.com/sillas</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://generacionmodular.com/sillas/ejecutivas</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://generacionmodular.com/sillas/operativas</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://generacionmodular.com/sillas/visitas</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://generacionmodular.com/sillas/barra</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://generacionmodular.com/sillas/lounge</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://generacionmodular.com/sillas/estadio</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <!-- Sillas individuales – Ejecutivas -->
+  <url><loc>https://generacionmodular.com/sillas/delphi</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/sillas/alek</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/sillas/fortis</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/sillas/lavo</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/sillas/wau</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/sillas/oasis</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/sillas/marin</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/sillas/flo</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/sillas/apollo</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+  <!-- Sillas individuales – Operativas -->
+  <url><loc>https://generacionmodular.com/sillas/slide</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/sillas/task-d251</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/sillas/eli</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/sillas/ace</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/sillas/pogo</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/sillas/cube-mesh</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/sillas/lumi-task</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/sillas/kaden</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+  <!-- Sillas individuales – Visitas -->
+  <url><loc>https://generacionmodular.com/sillas/lumi</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/sillas/chico</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/sillas/clark-d327</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/sillas/unique-d325</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+  <!-- Sillas individuales – Barra -->
+  <url><loc>https://generacionmodular.com/sillas/olla</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/sillas/mod</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/sillas/plaza</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/sillas/kopio</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+  <!-- Sillas individuales – Lounge -->
+  <url><loc>https://generacionmodular.com/sillas/sophia-mod-lineal</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/sillas/domino</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/sillas/grid</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/sillas/jackie</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/sillas/momo</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/sillas/cosmos</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/sillas/cuve</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/sillas/lutie</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/sillas/valerio</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/sillas/tranquo</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/sillas/qbuks</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/sillas/rest</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+  <!-- Sillas individuales – Estadio -->
+  <url><loc>https://generacionmodular.com/sillas/oahu2</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/sillas/sporta</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+  <!-- Estaciones -->
+  <url><loc>https://generacionmodular.com/estaciones/legan</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <!-- Apollo product -->
+  <url><loc>https://generacionmodular.com/productos/apollo</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
+  <!-- Proyectos -->
+  <url><loc>https://generacionmodular.com/proyectos</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+
+  <!-- Proyectos – Corporativo -->
+  <url><loc>https://generacionmodular.com/proyectos/corporativo/2025</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/proyectos/corporativo/2024</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/proyectos/corporativo/2023</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/proyectos/corporativo/2022</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/proyectos/corporativo/2020</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+  <!-- Proyectos – Educación -->
+  <url><loc>https://generacionmodular.com/proyectos/educacion/2025</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+  <!-- Proyectos – Salud -->
+  <url><loc>https://generacionmodular.com/proyectos/salud/2025</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/proyectos/salud/2024</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/proyectos/salud/2019</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/proyectos/salud/2015</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+  <!-- Proyectos – Hospitalidad -->
+  <url><loc>https://generacionmodular.com/proyectos/hospitalidad/2025</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/proyectos/hospitalidad/2023</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/proyectos/hospitalidad/2021</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+  <!-- Proyectos – Retail -->
+  <url><loc>https://generacionmodular.com/proyectos/retail/2024</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/proyectos/retail/2023</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://generacionmodular.com/proyectos/retail/2017</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+  <!-- Proyectos individuales -->
+  <url><loc>https://generacionmodular.com/proyecto/banco-de-guayaquil</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://generacionmodular.com/proyecto/general-motors</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://generacionmodular.com/proyecto/termikon</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://generacionmodular.com/proyecto/proyecto-ana</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://generacionmodular.com/proyecto/ibm</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://generacionmodular.com/proyecto/danec</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://generacionmodular.com/proyecto/usfq</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://generacionmodular.com/proyecto/merino-lizarzaburu-abogados</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://generacionmodular.com/proyecto/coface</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://generacionmodular.com/proyecto/ptie</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://generacionmodular.com/proyecto/grupo-superior</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://generacionmodular.com/proyecto/kushki</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://generacionmodular.com/proyecto/pfizer</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://generacionmodular.com/proyecto/semaica-energia</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://generacionmodular.com/proyecto/colegio-menor</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://generacionmodular.com/proyecto/crisfe-by-objekt</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://generacionmodular.com/proyecto/clinica-santa-lucia</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://generacionmodular.com/proyecto/dr-cornejo</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://generacionmodular.com/proyecto/clinica-pasteur</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://generacionmodular.com/proyecto/axxis-radiologos-asociados</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://generacionmodular.com/proyecto/hospital-pasteur-etapa-1</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://generacionmodular.com/proyecto/aeropuerto-mariscal-sucre</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://generacionmodular.com/proyecto/oro-verde</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://generacionmodular.com/proyecto/hampton-inn</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://generacionmodular.com/proyecto/novopan</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://generacionmodular.com/proyecto/agrinag</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://generacionmodular.com/proyecto/1001-carros</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://generacionmodular.com/proyecto/casabaca</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://generacionmodular.com/proyecto/almacenes-japon</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://generacionmodular.com/proyecto/bellini</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://generacionmodular.com/proyecto/chaide</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
 </urlset>
